@@ -1,0 +1,66 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Tutorial04.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Component.cpp
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C2065: 'ComponentType': undeclared identifier
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C2039: 'shared_ptr': is not a member of 'std'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\map(20): note: see declaration of 'std'
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C2065: 'shared_ptr': undeclared identifier
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C2065: 'Component': undeclared identifier
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C2923: 'std::map': 'ComponentType' is not a valid template type argument for parameter '_Kty'
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C2974: 'std::map': invalid template argument for '_Ty', type expected
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\map(81): note: see declaration of 'std::map'
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C3203: 'less': unspecialized class template can't be used as a template argument for template parameter '_Pr', expected a real type
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\map(79): error C3203: 'pair': unspecialized class template can't be used as a template argument for template parameter '_Ty', expected a real type
+e:\projects\rtglab-master\tutorial04\gameobject.h(6): error C2059: syntax error: '>'
+e:\projects\rtglab-master\tutorial04\gameobject.h(9): error C2039: 'enable_shared_from_this': is not a member of 'std'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\map(20): note: see declaration of 'std'
+e:\projects\rtglab-master\tutorial04\gameobject.h(9): error C2504: 'enable_shared_from_this': base class undefined
+e:\projects\rtglab-master\tutorial04\gameobject.h(9): error C2143: syntax error: missing ',' before '<'
+e:\projects\rtglab-master\tutorial04\gameobject.h(31): error C2039: 'shared_ptr': is not a member of 'std'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\map(20): note: see declaration of 'std'
+e:\projects\rtglab-master\tutorial04\gameobject.h(31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\gameobject.h(31): error C2143: syntax error: missing ',' before '<'
+e:\projects\rtglab-master\tutorial04\gameobject.h(32): error C2039: 'shared_ptr': is not a member of 'std'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\map(20): note: see declaration of 'std'
+e:\projects\rtglab-master\tutorial04\gameobject.h(32): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\gameobject.h(32): error C2143: syntax error: missing ',' before '<'
+e:\projects\rtglab-master\tutorial04\gameobject.h(33): error C2039: 'shared_ptr': is not a member of 'std'
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\map(20): note: see declaration of 'std'
+e:\projects\rtglab-master\tutorial04\gameobject.h(33): error C2143: syntax error: missing ';' before '<'
+e:\projects\rtglab-master\tutorial04\gameobject.h(33): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\gameobject.h(33): error C2238: unexpected token(s) preceding ';'
+e:\projects\rtglab-master\tutorial04\gameobject.h(43): error C3646: 'mComponents': unknown override specifier
+e:\projects\rtglab-master\tutorial04\gameobject.h(43): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\component.cpp(5): error C2664: 'void GameObject::AddComponent(const int)': cannot convert argument 1 from 'std::shared_ptr<_Ty>' to 'const int'
+          with
+          [
+              _Ty=Component
+          ]
+  e:\projects\rtglab-master\tutorial04\component.cpp(5): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+  DDSTextureLoader.cpp
+c1xx : fatal error C1083: Cannot open source file: 'DDSTextureLoader.cpp': No such file or directory
+  GameObject.cpp
+e:\projects\rtglab-master\tutorial04\component.h(19): error C2065: 'GameObject': undeclared identifier
+e:\projects\rtglab-master\tutorial04\component.h(19): error C2923: 'std::shared_ptr': 'GameObject' is not a valid template type argument for parameter '_Ty'
+e:\projects\rtglab-master\tutorial04\component.h(25): error C2065: 'GameObject': undeclared identifier
+e:\projects\rtglab-master\tutorial04\component.h(25): error C2923: 'std::shared_ptr': 'GameObject' is not a valid template type argument for parameter '_Ty'
+e:\projects\rtglab-master\tutorial04\component.h(43): error C2065: 'GameObject': undeclared identifier
+e:\projects\rtglab-master\tutorial04\component.h(43): error C2923: 'std::shared_ptr': 'GameObject' is not a valid template type argument for parameter '_Ty'
+e:\projects\rtglab-master\tutorial04\component.h(25): error C2440: 'return': cannot convert from 'const std::shared_ptr' to 'std::shared_ptr'
+  e:\projects\rtglab-master\tutorial04\component.h(25): note: Cannot copy construct class 'std::shared_ptr' due to ambiguous copy constructors or no available copy constructor
+  Mesh.cpp
+e:\projects\rtglab-master\tutorial04\renderer.h(23): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\renderer.h(23): error C2143: syntax error: missing ',' before '*'
+  Renderer.cpp
+e:\projects\rtglab-master\tutorial04\vbo.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\vbo.h(16): error C2143: syntax error: missing ',' before '*'
+  RenderSystem.cpp
+e:\projects\rtglab-master\tutorial04\vbo.h(16): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\vbo.h(16): error C2143: syntax error: missing ',' before '*'
+  VBO.cpp
+e:\projects\rtglab-master\tutorial04\mesh.h(14): error C2143: syntax error: missing ';' before '*'
+e:\projects\rtglab-master\tutorial04\mesh.h(14): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+e:\projects\rtglab-master\tutorial04\mesh.h(14): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+e:\projects\rtglab-master\tutorial04\mesh.h(29): error C2065: 'VBO': undeclared identifier
+e:\projects\rtglab-master\tutorial04\mesh.h(29): error C2923: 'std::unique_ptr': 'VBO' is not a valid template type argument for parameter '_Ty'
+e:\projects\rtglab-master\tutorial04\mesh.h(29): error C3203: 'default_delete': unspecialized class template can't be used as a template argument for template parameter '_Dx', expected a real type
+  Generating Code...
