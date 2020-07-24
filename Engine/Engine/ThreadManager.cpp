@@ -6,13 +6,7 @@ int ThreadManager::mID = 0;
 
 ThreadManager::~ThreadManager(){
 
-	for(auto i = mThreads.begin(); i!=mThreads.end(); i++){
 
-		i->second.join();
-		
-	}
-
-	mThreads.clear();
 	delete mInstance;
 	
 }
@@ -27,4 +21,16 @@ void ThreadManager::TeminateThread(uint32_t pThreadID){
 		mThreads.erase(thread);
 		
 	}
+}
+
+void ThreadManager::Finish(){
+
+	for (auto i = mThreads.begin(); i != mThreads.end(); i++) {
+
+		i->second.join();
+
+	}
+
+	mThreads.clear();
+	
 }

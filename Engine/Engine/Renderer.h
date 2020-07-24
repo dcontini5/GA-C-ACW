@@ -23,6 +23,7 @@ public:
 	virtual void InitRenderer() = 0;
 	virtual void Cleanup() = 0;
 	virtual void Run() = 0;
+	virtual void StopRunning() = 0;
 	
 	// Private Functions
 private:

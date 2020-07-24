@@ -5,13 +5,14 @@
 
 #include "Resource.h"
 #include "Window.h"
-#include "DX_Renderer.h"
+#include "Renderer_DX.h"
 
 class Window_DX final : protected Window {
 
 	//Structors
 public:
 	Window_DX(const UINT& pHeight, const UINT& pWidth): Window(pHeight, pWidth){}
+	Window_DX(const UINT& pHeight, const UINT& pWidth, HINSTANCE pHInstance, int pNCmdShow): Window(pHeight, pWidth), mHInstance(pHInstance), mNCmdShow(pNCmdShow){}
 	Window_DX(const Window_DX&);
 	Window_DX(Window_DX&&); //exchange members here;
 	~Window_DX();
@@ -39,10 +40,13 @@ public:
 
 	
 	void Initialize() override;
-	void InitWindowDX(HINSTANCE pHInstance, int pNCmdShow);
+	void InitPlaformSpecific(HINSTANCE pHInstance, int pNCmdShow);
+	void InitPlaformSpecific();
 	std::shared_ptr<Renderer> getRenderer() const{ return mRenderer; }
 
 	void Run() {
+
+		Initialize();
 		
 		MSG msg = { 0 };
 		while (WM_QUIT != msg.message){
@@ -52,21 +56,19 @@ public:
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
-			else
-			{
-				//tm->TeminateThread(tm->AddThread(&Renderer::Render, renderer));
-				mRenderer->Render();
-				std::this_thread::sleep_for(std::chrono::microseconds(1));
-			}
+			
 		}
-		
+
+		mRenderer->StopRunning();
 		
 	}
 	
 	//Data:
 private:
 
-	//HINSTANCE mHInstance = nullptr;
+	HINSTANCE mHInstance = nullptr;
 	HWND      mHWindow = nullptr;
+	int		  mNCmdShow;
+
 	
 };

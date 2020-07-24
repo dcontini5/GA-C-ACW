@@ -156,7 +156,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DX_Renderer.cpp" />
+    <ClCompile Include="Renderer_DX.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -167,7 +167,7 @@
     <ClCompile Include="Window_DX.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DX_Renderer.h" />
+    <ClInclude Include="Renderer_DX.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />

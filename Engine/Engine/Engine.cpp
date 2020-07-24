@@ -34,27 +34,27 @@ Window_DX* window = nullptr;
 //-------------------------------------------------------------------------------------
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-	window = new Window_DX(600, 800);
+	window = new Window_DX(600, 800, hInstance, nCmdShow);
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	window->InitWindowDX(hInstance, nCmdShow);
-	window->Initialize();
+	//window->InitPlaformSpecific(hInstance, nCmdShow);
+	//window->Initialize();
 
-	auto renderer = window->getRenderer();
+	
 
 	auto tm = ThreadManager::Instance();
-	//if (FAILED(InitDevice()))
-	//{
-	//	CleanupDevice();
-	//	return 0;
-	//}
+
+	
 
 	// Main message loop
-
-   
+	auto j = tm->AddThread(&Window_DX::Run, window);
+	//auto renderer = window->getRenderer();
+	//auto i = tm->AddThread(&Renderer::Run, renderer);
+	
 	//MSG msg = { 0 };
+	//
 	//while (WM_QUIT != msg.message)
 	//{
 	//	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -69,14 +69,17 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	
 
 	
-	//auto i = tm->AddThread(&Renderer::Run, renderer);
-	auto i = tm->AddThread(&Window_DX::Run, window);
-	//
 	
-	tm->TeminateThread(i);
+	//auto i = tm->AddThread(&Window_DX::Run, window);
+	
+	
+	//tm->TeminateThread(i);
+	//tm->TeminateThread(j);
+	
+	tm->Finish();
 	
 	//CleanupDevice();
-	renderer->Cleanup();
+	//renderer->Cleanup();
 	
 	return 0;
 	//return (int)msg.wParam;

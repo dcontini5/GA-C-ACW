@@ -1,6 +1,6 @@
 ﻿#include "VBO_DX.h"
 
-#include "DX_Renderer.h"
+#include "Renderer_DX.h"
 
 
 void VBO_DX::Create(Renderer* const pRenderer, const int& pNumVertices) {

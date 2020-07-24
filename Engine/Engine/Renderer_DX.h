@@ -53,35 +53,20 @@ public:
 	void Render() override;
 	void InitRenderer() override;
 	void Cleanup() override;
-
+	void StopRunning() override { mRun = false; }
 	
 	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() const { return mD3D11Device; }
 
 
 	
 	void Run() {
-
-
 		
+		while(mRun){
 
-		MSG msg = { 0 };
-		while (WM_QUIT != msg.message)
-		{
-			
-			if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-			else
-			{
-				Render();
-			}
-
+			Render();
+		
 		}
-
-
-		
+			   		
 	}
 
 	
@@ -112,6 +97,7 @@ public:
 private:
 	HWND      mHWindow = nullptr;
 	
+	
 	D3D_DRIVER_TYPE									mDriverType = D3D_DRIVER_TYPE_NULL;
 	D3D_FEATURE_LEVEL								mFeatureLevel = D3D_FEATURE_LEVEL_11_0;
 	Microsoft::WRL::ComPtr<ID3D11Device>			mD3D11Device = nullptr;
@@ -133,6 +119,8 @@ private:
 	//std::shared_ptr<VBO_DX> mVbo = nullptr;
 	//VBO_DX* mVbo = nullptr;
 
+	bool											mRun = true;
+	
 	DirectX::XMMATRIX								mWorld;
 	DirectX::XMMATRIX								mView;
 	DirectX::XMMATRIX								mProjection;

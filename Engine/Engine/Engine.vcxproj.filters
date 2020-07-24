@@ -42,14 +42,14 @@
     <ClCompile Include="Window_DX.cpp">
       <Filter>DirectX 11</Filter>
     </ClCompile>
-    <ClCompile Include="DX_Renderer.cpp">
-      <Filter>DirectX 11</Filter>
-    </ClCompile>
     <ClCompile Include="VBO_DX.cpp">
       <Filter>DirectX 11</Filter>
     </ClCompile>
     <ClCompile Include="VBO.cpp">
       <Filter>Platform Indipendent</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer_DX.cpp">
+      <Filter>DirectX 11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,14 +71,14 @@
     <ClInclude Include="Window_DX.h">
       <Filter>DirectX 11</Filter>
     </ClInclude>
-    <ClInclude Include="DX_Renderer.h">
-      <Filter>DirectX 11</Filter>
-    </ClInclude>
     <ClInclude Include="VBO_DX.h">
       <Filter>DirectX 11</Filter>
     </ClInclude>
     <ClInclude Include="VBO.h">
       <Filter>Platform Indipendent</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer_DX.h">
+      <Filter>DirectX 11</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
