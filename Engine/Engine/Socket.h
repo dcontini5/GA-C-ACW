@@ -10,7 +10,12 @@ class Socket {
 public:
 	Socket(const Socket&);
 	Socket(Socket&&); //exchange members here;
-	~Socket() = default;
+	~Socket(){
+
+		closesocket(mSocket);
+		WSACleanup();
+
+	};
 	
 protected:
 	Socket() : mSocket(INVALID_SOCKET) {}

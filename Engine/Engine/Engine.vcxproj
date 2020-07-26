@@ -156,22 +156,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="ListenSocket.cpp" />
+    <ClCompile Include="Peer.cpp" />
     <ClCompile Include="Renderer_DX.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Socket.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
+    <ClCompile Include="TransferSocket.cpp" />
     <ClCompile Include="VBO.cpp" />
     <ClCompile Include="VBO_DX.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Window_DX.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="ListenSocket.h" />
+    <ClInclude Include="Peer.h" />
     <ClInclude Include="Renderer_DX.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="Socket.h" />
     <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="TransferSocket.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VBO_DX.h" />
     <ClInclude Include="Window.h" />

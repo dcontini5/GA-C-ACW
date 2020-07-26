@@ -22,6 +22,9 @@
     <Filter Include="DirectX 11">
       <UniqueIdentifier>{06f66a1a-5957-4261-95c4-15a7f522274b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{e1bc4097-a43b-49ca-bf76-8ded6cc08b5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -51,6 +54,24 @@
     <ClCompile Include="Renderer_DX.cpp">
       <Filter>DirectX 11</Filter>
     </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="ListenSocket.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Peer.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="TransferSocket.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -79,6 +100,24 @@
     </ClInclude>
     <ClInclude Include="Renderer_DX.h">
       <Filter>DirectX 11</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ListenSocket.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Peer.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="TransferSocket.h">
+      <Filter>Networking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

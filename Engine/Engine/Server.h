@@ -2,6 +2,16 @@
 #include "ListenSocket.h"
 #include "TransferSocket.h"
 
+#include <vector>
+
+void receive(const TransferSocket& pClient) {
+
+
+
+}
+
+
+
 class Server {
 
 	//Structors
@@ -21,6 +31,12 @@ public:
 public:
 	void Init();
 	void Start();
+	void Listen();
+	void Send();
+	//void Receive();
+	//void Receive(const TransferSocket& pClient);
+	
+	
 	void Echo(std::string& pMessage);
 	// Private Functions
 private:
@@ -38,8 +54,10 @@ public:
 	//Data:
 private:
 
-	ListenSocket	mListenSocket;
-	TransferSocket	mTransferSocket;
-	Peer			mPeer;
+	typedef std::vector<TransferSocket> ClientList;
+	ClientList                  mClients;
+	ListenSocket				mListenSocket;
+	TransferSocket				mTransferSocket;
+	Peer						mPeer;
 	
 };

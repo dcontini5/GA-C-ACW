@@ -10,9 +10,7 @@ public:
 	TransferSocket(SOCKET& pSocket) : Socket(pSocket) {}
 	TransferSocket(const TransferSocket&);
 	TransferSocket(TransferSocket&&); //exchange members here;
-	~TransferSocket(){
-		WSACleanup();
-	}
+	~TransferSocket() = default;
 
 	//Accessors
 public:
@@ -22,12 +20,12 @@ public:
 
 	// Public Functions
 public:
-	void Send();
+	
 	void Send(const std::string pMessage);
 	void SetSocket(SOCKET& pSocket) { mSocket = pSocket; }
 	void Connect(const Peer& pPeer) const;
-	//void Receive();
-	void Receive(std::string& pMessage);
+	void Receive();
+	//void Receive(std::string& pMessage);
 	
 	// Private Functions
 private:

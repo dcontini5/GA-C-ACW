@@ -1,7 +1,9 @@
 ﻿#include "Server.h"
+#include "ThreadManager.h"
+
 void Server::Init() {
 
-	mListenSocket.Init(2, 0);
+	mListenSocket.Init(2, 2);
 	mListenSocket.Create();
 	mListenSocket.Bind(mPeer);
 
@@ -9,28 +11,62 @@ void Server::Init() {
 
 void Server::Start(){
 
-	auto transfSocket = mListenSocket.Listen();
-	mTransferSocket.SetSocket(transfSocket);
-	std::string message = "";
-	
-	//while (!message.empty()){
-	//
-	//	message.clear();
-	//	mTransferSocket.Receive(message);
-	//	std::cout << message << std::endl;
-	//	mTransferSocket.Send("Hi");
-	//
-	//} 
-	do{
-		
-		Echo(message);
-		
-	} while (!message.empty());
-	
-	
-	std::cout << "Finished..." << std::endl;
+	ThreadManager::Instance()->AddThread(&Server::Listen, this);
+	ThreadManager::Instance()->AddThread(&Server::Send, this);
+
+}
+
+void Server::Listen(){
+
+	while(true){
+
+		auto transferSocket = mListenSocket.Listen();
+		if (transferSocket != SOCKET_ERROR) {
+			mClients.emplace_back(transferSocket);
+			ThreadManager::AddThread(&receive, std::ref(transferSocket));
+		}
+	}
 	
 }
+
+void Server::Send(){
+
+	while( mClients.empty() ) std::this_thread::yield();
+	
+	while (true){
+
+		for(auto& client : mClients){
+
+			client.Send("Message");
+			
+		}
+		
+	}
+
+}
+
+
+//void Server::Receive(){
+//
+//
+//	while (mClients.empty()) std::this_thread::yield();
+//
+//	while(true){
+//
+//		for (auto& client : mClients){
+//
+//			std::string message;
+//			client.Receive(message);
+//			
+//		}
+//		
+//	}
+//
+//	
+//}
+
+
+
 
 void Server::Echo(std::string& pMessage){
 

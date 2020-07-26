@@ -8,10 +8,7 @@ public:
 	ListenSocket() : Socket() {};
 	ListenSocket(const ListenSocket&);
 	ListenSocket(ListenSocket&&); //exchange members here;
-	~ListenSocket(){
-		WSACleanup();
-	}
-
+	~ListenSocket() = default;
 	//Accessors
 public:
 
