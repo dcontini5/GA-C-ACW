@@ -1,13 +1,9 @@
 ﻿#pragma once
-
-#include <vector>
-#include <memory>
 #include "RenderComponent.h"
 #include "System.h"
 
 
 //typedef std::vector<std::shared_ptr<RenderComponent>> Components;
-typedef std::vector<std::shared_ptr<GameObject>> RenderableObjects;
 
 class RenderSystem : public System {
 
@@ -38,8 +34,7 @@ public:
 	// Public Functions
 public:
 	void Process() override;
-	void AddObject(GameObjectPtr& pGameObject) override;
-	void RemoveObject(GameObjectPtr& pGameObject) override;
+	void Start() override;
 	// Private Functions
 private:
 
@@ -52,12 +47,12 @@ private:
 		return *this;
 	}
 
+public:
 	//Data:
 private:
 
 	//Components mComponents;
 	static RenderSystem* mInstance;
-	RenderableObjects mRenderableObjects;
 	std::shared_ptr<Renderer> mRenderer;
 	
 };

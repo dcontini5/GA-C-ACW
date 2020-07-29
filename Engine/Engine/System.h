@@ -1,6 +1,11 @@
 ﻿#pragma once
+#include <vector>
+#include <memory>
 #include "GameObject.h"
 #include "GameObjectComponent.h"
+
+
+typedef std::vector<std::shared_ptr<GameObject>> GameObjects;
 
 class System {
 
@@ -21,8 +26,9 @@ public:
 public:
 
 	virtual void Process() = 0;
-	virtual void AddObject(GameObjectPtr& pGameObject) = 0;
-	virtual void RemoveObject(GameObjectPtr& pGameObject) = 0;
+	virtual void Start() = 0;
+	void AddObject(GameObjectPtr& pGameObject);
+	void RemoveObject(GameObjectPtr& pGameObject);
 	
 	// Private Functions
 private:
@@ -38,7 +44,8 @@ public:
 	}
 
 	//Data:
-private:
+protected:
 
+	GameObjects mGameObjects;
 	
 };

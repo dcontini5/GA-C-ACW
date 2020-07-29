@@ -38,5 +38,7 @@ protected:
 	UINT mWidth = 0;
 
 	std::shared_ptr<Renderer> mRenderer = nullptr;
+
+	int mThreadID = -1;
 	
 };

@@ -25,12 +25,12 @@ public:
 
 	ComponentMap GetComponents();
 	ComponentPtr GetComponent(const ComponentTypes& pComponentName);
-	glm::vec3 GetPos() { return mPos; };
-	glm::vec3 GetScale() { return mScale; };
+	glm::vec3 GetPos() const { return mPos; };
+	glm::vec3 GetScale() const { return mScale; };
 	
 	//Mutators
 public:
-
+	void SetPos(const glm::vec3& pNewPos) { mPos = pNewPos; }
 	// Public Functions
 public:
 

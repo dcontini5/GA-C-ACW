@@ -7,7 +7,7 @@ RenderSystem* RenderSystem::mInstance = nullptr;
 
 void RenderSystem::Process(){
 
-	for(const auto& object: mRenderableObjects){
+	for(const auto& object: mGameObjects){
 
 		auto renderComponent = std::reinterpret_pointer_cast<RenderComponent>(object->GetComponent(Render));
 
@@ -20,23 +20,4 @@ void RenderSystem::Process(){
 	}
 }
 
-void RenderSystem::AddObject(GameObjectPtr& pGameObject){
 
-	mRenderableObjects.push_back(pGameObject);
-	
-}
-
-void RenderSystem::RemoveObject(GameObjectPtr& pGameObject){
-
-	auto it = mRenderableObjects.begin();
-	for(const auto& object : mRenderableObjects){
-
-		
-		if(pGameObject == object){
-			mRenderableObjects.erase(it);
-			return;
-		}
-		++it;
-	}
-	
-}

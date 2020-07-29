@@ -28,22 +28,28 @@
 DX_Renderer* renderer = nullptr;
 Window_DX* window = nullptr;
 
+
+
 //--------------------------------------------------------------------------------------
 // Entry point to the program. Initializes everything and goes into a message processing 
 // loop. Idle time is used to render the scene.
 //-------------------------------------------------------------------------------------
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-	window = new Window_DX(600, 800, hInstance, nCmdShow);
-
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-	
 
+
+	
+	window = new Window_DX(600, 800, hInstance, nCmdShow);
+
+	window->Initialize();
+	
 	auto tm = ThreadManager::Instance();
 
-	tm->AddThread(&Window_DX::Run, window);
 
+	//todo auto game = new Game();
+	//game.Run();
 	
 	tm->Finish();
 

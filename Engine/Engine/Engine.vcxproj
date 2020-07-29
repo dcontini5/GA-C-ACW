@@ -158,11 +158,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectComponent.cpp" />
     <ClCompile Include="ListenSocket.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Peer.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Renderer_DX.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -182,12 +186,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectComponent.h" />
-    <ClInclude Include="Header.h" />
     <ClInclude Include="ListenSocket.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Peer.h" />
+    <ClInclude Include="PhysicsComponent.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Renderer_DX.h" />
     <ClInclude Include="Renderer.h" />

@@ -1,6 +1,14 @@
 ﻿#include "Window_DX.h"
 #include "ThreadManager.h"
 
+
+Window_DX::Window_DX(const UINT& pHeight, const UINT& pWidth, HINSTANCE pHInstance, int pNCmdShow)
+: Window(pHeight, pWidth), mHInstance(pHInstance), mNCmdShow(pNCmdShow){
+	
+	InitPlaformSpecific();
+	
+}
+
 LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
@@ -29,9 +37,12 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 
 void Window_DX::Initialize(){
 
-	InitPlaformSpecific();
+	//InitPlaformSpecific();
+	mThreadID = ThreadManager::Instance()->AddThread(&Window_DX::Run, this);
+	
 	mRenderer = std::make_shared<DX_Renderer>(mHWindow, mHeight, mWidth);
 	mRenderer->InitRenderer();
+	
 	//ThreadManager::Instance()->AddThread(&Renderer::Run, mRenderer);
 	
 }

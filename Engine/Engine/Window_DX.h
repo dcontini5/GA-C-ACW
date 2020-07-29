@@ -11,12 +11,15 @@ class Window_DX final : protected Window {
 
 	//Structors
 public:
-	Window_DX(const UINT& pHeight, const UINT& pWidth): Window(pHeight, pWidth){}
-	Window_DX(const UINT& pHeight, const UINT& pWidth, HINSTANCE pHInstance, int pNCmdShow): Window(pHeight, pWidth), mHInstance(pHInstance), mNCmdShow(pNCmdShow){}
+	
+	Window_DX(const UINT& pHeight, const UINT& pWidth, HINSTANCE pHInstance, int pNCmdShow);
 	Window_DX(const Window_DX&);
 	Window_DX(Window_DX&&); //exchange members here;
 	~Window_DX();
 
+private:
+	Window_DX(const UINT& pHeight, const UINT& pWidth) : Window(pHeight, pWidth){}
+	
 	//Accessors
 public:
 	
@@ -45,8 +48,7 @@ public:
 
 	void Run() {
 
-		Initialize();
-		
+
 		MSG msg = { 0 };
 		while (WM_QUIT != msg.message){
 			
@@ -57,8 +59,6 @@ public:
 			}
 			
 		}
-
-		//mRenderer->StopRunning();
 		
 	}
 	
