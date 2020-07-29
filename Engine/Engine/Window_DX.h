@@ -19,7 +19,7 @@ public:
 
 	//Accessors
 public:
-
+	
 	//Mutators
 public:
 
@@ -42,7 +42,6 @@ public:
 	void Initialize() override;
 	void InitPlaformSpecific(HINSTANCE pHInstance, int pNCmdShow);
 	void InitPlaformSpecific();
-	std::shared_ptr<Renderer> getRenderer() const{ return mRenderer; }
 
 	void Run() {
 
@@ -59,7 +58,7 @@ public:
 			
 		}
 
-		mRenderer->StopRunning();
+		//mRenderer->StopRunning();
 		
 	}
 	

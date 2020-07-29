@@ -17,14 +17,14 @@ public:
 
 	//Accessors
 public:
-
+	int GetNumberOfIndices() const { return mNumberOfIndices; }
 	//Mutators
 public:
 
 	// Public Functions
 public:
 
-	void Create(Renderer* pRenderer, const int& pNumVertices) override;
+	void Create(std::shared_ptr<Renderer>& pRenderer, const std::string& pMeshName) override;
 	void Draw() override { return; }
 
 	void Set(Microsoft::WRL::ComPtr<ID3D11DeviceContext>& pD3D11ImmediateContext) {
@@ -49,6 +49,7 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mVertexBuffer = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> mIndexBuffer = nullptr;
+	int mNumberOfIndices = 0;
 	
 };
 

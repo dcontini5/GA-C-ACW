@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <string>
+
 #include "Renderer.h"
 
 class VBO {
@@ -15,10 +17,10 @@ public:
 
 	//Mutators
 public:
-
+	
 	// Public Functions
 public:
-	virtual void Create(Renderer* pRenderer , const int& pNumVertices) = 0;
+	virtual void Create(std::shared_ptr<Renderer>& pRenderer , const std::string& pMeshName) = 0;
 	virtual void Draw() = 0;
 	
 

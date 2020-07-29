@@ -37,23 +37,23 @@ public:
 
 	template<class Function, class Args>
 	int AddThread(Function&& pFunction, Args&& pArgs) {
-
-		mThreads.insert(std::pair<uint32_t, std::thread>(mID, std::thread(pFunction, pArgs)));
-		return mID++;
-
-	}
-
 	
-	//template<class Function, class Args>
-	//int AddThread1(Function&& pFunction) {
+		mThreads.insert(std::pair<uint32_t, std::thread>(mID,
+			std::thread(pFunction , pArgs)));
+		return mID++;
+	
+	}
+	
+	//template<class Function, class... Args>
+	//int AddThread(Function&& pFunction, Args&&... pArgs) {
 	//
-	//	mThreads.insert(std::pair<uint32_t, std::thread>(mID, std::thread(pFunction)));
-	//
+	//	mThreads.insert(std::pair<uint32_t, std::thread>(mID,
+	//		std::thread(std::forward<Function>(pFunction) , std::forward<Args>(pArgs)...)));
 	//	return mID++;
 	//
 	//}
-	
 
+	
 	void TeminateThread(uint32_t pThreadID);
 	void Finish();
 	

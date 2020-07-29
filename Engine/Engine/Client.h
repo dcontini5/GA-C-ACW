@@ -5,7 +5,7 @@ class Client {
 
 	//Structors
 public:
-	Client() : mPeer("127.0.0.1"){}
+	Client() : mPeer("127.0.0.1"), mSendThreadID(-1), mReceiveThreadID(-1) {}
 	Client(const Client&);
 	Client(Client&&); //exchange members here;
 	~Client() = default;
@@ -39,5 +39,7 @@ private:
 
 	TransferSocket	mTransferSocket;
 	Peer			mPeer;
+	int				mSendThreadID;
+	int				mReceiveThreadID;
 	
 };

@@ -1,6 +1,61 @@
 ﻿#include "ResourceManager.h"
+
+
+#include <iostream>
+#include <string>
 ResourceManager* ResourceManager::mInstance = nullptr;
 
+
+
+std::string ResourceManager::ParseData(const std::vector<glm::vec3>& pPosList){
+
+	std::string data;
+	for(const auto& pos : pPosList){
+
+		data.append(std::to_string(pos.x));
+		data += ",";
+		
+		data.append(std::to_string(pos.y));
+		data += ",";
+		
+		data.append(std::to_string(pos.z));
+		data += ",";
+		
+	}
+
+	return data;
+	
+}
+
+void ResourceManager::ParseMessage(std::string& pMessage){
+
+	std::vector<glm::vec3> posList;
+
+	auto divider = 0;
+	auto i = 0;
+	
+	while (i != pMessage.size()){
+
+		
+		divider = pMessage.find(',', (i + 1));
+		auto x = std::stof(pMessage.substr(i, divider - i));
+
+		i = divider + 1;
+		divider = pMessage.find(',', (i + 1));
+		auto y = std::stof(pMessage.substr(i, divider - i));
+
+		i = divider + 1;
+		divider = pMessage.find(',', (i + 1));
+		auto z = std::stof(pMessage.substr(i, divider - i));
+
+		i = divider + 1;
+
+		posList.emplace_back(x, y, z);
+		
+	}
+
+	
+}
 
 std::vector<WORD> ResourceManager::GenerateIndices(){
 	

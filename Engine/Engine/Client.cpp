@@ -1,5 +1,7 @@
 ﻿#include "Client.h"
 
+#include "ThreadManager.h"
+
 void Client::Init(){
 
 	mTransferSocket.Init(2, 2);
@@ -9,33 +11,20 @@ void Client::Init(){
 }
 
 
-void Client::Start(){
+void Client::Start() {
 
-	//mTransferSocket.Send("awpwpowipdaowidp[awoid[pawoid[paok[aespofi[eofies[poaifpeofisepaoiwudapowidupawoidupoiufposaiefjseoifjaiefjpasoifjpsofijaspeoifjapsoiefjp\toaisjpfoaeijfapseoijpoeifjpoaiejfpoiajsfoijspofaiejfpoiesjpfaoisejfpaosiejf\tpoisjfopiejfapefoijasiefjpaoseijfpaoiejfpoeijfpaosiejfpoiesjfpaosiejfpaoisejfpasoiefjposiefjpoaseifjpaseoifjpoaisejfpoiasjefpoisejfpoiesjfapoisefjpaoesifjpoiasejfpoiajsepofijspaoifjepfoiasjfpoiajespfoisjeafpoiejfpaoiejfpioajfpaoisejpoiajf\tpsoeijfpoiaejpfoijaespfiojespfoiajspfeifjsepoifjapsefijpseofijaepsfijeofiepofidspfoidfpoispeofi1");
-	//std::string message;
-	//mTransferSocket.Receive(message);
-	//std::cout << message << std::endl;
-	//mTransferSocket.Send("*");
-	//mTransferSocket.Receive(message);
-	//std::cout << message << std::endl;
+	mReceiveThreadID =  ThreadManager::Instance()->AddThread(&TransferSocket::Receive, mTransferSocket);
+	mSendThreadID =  ThreadManager::Instance()->AddThread(&TransferSocket::Send, mTransferSocket);
 
-
-	auto totsize = 0;
-	
-	Echo("Echo");
-
-	mTransferSocket.Send("");
-
-	
-	std::cout << "Finished..." << std::endl;
 }
 
-void Client::Echo(const std::string& pMessage){
-
-	mTransferSocket.Send(pMessage);
-	std::string message;
-	mTransferSocket.Receive(message);
-
-	std::cout << message;
-		
-}
+//void Client::Echo(const std::string& pMessage){
+//
+//	mTransferSocket.Send(pMessage);
+//	std::string message;
+//	mTransferSocket.Receive();
+//	//mTransferSocket.Receive(message);
+//
+//	std::cout << message;
+//		
+//}

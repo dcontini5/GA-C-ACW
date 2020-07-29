@@ -1,6 +1,10 @@
 ﻿#pragma once
 #include <Windows.h>
+//#include "Mesh.h"
+#include <glm.hpp>
+#include <memory>
 
+class Mesh;
 
 class Renderer {
 
@@ -19,7 +23,7 @@ public:
 
 	// Public Functions
 public:
-	virtual void Render() = 0;
+	virtual void Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const glm::vec3 pScale) = 0;
 	virtual void InitRenderer() = 0;
 	virtual void Cleanup() = 0;
 	virtual void Run() = 0;

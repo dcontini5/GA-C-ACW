@@ -4,13 +4,6 @@
 
 #include <vector>
 
-void receive(const TransferSocket& pClient) {
-
-
-
-}
-
-
 
 class Server {
 
@@ -34,7 +27,7 @@ public:
 	void Listen();
 	void Send();
 	//void Receive();
-	//void Receive(const TransferSocket& pClient);
+	void Receive(TransferSocket& pClient);
 	
 	
 	void Echo(std::string& pMessage);

@@ -14,7 +14,8 @@ public:
 
 	//Accessors
 public:
-
+	std::shared_ptr<Renderer> GetRenderer() const { return mRenderer; }
+	
 	//Mutators
 public:
 

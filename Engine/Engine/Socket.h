@@ -8,8 +8,7 @@ class Socket {
 
 	//Structors
 public:
-	Socket(const Socket&);
-	Socket(Socket&&); //exchange members here;
+
 	~Socket(){
 
 		closesocket(mSocket);
@@ -20,7 +19,10 @@ public:
 protected:
 	Socket() : mSocket(INVALID_SOCKET) {}
 	Socket(SOCKET& const pSocket) : mSocket(pSocket) {}
+	Socket(const Socket& pOther) : mSocket(pOther.mSocket) {}
+	Socket(Socket&& pOther) noexcept : mSocket(std::exchange(pOther.mSocket, -1)) {} //exchange members here;
 
+	
 	//Accessors
 public:
 

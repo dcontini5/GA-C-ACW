@@ -3,11 +3,11 @@
 #include "Renderer_DX.h"
 
 
-void VBO_DX::Create(Renderer* const pRenderer, const int& pNumVertices) {
+void VBO_DX::Create(std::shared_ptr<Renderer>& pRenderer, const std::string& pMeshName) {
 
 	// Create vertex buffer
 
-	const auto dxRenderer = dynamic_cast<DX_Renderer*> (pRenderer);
+	auto dxRenderer = std::dynamic_pointer_cast<DX_Renderer> (pRenderer);
 	
 	auto vertices = ResourceManager::Instance()->GenerateVertices();
 
@@ -34,10 +34,6 @@ void VBO_DX::Create(Renderer* const pRenderer, const int& pNumVertices) {
 	InitData.pSysMem = &indices[0];
 	device->CreateBuffer(&bd, &InitData, &mIndexBuffer);
 	
-	//indices_no = indices.size();
-	//indices_no = vertices.size();
-
-	// Set index buffer
-
+	mNumberOfIndices = indices.size(); 
 	
 }

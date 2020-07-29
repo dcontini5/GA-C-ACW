@@ -32,7 +32,7 @@ void Window_DX::Initialize(){
 	InitPlaformSpecific();
 	mRenderer = std::make_shared<DX_Renderer>(mHWindow, mHeight, mWidth);
 	mRenderer->InitRenderer();
-	ThreadManager::Instance()->AddThread(&Renderer::Run, mRenderer);
+	//ThreadManager::Instance()->AddThread(&Renderer::Run, mRenderer);
 	
 }
 

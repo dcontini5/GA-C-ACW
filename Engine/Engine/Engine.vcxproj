@@ -91,6 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_DISABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\Projects\GA-C-ACW\Engine\glm\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,14 +158,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectComponent.cpp" />
     <ClCompile Include="ListenSocket.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Peer.cpp" />
+    <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="Renderer_DX.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="System.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
     <ClCompile Include="TransferSocket.cpp" />
     <ClCompile Include="VBO.cpp" />
@@ -174,14 +182,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameObjectComponent.h" />
+    <ClInclude Include="Header.h" />
     <ClInclude Include="ListenSocket.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Peer.h" />
+    <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Renderer_DX.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Socket.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="TransferSocket.h" />
     <ClInclude Include="VBO.h" />

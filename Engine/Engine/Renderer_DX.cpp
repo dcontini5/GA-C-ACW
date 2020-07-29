@@ -1,5 +1,5 @@
 ﻿#include "Renderer_DX.h"
-
+#include "Mesh.h"
 #include <iostream>
 
 void DX_Renderer::InitRenderer(){
@@ -16,19 +16,7 @@ void DX_Renderer::InitRenderer(){
 
 void DX_Renderer::Cleanup(){
 
-	//if (mD3D11Device) mD3D11Device->Release();
-	//if (mD3D11Device1) mD3D11Device1->Release();
-	//if (mD3D11ImmediateContext) mD3D11ImmediateContext->Release();
-	//if (mD3D11ImmediateContext1) mD3D11ImmediateContext1->Release();
-	//if (mDXGISwapChain) mDXGISwapChain->Release();
-	//if (mDXGISwapChain1) mDXGISwapChain1->Release();
-	//if (mD3D11RenderTargetView) mD3D11RenderTargetView->Release();
-	//if (mD3D11DepthStencilView) mD3D11DepthStencilView->Release();
-	//if (mD3D11DepthStencil) mD3D11DepthStencil->Release();
-	//if (mD3D11VertexShader) mD3D11VertexShader->Release();
-	//if (mD3D11PixelShader) mD3D11PixelShader->Release();
-	//if (mD3D11VertexLayout) mD3D11VertexLayout->Release();
-	
+
 }
 
 void DX_Renderer::CreateDevice(){
@@ -334,13 +322,13 @@ void DX_Renderer::CreateMVPM(){
 
 void DX_Renderer::CreateVBO(){
 
-
-	mVBO = std::make_shared<VBO_DX>();
-	auto x = this;
-	//
-	mVBO->Create(this, 10);
-	mVBO->Set(mD3D11ImmediateContext);
-}
+   //
+	//mVBO = std::make_shared<VBO_DX>();
+	//auto x = this;
+	////
+	//mVBO->Create(this, 10);
+	//mVBO->Set(mD3D11ImmediateContext);
+}  //
 
 
 HRESULT DX_Renderer::CompileShaderFromFile(const LPCWSTR& pFileName, const LPCSTR& pEntryPoint,
@@ -377,7 +365,7 @@ HRESULT DX_Renderer::CompileShaderFromFile(const LPCWSTR& pFileName, const LPCST
 	
 }
 
-void DX_Renderer::Render(){
+void DX_Renderer::Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const glm::vec3 pScale){
 	
 	// Update our time
 	static float t = 0.0f;
@@ -404,7 +392,12 @@ void DX_Renderer::Render(){
 	// Update variables
 	//
 	ConstantBuffer cb;
-	cb.mWorld = DirectX::XMMatrixTranspose(mWorld);
+
+	auto world = mWorld;
+	world *= DirectX::XMMatrixScaling(pScale.x, pScale.y, pScale.z);
+	world *= DirectX::XMMatrixTranslation(pPos.x, pPos.y, pPos.z);
+	
+	cb.mWorld = DirectX::XMMatrixTranspose(world);
 	cb.mView = DirectX::XMMatrixTranspose(mView);
 	cb.mProjection = DirectX::XMMatrixTranspose(mProjection);
 	cb.time = t;
@@ -412,15 +405,18 @@ void DX_Renderer::Render(){
 	cb.Eye = DirectX::XMVectorSet(0.0f, 0.0f, 3.0f, 0.0f);
 	mD3D11ImmediateContext->UpdateSubresource(mD3D11ConstantBuffer.Get(), 0, nullptr, &cb, 0, 0);
 
+	std::shared_ptr<VBO_DX> vbo = std::reinterpret_pointer_cast<VBO_DX>(pMesh->GetVBO());
+	
+	vbo->Set(mD3D11ImmediateContext);
+	
 	//
-	// Renders a triangle
+	// Render
 	//
-
 	mD3D11ImmediateContext->VSSetShader(mD3D11VertexShader.Get(), nullptr, 0);
 	mD3D11ImmediateContext->PSSetShader(mD3D11PixelShader.Get(), nullptr, 0);
 	mD3D11ImmediateContext->VSSetConstantBuffers(0, 1, mD3D11ConstantBuffer.GetAddressOf());
 	mD3D11ImmediateContext->PSSetConstantBuffers(0, 1, mD3D11ConstantBuffer.GetAddressOf());
-	mD3D11ImmediateContext->DrawIndexed(ResourceManager::Instance()->GetIndNo(), 0, 0);
+	mD3D11ImmediateContext->DrawIndexed(vbo->GetNumberOfIndices(), 0, 0);
 
 
 	mDXGISwapChain->Present(0, 0);

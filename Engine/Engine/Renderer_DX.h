@@ -50,24 +50,24 @@ public:
 
 	// Public Functions
 public:
-	void Render() override;
+	void Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const glm::vec3 pScale) override;
 	void InitRenderer() override;
 	void Cleanup() override;
 	void StopRunning() override { mRun = false; }
-	
+	void Run() override {};
 	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() const { return mD3D11Device; }
 
 
 	
-	void Run() {
-		
-		while(mRun){
-
-			Render();
-		
-		}
-			   		
-	}
+	//void Run() {
+	//	
+	//	while(mRun){
+	//
+	//		Render();
+	//	
+	//	}
+	//		   		
+	//}
 
 	
 	

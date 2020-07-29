@@ -2,18 +2,15 @@
 
 #include <vector>
 
+#include "ResourceManager.h"
+//void TransferSocket::Send(){}
+
+
 void TransferSocket::Send(){
 
-
-
+	const auto message = ResourceManager::Instance()->ParseData({ glm::vec3(0.f, 0.f, 0.f) });
 	
-}
-
-
-void TransferSocket::Send(const std::string pMessage){
-
-
-	if (send(mSocket, pMessage.c_str(), pMessage.size(), 0) == SOCKET_ERROR) {
+	if (send(mSocket, message.c_str(), message.size(), 0) == SOCKET_ERROR) {
 		
 		std::cerr << "Send failed with " << WSAGetLastError() << std::endl;
 		
@@ -30,7 +27,9 @@ void TransferSocket::Connect(const Peer& pPeer) const{
 	
 }
 
-void TransferSocket::Receive(std::string& pMessage){
+//void TransferSocket::Receive(std::string& pMessage){}
+
+void TransferSocket::Receive(){
 
 	const int maxSize = 4096;
 	std::vector<char> buffer(maxSize);
@@ -41,7 +40,9 @@ void TransferSocket::Receive(std::string& pMessage){
 		return;
 		
 	}
-	pMessage.assign(buffer.cbegin(), buffer.cend());
-	//pMessage.append(buffer.cbegin(), buffer.cend());
+	
+	std::string message;
+	message.assign(buffer.cbegin(), buffer.cend());
+	
 	
 }

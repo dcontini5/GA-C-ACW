@@ -38,50 +38,16 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-
-	//window->InitPlaformSpecific(hInstance, nCmdShow);
-	//window->Initialize();
-
 	
 
 	auto tm = ThreadManager::Instance();
 
-	
+	tm->AddThread(&Window_DX::Run, window);
 
-	// Main message loop
-	auto j = tm->AddThread(&Window_DX::Run, window);
-	//auto renderer = window->getRenderer();
-	//auto i = tm->AddThread(&Renderer::Run, renderer);
-	
-	//MSG msg = { 0 };
-	//
-	//while (WM_QUIT != msg.message)
-	//{
-	//	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-	//	{
-	//		TranslateMessage(&msg);
-	//		DispatchMessage(&msg);
-	//	}
-	//	
-	//	
-	//}
-
-	
-
-	
-	
-	//auto i = tm->AddThread(&Window_DX::Run, window);
-	
-	
-	//tm->TeminateThread(i);
-	//tm->TeminateThread(j);
 	
 	tm->Finish();
-	
-	//CleanupDevice();
-	//renderer->Cleanup();
+
 	
 	return 0;
-	//return (int)msg.wParam;
 }
 
