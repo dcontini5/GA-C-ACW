@@ -14,8 +14,8 @@ public:
 		closesocket(mSocket);
 		WSACleanup();
 
-	};
-	
+	}
+
 protected:
 	Socket() : mSocket(INVALID_SOCKET) {}
 	Socket(SOCKET& const pSocket) : mSocket(pSocket) {}

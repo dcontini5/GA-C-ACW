@@ -5,7 +5,6 @@
 #include "GameObjectComponent.h"
 
 
-typedef std::vector<std::shared_ptr<GameObject>> GameObjects;
 
 class System {
 
@@ -14,7 +13,7 @@ public:
 	System() = default;
 	System(const System&);
 	System(System&&); //exchange members here;
-	~System();
+	~System() = default;
 
 	//Accessors
 public:

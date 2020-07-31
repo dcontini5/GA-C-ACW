@@ -1,38 +1,46 @@
 ﻿#pragma once
+#include "System.h"
 
-class CollisionSystem {
+class InfinitePlaneCollisionComponent;
+class SphereCollisionComponent;
+
+typedef std::shared_ptr<SphereCollisionComponent> SphereCollisionPtr;
+typedef std::shared_ptr<InfinitePlaneCollisionComponent> PlaneCollisionPtr;
+
+class CollisionSystem : public System {
 
 	//Private Structors
 private:
-	CollisionSystem() = default;
+
 
 	//Public Structors
 public:
-	~CollisionSystem() = default;
-
-	static CollisionSystem* Instance(){
-
-		if (!mInstance){ mInstance = new CollisionSystem(); }
-
-		return mInstance;
-	}
-
+	CollisionSystem() = default;
+	~CollisionSystem() = default;	
 	//Accessors
-public:
 
+	
 	//Mutators
 public:
 
 	// Public Functions
 public:
-
+	
+	void Process() override;
+	void Start() override;
+	
 	// Private Functions
 private:
 
+	bool CheckCollision(ComponentPtr& pCollider, ComponentPtr& pCollidee);
+	bool CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCollisionPtr& pCollidee);
+	bool CheckPlaneSphere(PlaneCollisionPtr& pPlaneCollider, SphereCollisionPtr& pSphereCollidee);
+	void CollisionResponse(ComponentPtr& pCollider, ComponentPtr& pCollidee);
+	void ResponseSphereSphere(SphereCollisionPtr& pCollider, SphereCollisionPtr& pCollidee);
+	void ResponsePlaneSphere(PlaneCollisionPtr& pPlaneCollider, SphereCollisionPtr& pSphereCollidee);
+
 	//Data:
 private:
-	static CollisionSystem* mInstance;
 
-
-	
+		
 };

@@ -43,16 +43,17 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	
 	window = new Window_DX(600, 800, hInstance, nCmdShow);
 
-	window->Initialize();
 	
 	auto tm = ThreadManager::Instance();
 
+	const auto windowThreadID = tm->AddThread(&Window_DX::Run, window);
 
 	//todo auto game = new Game();
 	//game.Run();
-	
-	tm->Finish();
 
+	
+
+	tm->TeminateThread(windowThreadID);
 	
 	return 0;
 }

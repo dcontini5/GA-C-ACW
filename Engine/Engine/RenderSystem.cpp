@@ -3,13 +3,12 @@
 #include "GameObject.h"
 #include "ThreadManager.h"
 
-RenderSystem* RenderSystem::mInstance = nullptr;
 
 void RenderSystem::Process(){
 
 	for(const auto& object: mGameObjects){
 
-		auto renderComponent = std::reinterpret_pointer_cast<RenderComponent>(object->GetComponent(Render));
+		auto renderComponent = std::reinterpret_pointer_cast<RenderComponent>(object->GetComponent(ComponentTypes::RENDER));
 
 		if (!renderComponent->IsDrawable()) continue;
 		auto mesh = renderComponent->GetMesh();

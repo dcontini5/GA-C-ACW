@@ -1,23 +1,36 @@
 ﻿#pragma once
+#include "GameObjectComponent.h"
 
-class CollisionComponent {
+typedef const int ColliderType;
+
+struct ColliderTypes {
+
+	static ColliderType SPHERE = 1;
+	static ColliderType PLANE = 2;
+	
+};
+
+
+class CollisionComponent : public GameObjectComponent {
 
 	//Structors
 public:
-	CollisionComponent();
+	CollisionComponent(GameObjectPtr& pParent, ColliderType& pCollider): GameObjectComponent(pParent, ComponentTypes::COLLISION), mCollider(pCollider){}
 	CollisionComponent(const CollisionComponent&);
 	CollisionComponent(CollisionComponent&&); //exchange members here;
 	~CollisionComponent();
 
 	//Accessors
 public:
-
+	ColliderType GetColliderType() const { return mCollider; }
+	
 	//Mutators
 public:
 
 	// Public Functions
 public:
-
+	void OnMessage(std::shared_ptr<Message>& pMessage) override {}
+	
 	// Private Functions
 private:
 
@@ -34,6 +47,6 @@ public:
 	//Data:
 private:
 
-	bool mIsTrigger = false;
+	ColliderType mCollider;
 	
 };

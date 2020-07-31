@@ -12,11 +12,11 @@ void System::RemoveObject(GameObjectPtr& pGameObject) {
 	for (const auto& object : mGameObjects) {
 
 
+		++it;
 		if (pGameObject == object) {
 			mGameObjects.erase(it);
 			return;
 		}
-		++it;
 	}
 
 }

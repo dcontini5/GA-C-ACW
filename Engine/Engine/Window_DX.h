@@ -46,21 +46,7 @@ public:
 	void InitPlaformSpecific(HINSTANCE pHInstance, int pNCmdShow);
 	void InitPlaformSpecific();
 
-	void Run() {
-
-
-		MSG msg = { 0 };
-		while (WM_QUIT != msg.message){
-			
-			if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-			
-		}
-		
-	}
+	void Run();
 	
 	//Data:
 private:

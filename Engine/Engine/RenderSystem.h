@@ -10,8 +10,6 @@ class RenderSystem : public System {
 	//Structors
 public:
 	~RenderSystem();
-
-private:
 	RenderSystem() = default;
 	RenderSystem(const RenderSystem&);
 	RenderSystem(RenderSystem&&); //exchange members here;
@@ -19,13 +17,7 @@ private:
 	
 	//Accessors
 public:
-	static RenderSystem* Instance(){
 
-		if (!mInstance) mInstance = new RenderSystem();
-
-		return mInstance;
-		
-	}
 	//Mutators
 public:
 
@@ -34,7 +26,7 @@ public:
 	// Public Functions
 public:
 	void Process() override;
-	void Start() override;
+	void Start() override {};
 	// Private Functions
 private:
 
@@ -52,7 +44,7 @@ public:
 private:
 
 	//Components mComponents;
-	static RenderSystem* mInstance;
+	
 	std::shared_ptr<Renderer> mRenderer;
 	
 };

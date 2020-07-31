@@ -30,6 +30,8 @@ public:
 	// Public Functions
 public:
 
+	void OnMessage(std::shared_ptr<Message>& pMessage) override {};
+	
 	// Private Functions
 private:
 

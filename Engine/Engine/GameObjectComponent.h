@@ -1,26 +1,21 @@
 ﻿#pragma once
 #include <memory>
+#include "ComponentTypes.h"
+#include "Observer.h"
 //#include "GameObject.h"
 
 class GameObject;
 
 typedef std::shared_ptr<GameObject> GameObjectPtr;
 
-enum ComponentTypes {
-
-	Render,
-	Collision,
-	Physics,
-	Network, //maybe
-	
-};
 
 
-class GameObjectComponent : std::enable_shared_from_this<GameObjectComponent> {
+
+class GameObjectComponent : std::enable_shared_from_this<GameObjectComponent>, public Observer {
 
 	//Structors
 public:
-	GameObjectComponent(GameObjectPtr& pParent, const ComponentTypes& pType);
+	GameObjectComponent(GameObjectPtr& pParent, ComponentType& pType);
 	GameObjectComponent(const GameObjectComponent&);
 	GameObjectComponent(GameObjectComponent&&); //exchange members here;
 	~GameObjectComponent() = default;
@@ -28,7 +23,7 @@ public:
 	//Accessors
 public:
 	GameObjectPtr GetParent() const{ return mParent; }
-	ComponentTypes GetType() const { return mType; }
+	ComponentType GetType() const { return mType; }
 	//Mutators
 public:
 
@@ -40,7 +35,7 @@ private:
 
 	//Operators
 public:
-	GameObjectComponent& operator=(const GameObjectComponent& pOther){ return *this = GameObjectComponent(pOther); }
+	GameObjectComponent& operator=(const GameObjectComponent& pOther) = delete;
 
 	GameObjectComponent& operator=(const GameObjectComponent&& pOther){
 
@@ -52,6 +47,6 @@ public:
 private:
 
 	GameObjectPtr mParent;
-	ComponentTypes mType;
+	ComponentType mType;
 	
 };

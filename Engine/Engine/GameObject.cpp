@@ -1,7 +1,7 @@
 ﻿#include "GameObject.h"
 #include "GameObjectComponent.h"
 
-ComponentPtr GameObject::GetComponent(const ComponentTypes& pComponentName){
+ComponentPtr GameObject::GetComponent(const int& pComponentName){
 
 	ComponentMapIterator it = mComponents.find(pComponentName);
 
@@ -25,7 +25,7 @@ void GameObject::AddComponent(ComponentPtr& pComponent){
 	
 }
 
-void GameObject::RemoveComponent(const ComponentTypes& pType){
+void GameObject::RemoveComponent(const int& pType){
 
 	ComponentMapIterator it = mComponents.find(pType);
 

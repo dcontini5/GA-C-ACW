@@ -1,8 +1,6 @@
 ﻿#include "PhysicsSystem.h"
 #include "PhysicsComponent.h"
 
-PhysicsSystem* PhysicsSystem::mInstance = nullptr;
-
 void PhysicsSystem::Process(){
 
 	const auto now = std::chrono::steady_clock::now();
@@ -12,7 +10,7 @@ void PhysicsSystem::Process(){
 	for(auto& obj : mGameObjects){
 				
 		
-		const auto physComp = std::reinterpret_pointer_cast<PhysicsComponent>(obj->GetComponent(Physics));
+		const auto physComp = std::reinterpret_pointer_cast<PhysicsComponent>(obj->GetComponent(ComponentTypes::PHYSICS));
 
 		if (physComp->IsStatic()) continue;
 		

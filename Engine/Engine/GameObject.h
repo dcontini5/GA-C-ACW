@@ -3,15 +3,17 @@
 #include <map>
 #include <memory>
 
-class GameObjectComponent;
-enum ComponentTypes;
+#include "ComponentTypes.h"
+#include "Subject.h"
 
-typedef std::map <ComponentTypes, std::shared_ptr<GameObjectComponent>> ComponentMap;
-typedef std::map <ComponentTypes, std::shared_ptr<GameObjectComponent>>::iterator ComponentMapIterator;
+class GameObjectComponent;
+
+typedef std::map <int, std::shared_ptr<GameObjectComponent>> ComponentMap;
+typedef std::map <int, std::shared_ptr<GameObjectComponent>>::iterator ComponentMapIterator;
 typedef std::shared_ptr<GameObjectComponent> ComponentPtr;
 
 
-class GameObject{
+class GameObject : public Subject {
 
 	//Structors
 public:
@@ -24,19 +26,24 @@ public:
 public:
 
 	ComponentMap GetComponents();
-	ComponentPtr GetComponent(const ComponentTypes& pComponentName);
-	glm::vec3 GetPos() const { return mPos; };
+	ComponentPtr GetComponent(ComponentType& pComponentName);
+	glm::vec3 GetPos() const { return mPosition; };
 	glm::vec3 GetScale() const { return mScale; };
+	glm::vec3 GetRot() const { return mRotation; }
 	
 	//Mutators
 public:
-	void SetPos(const glm::vec3& pNewPos) { mPos = pNewPos; }
+	void SetPos(const glm::vec3& pNewPos) { mPosition = pNewPos; }
+	void setScale(const glm::vec3& pNewScale) { mScale = pNewScale; }
+	void setRot(const glm::vec3& pNewRot) { mRotation = pNewRot; }
 	// Public Functions
 public:
 
 	void AddComponent(ComponentPtr& pComponent);
-	void RemoveComponent(const ComponentTypes& pType);
+	void RemoveComponent(ComponentType& pType);
 	void RemoveComponent(ComponentPtr& pComponent);
+	
+
 	// Private Functions
 private:
 
@@ -53,9 +60,11 @@ public:
 	//Data:
 private:
 
-	glm::vec3 mPos;
+	glm::vec3 mPosition;
 	glm::vec3 mScale;
+	glm::vec3 mRotation;
 
+	bool mAlive;
 	ComponentMap mComponents;
 	
 };

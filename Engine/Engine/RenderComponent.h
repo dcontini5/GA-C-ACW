@@ -23,9 +23,12 @@ public:
 	void SetMesh(std::shared_ptr<Mesh>& pMesh) { mMesh = pMesh; }
 	void StartDrawing() { if (mMesh) mDrawable = true; }
 	void StopDrawing() { mDrawable = false; }
+	
 	// Public Functions
 public:
 
+	void OnMessage(std::shared_ptr<Message>& pMessage) override {};
+	
 	// Private Functions
 private:
 

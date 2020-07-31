@@ -5,7 +5,7 @@
 Window_DX::Window_DX(const UINT& pHeight, const UINT& pWidth, HINSTANCE pHInstance, int pNCmdShow)
 : Window(pHeight, pWidth), mHInstance(pHInstance), mNCmdShow(pNCmdShow){
 	
-	InitPlaformSpecific();
+	//InitPlaformSpecific();
 	
 }
 
@@ -37,14 +37,13 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 
 void Window_DX::Initialize(){
 
-	//InitPlaformSpecific();
-	mThreadID = ThreadManager::Instance()->AddThread(&Window_DX::Run, this);
+	InitPlaformSpecific();
 	
 	mRenderer = std::make_shared<DX_Renderer>(mHWindow, mHeight, mWidth);
 	mRenderer->InitRenderer();
 	
 	//ThreadManager::Instance()->AddThread(&Renderer::Run, mRenderer);
-	
+	//mThreadID = ThreadManager::Instance()->AddThread(&Window_DX::Run, this);
 }
 
 
@@ -71,7 +70,7 @@ void Window_DX::InitPlaformSpecific(HINSTANCE pHInstance, int pNCmdShow) {
 	//mHInstance = pHInstance;
 	RECT rc = { 0, 0, static_cast<LONG> (mWidth), static_cast<LONG> (mHeight) };
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
-	mHWindow = CreateWindow(L"TutorialWindowClass", L"Direct3D 11 Tutorial 4: 3D Spaces",
+	mHWindow = CreateWindow(L"TutorialWindowClass", L"GA&C Window",
 		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 		CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, pHInstance,
 		nullptr);
@@ -112,4 +111,21 @@ void Window_DX::InitPlaformSpecific(){
 	ShowWindow(mHWindow, mNCmdShow);
 
 	
+}
+
+void Window_DX::Run() {
+
+	Initialize();
+
+	MSG msg = { 0 };
+	while (WM_QUIT != msg.message) {
+
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+	}
+
 }
