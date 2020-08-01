@@ -7,7 +7,7 @@ class RenderComponent : public GameObjectComponent {
 	//Structors
 public:
 	RenderComponent(GameObjectPtr& pParent);
-	~RenderComponent();
+	~RenderComponent() = default;
 
 private:
 	RenderComponent(const RenderComponent&);

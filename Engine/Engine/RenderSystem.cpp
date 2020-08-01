@@ -2,21 +2,33 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 #include "ThreadManager.h"
-
+#include "Game.h"
 
 void RenderSystem::Process(){
 
 	for(const auto& object: mGameObjects){
-
-		auto renderComponent = std::reinterpret_pointer_cast<RenderComponent>(object->GetComponent(ComponentTypes::RENDER));
+		
+		const auto renderComponent = std::reinterpret_pointer_cast<RenderComponent>(object->GetComponent(ComponentTypes::RENDER));
 
 		if (!renderComponent->IsDrawable()) continue;
 		auto mesh = renderComponent->GetMesh();
-		auto pos = object->GetPos();
-		auto scale = object->GetScale();
+		const auto pos = object->GetPos();
+		const auto scale = object->GetScale();
 
 		mRenderer->Render(mesh, pos, scale);
 	}
+}
+
+void RenderSystem::Start(){
+
+	
+	while (Game::Instance()->GetQuitFlag()){
+
+		Process();
+		
+	}
+
+	
 }
 
 

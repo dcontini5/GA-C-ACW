@@ -15,7 +15,7 @@ private:
 
 	//Public Structors
 public:
-	CollisionSystem() = default;
+	CollisionSystem() :System(SystemTypes::COLLISION) {};
 	~CollisionSystem() = default;	
 	//Accessors
 

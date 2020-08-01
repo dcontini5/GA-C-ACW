@@ -6,10 +6,10 @@ class PyramidGame : public Game {
 
 	//Structors
 public:
-	PyramidGame();
+	PyramidGame() = default;
 	PyramidGame(const PyramidGame&);
 	PyramidGame(PyramidGame&&); //exchange members here;
-	~PyramidGame();
+	~PyramidGame() = default;
 
 	//Accessors
 public:
@@ -19,7 +19,7 @@ public:
 
 	// Public Functions
 public:
-
+	void Initialize();
 	// Private Functions
 private:
 

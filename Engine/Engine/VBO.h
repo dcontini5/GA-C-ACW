@@ -1,7 +1,14 @@
 ﻿#pragma once
 #include <string>
+#include <vector>
 
+#include "ResourceManager.h"
 #include "Renderer.h"
+
+
+typedef std::vector<SimpleVertex> Vertices;
+typedef std::vector<WORD> Indices;
+
 
 class VBO {
 
@@ -20,7 +27,7 @@ public:
 	
 	// Public Functions
 public:
-	virtual void Create(std::shared_ptr<Renderer>& pRenderer , const std::string& pMeshName) = 0;
+	virtual void Create(std::shared_ptr<Renderer>& pRenderer, const Vertices& pVertices, const Indices& pIndices) = 0;
 	virtual void Draw() = 0;
 	
 

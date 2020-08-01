@@ -17,10 +17,10 @@ class GameObject :std::enable_shared_from_this<GameObject>, public Subject {
 
 	//Structors
 public:
-	GameObject();
+	GameObject() = default;
 	GameObject(const GameObject&);
 	GameObject(GameObject&&); //exchange members here;
-	~GameObject();
+	~GameObject() = default;
 
 	//Accessors
 public:
@@ -64,7 +64,7 @@ private:
 	glm::vec3 mScale;
 	glm::vec3 mRotation;
 
-	bool mAlive;
+	bool mAlive = true;
 	ComponentMap mComponents;
 	
 };

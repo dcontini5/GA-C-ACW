@@ -9,9 +9,8 @@ private:
 
 	//Public Structors
 public:
+	PhysicsSystem() :System(SystemTypes::PHYSICS) {};
 	~PhysicsSystem() = default;
-	PhysicsSystem() = default;
-
 	
 	//Accessors
 

@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <string>
+#include "Mesh.h"
+#include "Renderer.h"
+
 ResourceManager* ResourceManager::mInstance = nullptr;
 
 
@@ -56,6 +59,26 @@ void ResourceManager::ParseMessage(std::string& pMessage){
 
 	
 }
+
+void ResourceManager::LoadMesh(const PrefabMeshes& pMeshType, std::shared_ptr<Renderer>& pRenderer){
+
+	const auto vertices = GenerateVertices();
+	const auto indices = GenerateIndices();
+	
+	auto newMesh = std::make_shared<Mesh>(vertices, indices);
+
+	newMesh->CreateVBO(pRenderer);
+	
+	if (mMeshes.find("Plane") != mMeshes.end()){
+
+		mMeshes["Plane"] = newMesh;
+		
+	}
+
+	
+}
+
+
 
 std::vector<WORD> ResourceManager::GenerateIndices(){
 	

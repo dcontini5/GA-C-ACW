@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\Engine;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Configuration)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -132,9 +132,11 @@
   <ItemGroup>
     <ClCompile Include="..\Engine\main.cpp" />
     <ClCompile Include="PyramidGame.cpp" />
+    <ClCompile Include="PyramidScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidGame.h" />
+    <ClInclude Include="PyramidScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

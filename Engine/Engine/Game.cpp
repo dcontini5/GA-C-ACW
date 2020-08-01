@@ -11,3 +11,11 @@ void Game::OnMessage(std::shared_ptr<Message>& pMessage){
 
 	
 }
+
+void Game::Initialize(std::shared_ptr<Renderer>& pRenderer){
+
+
+
+
+	
+}

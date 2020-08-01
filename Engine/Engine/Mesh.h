@@ -1,17 +1,19 @@
 ﻿#pragma once
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "VBO.h"
+
 
 class Mesh {
 
 	//Structors
 public:
-	Mesh();
+	Mesh(const Vertices& pVertices,const Indices& pIndices) : mVertices(pVertices), mIndices(pIndices){}
 	Mesh(const Mesh&);
 	Mesh(Mesh&&); //exchange members here;
-	~Mesh();
+	~Mesh() = default;
 
 	//Accessors
 public:
@@ -21,7 +23,7 @@ public:
 
 	// Public Functions
 public:
-	void CreateVBO(std::shared_ptr<Renderer>& pRenderer, const std::string& pMeshName);
+	void CreateVBO(std::shared_ptr<Renderer>& pRenderer);
 	// Private Functions
 private:
 
@@ -38,5 +40,7 @@ public:
 	//Data:
 private:
 	std::shared_ptr<VBO> mVBO = nullptr;
+	Vertices mVertices;
+	Indices mIndices;
 	
 };

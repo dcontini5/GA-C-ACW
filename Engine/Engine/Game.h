@@ -8,8 +8,8 @@ class Scene;
 class Game {
 
 	//Private Structors
-private:
-	Game(){  };
+protected:
+	Game() { mInstance = this; }
 
 	//Public Structors
 public:
@@ -18,19 +18,18 @@ public:
 
 	static Game* Instance(){
 
-		if (!mInstance){ mInstance = new Game(); }
-
 		return mInstance;
+		
 	}
 
 	//Accessors
 public:
-	bool GetQuitFlag() const { mQuitFlag; }
+	bool GetQuitFlag() const { return !mQuitFlag; }
 	
 	//Mutators
 public:
 
-	void SetQuitFlag(const bool& pQuitFlag) { mQuitFlag = pQuitFlag; }
+	void Quit(const bool& pQuitFlag) { mQuitFlag = true; }
 	void SetWindow(std::shared_ptr<Window>& pWindow) { mWindow = pWindow; }
 	void OnMessage(std::shared_ptr<Message>& pMessage);
 
@@ -39,11 +38,13 @@ public:
 	// Public Functions
 public:
 
+	void Initialize(std::shared_ptr<Renderer>& pRenderer);
+	
 	// Private Functions
 private:
 
 	//Data:
-private:
+protected:
 	
 	static Game* mInstance;
 	bool mQuitFlag = false;

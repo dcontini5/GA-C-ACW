@@ -3,17 +3,20 @@
 
 #include "Renderer.h"
 
+class Game;
+
 class Window {
 
 	//Structors
 public:
-	Window(const UINT& pHeight, const UINT& pWidth):mHeight(pHeight), mWidth(pWidth){}
+	Window(const UINT& pHeight, const UINT& pWidth, std::shared_ptr<Game>& pGame):mHeight(pHeight), mWidth(pWidth), mGame(pGame){}
 	Window(const Window&);
 	Window(Window&&); //exchange members here;
 	~Window() = default;
 
 	//Accessors
 public:
+	
 	std::shared_ptr<Renderer> GetRenderer() const { return mRenderer; }
 	
 	//Mutators
@@ -34,10 +37,12 @@ public:
 
 	//Data:
 protected:
+	
 	UINT mHeight = 0;
 	UINT mWidth = 0;
 
 	std::shared_ptr<Renderer> mRenderer = nullptr;
+	std::shared_ptr<Game> mGame = nullptr;
 
 	int mThreadID = -1;
 	

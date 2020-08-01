@@ -4,13 +4,13 @@
 #include "GameObject.h"
 #include "GameObjectComponent.h"
 #include "Scene.h"
-
+#include "SystemTypes.h"
 
 class System {
 
 	//Structors
 public:
-	System() = default;
+	System(SystemType& pType): mType(pType){}
 	System(const System&);
 	System(System&&); //exchange members here;
 	~System() = default;
@@ -18,6 +18,8 @@ public:
 	//Accessors
 public:
 
+	SystemType GetType() const { return mType; }
+	
 	//Mutators
 public:
 
@@ -46,5 +48,5 @@ public:
 protected:
 
 	GameObjects mGameObjects;
-	
+	SystemType mType;
 };

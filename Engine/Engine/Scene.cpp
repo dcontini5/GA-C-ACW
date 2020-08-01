@@ -1,10 +1,19 @@
 ﻿#include "Scene.h"
-#include "RenderSystem.h"
-#include "PhysicsSystem.h"
-#include "CollisionSystem.h"
+#include "System.h"
 #include "ThreadManager.h"
 #include "AddedComponentMessage.h"
+#include "RenderSystem.h"
 
+
+Scene::~Scene(){
+
+	for(auto threadID : mSystemThreadIDs){
+
+		ThreadManager::Instance()->TeminateThread(threadID.second);
+		
+	}
+	
+}
 
 void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 
@@ -25,23 +34,27 @@ void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 	
 }
 
-void Scene::Start(std::shared_ptr<Renderer>& pRenderer){
+void Scene::Start(){
 
-	
-	
-	//std::shared_ptr<RenderSystem> renderSystem = std::make_shared<RenderSystem>();
-	//renderSystem->SetRenderer(pRenderer);
-	//
-	//mSystems[RENDER] = std::make_shared<RenderSystem>();
-	//
-	//mCollisionSystem = std::shared_ptr<CollisionSystem>();
-	//
-	//mPhysicsSystem = std::shared_ptr<PhysicsSystem>();
-	//
-	//const auto threadManager = ThreadManager::Instance();
-	//
-	//mRenderSystemThreadID = threadManager->AddThread(&RenderSystem::Start, mRenderSystem);
-	//mCollisionSystemThreadID = threadManager->AddThread(&CollisionSystem::Start, mCollisionSystem);
-	//mPhysicsSystemThreadID = threadManager->AddThread(&PhysicsSystem::Start, mPhysicsSystem);
+	auto* const threadManager = ThreadManager::Instance();
+
+	for(const auto& system : mSystems){
+
+		const auto type = system.second->GetType();
+		
+		if (system.second->GetType() == SystemTypes::RENDER) {
+			
+			auto sys = std::reinterpret_pointer_cast<RenderSystem>(system.second);
+			mSystemThreadIDs[type] = threadManager->AddThread(&RenderSystem::Start, sys);
+			
+		}
+		
+	}
+
+}
+
+void Scene::AddSystem(std::shared_ptr<System>& pSystem){
+
+	if (mSystems.find(pSystem->GetType()) != mSystems.end()) mSystems[pSystem->GetType()] = pSystem;
 
 }

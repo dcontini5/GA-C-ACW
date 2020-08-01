@@ -7,18 +7,18 @@
 #include "Window.h"
 #include "Renderer_DX.h"
 
-class Window_DX final : protected Window {
+class Window_DX final : public Window {
 
 	//Structors
 public:
 	
-	Window_DX(const UINT& pHeight, const UINT& pWidth, HINSTANCE pHInstance, int pNCmdShow);
+	Window_DX(const UINT& pHeight, const UINT& pWidth, std::shared_ptr<Game>& pGame, HINSTANCE pHInstance, int pNCmdShow);
 	Window_DX(const Window_DX&);
 	Window_DX(Window_DX&&); //exchange members here;
-	~Window_DX();
+	~Window_DX() = default;
 
 private:
-	Window_DX(const UINT& pHeight, const UINT& pWidth) : Window(pHeight, pWidth){}
+	//Window_DX(const UINT& pHeight, const UINT& pWidth) : Window(pHeight, pWidth){}
 	
 	//Accessors
 public:

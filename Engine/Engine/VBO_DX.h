@@ -24,7 +24,7 @@ public:
 	// Public Functions
 public:
 
-	void Create(std::shared_ptr<Renderer>& pRenderer, const std::string& pMeshName) override;
+	void Create(std::shared_ptr<Renderer>& pRenderer, const Vertices& pVertices, const Indices& pIndices) override;
 	void Draw() override { return; }
 
 	void Set(Microsoft::WRL::ComPtr<ID3D11DeviceContext>& pD3D11ImmediateContext) {

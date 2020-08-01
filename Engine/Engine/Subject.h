@@ -15,10 +15,10 @@ class Subject {
 
 	//Structors
 public:
-	Subject();
+	Subject() = default;	
 	Subject(const Subject&);
 	Subject(Subject&&); //exchange members here;
-	~Subject();
+	~Subject() = default;
 
 	//Accessors
 public:

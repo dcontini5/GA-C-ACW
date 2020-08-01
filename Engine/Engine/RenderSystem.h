@@ -9,8 +9,8 @@ class RenderSystem : public System {
 
 	//Structors
 public:
-	~RenderSystem();
-	RenderSystem() = default;
+	~RenderSystem() = default;
+	RenderSystem() :System(SystemTypes::RENDER){}
 	RenderSystem(const RenderSystem&);
 	RenderSystem(RenderSystem&&); //exchange members here;
 
@@ -26,7 +26,7 @@ public:
 	// Public Functions
 public:
 	void Process() override;
-	void Start() override {};
+	void Start() override;
 	// Private Functions
 private:
 

@@ -1,9 +1,10 @@
 ﻿#include "Window_DX.h"
 #include "ThreadManager.h"
+#include "Game.h"
 
 
-Window_DX::Window_DX(const UINT& pHeight, const UINT& pWidth, HINSTANCE pHInstance, int pNCmdShow)
-: Window(pHeight, pWidth), mHInstance(pHInstance), mNCmdShow(pNCmdShow){
+Window_DX::Window_DX(const UINT& pHeight, const UINT& pWidth, std::shared_ptr<Game>& pGame, HINSTANCE pHInstance, int pNCmdShow)
+: Window(pHeight, pWidth, pGame), mHInstance(pHInstance), mNCmdShow(pNCmdShow){
 	
 	//InitPlaformSpecific();
 	
@@ -41,9 +42,9 @@ void Window_DX::Initialize(){
 	
 	mRenderer = std::make_shared<DX_Renderer>(mHWindow, mHeight, mWidth);
 	mRenderer->InitRenderer();
+
+
 	
-	//ThreadManager::Instance()->AddThread(&Renderer::Run, mRenderer);
-	//mThreadID = ThreadManager::Instance()->AddThread(&Window_DX::Run, this);
 }
 
 
@@ -117,6 +118,8 @@ void Window_DX::Run() {
 
 	Initialize();
 
+	mGame->Initialize(mRenderer);
+	
 	MSG msg = { 0 };
 	while (WM_QUIT != msg.message) {
 
