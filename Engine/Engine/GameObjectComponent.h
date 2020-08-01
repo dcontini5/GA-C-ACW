@@ -10,7 +10,6 @@ typedef std::shared_ptr<GameObject> GameObjectPtr;
 
 
 
-
 class GameObjectComponent : std::enable_shared_from_this<GameObjectComponent>, public Observer {
 
 	//Structors

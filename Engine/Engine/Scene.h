@@ -2,16 +2,18 @@
 #include <memory>
 #include <vector>
 #include "Message.h"
+#include "map"
 
 class GameObject;
 class CollisionSystem;
 class PhysicsSystem;
 class RenderSystem;
+class System;
 class Renderer;
 
 typedef std::shared_ptr<GameObject> GameObjectPtr;
 typedef std::vector<std::shared_ptr<GameObject>> GameObjects;
-
+typedef std::map<const int, std::shared_ptr<System>> SystemMap;
 
 class Scene {
 
@@ -49,9 +51,11 @@ public:
 private:
 
 	GameObjects mGameObjectList;
-	std::shared_ptr<CollisionSystem> mCollisionSystem	= nullptr;
-	std::shared_ptr<PhysicsSystem> mPhysicsSystem		= nullptr;
-	std::shared_ptr<RenderSystem> mRenderSystem			= nullptr;
+	SystemMap   mSystems;
+	
+	//std::shared_ptr<CollisionSystem> mCollisionSystem	= nullptr;
+	//std::shared_ptr<PhysicsSystem> mPhysicsSystem		= nullptr;
+	//std::shared_ptr<RenderSystem> mRenderSystem			= nullptr;
 
 	int mCollisionSystemThreadID = -1;
 	int mPhysicsSystemThreadID = -1;

@@ -13,7 +13,7 @@ typedef std::map <int, std::shared_ptr<GameObjectComponent>>::iterator Component
 typedef std::shared_ptr<GameObjectComponent> ComponentPtr;
 
 
-class GameObject : public Subject {
+class GameObject :std::enable_shared_from_this<GameObject>, public Subject {
 
 	//Structors
 public:

@@ -1,5 +1,7 @@
 ﻿#include "GameObject.h"
 #include "GameObjectComponent.h"
+#include "Game.h"
+#include "AddedComponentMessage.h"
 
 ComponentPtr GameObject::GetComponent(const int& pComponentName){
 
@@ -20,7 +22,9 @@ void GameObject::AddComponent(ComponentPtr& pComponent){
 		return;
 
 	mComponents[pComponent->GetType()] = pComponent;
-
+	auto imThis = shared_from_this();
+	std::shared_ptr<Message> msg = std::make_shared<AddedComponentMessage>(pComponent->GetType(), imThis);
+	Game::Instance()->OnMessage(msg);
 
 	
 }

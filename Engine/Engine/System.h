@@ -3,7 +3,7 @@
 #include <memory>
 #include "GameObject.h"
 #include "GameObjectComponent.h"
-
+#include "Scene.h"
 
 
 class System {
