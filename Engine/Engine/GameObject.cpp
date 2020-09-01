@@ -29,6 +29,20 @@ void GameObject::AddComponent(ComponentPtr& pComponent){
 	
 }
 
+void GameObject::AddComponent(GameObjectComponent* pComponent){
+
+
+	
+	if(mComponents.find(pComponent->GetType()) != mComponents.end())
+		return;
+
+	mComponents[pComponent->GetType()] = std::make_shared<GameObjectComponent>(*pComponent);
+	auto imThis = shared_from_this();
+	std::shared_ptr<Message> msg = std::make_shared<AddedComponentMessage>(pComponent->GetType(), imThis);
+	Game::Instance()->OnMessage(msg);
+	
+}
+
 void GameObject::RemoveComponent(const int& pType){
 
 	ComponentMapIterator it = mComponents.find(pType);

@@ -10,7 +10,7 @@ public:
 	InfinitePlaneCollisionComponent(GameObjectPtr& pParent): CollisionComponent(pParent, ColliderTypes::PLANE) {}
 	InfinitePlaneCollisionComponent(const InfinitePlaneCollisionComponent&);
 	InfinitePlaneCollisionComponent(InfinitePlaneCollisionComponent&&); //exchange members here;
-	~InfinitePlaneCollisionComponent();
+	~InfinitePlaneCollisionComponent() = default;
 
 	//Accessors
 public:
@@ -18,6 +18,8 @@ public:
 	//Mutators
 public:
 
+	void SetNormal(const glm::vec3& pNormal) { mNormal = pNormal; }
+	
 	// Public Functions
 public:
 

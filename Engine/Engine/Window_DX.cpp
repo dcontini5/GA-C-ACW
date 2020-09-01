@@ -6,9 +6,9 @@
 Window_DX::Window_DX(const UINT& pHeight, const UINT& pWidth, std::shared_ptr<Game>& pGame, HINSTANCE pHInstance, int pNCmdShow)
 : Window(pHeight, pWidth, pGame), mHInstance(pHInstance), mNCmdShow(pNCmdShow){
 	
-	//InitPlaformSpecific();
 	
 }
+
 
 LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -118,7 +118,9 @@ void Window_DX::Run() {
 
 	Initialize();
 
-	mGame->Initialize(mRenderer);
+	auto wind = shared_from_this();
+	
+	mGame->Initialize(wind);
 	
 	MSG msg = { 0 };
 	while (WM_QUIT != msg.message) {

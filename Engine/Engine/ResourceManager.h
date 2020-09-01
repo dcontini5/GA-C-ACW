@@ -59,6 +59,9 @@ public:
 	void ParseMessage(std::string&);
 
 	void LoadMesh(const PrefabMeshes& pMeshType, std::shared_ptr<Renderer>& pRenderer);
+	std::shared_ptr<Mesh> GetMesh(const std::string& pName);
+	void CreateSphereGeometry(std::vector<SimpleVertex>& vertices, std::vector<WORD>& indices, const int& sectorCount,
+		const int& stackCount);
 	
 	std::vector<WORD> GenerateIndices();
 	std::vector<SimpleVertex> GenerateVertices();

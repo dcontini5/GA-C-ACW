@@ -1,15 +1,16 @@
 ﻿#pragma once
 #include "ListenSocket.h"
 #include "TransferSocket.h"
+#include "NetworkingSystem.h"
 
 #include <vector>
 
 
-class Server {
+class Server :public NetworkingSystem{
 
 	//Structors
 public:
-	Server() {}
+	Server();
 	Server(const Server&);
 	Server(Server&&); //exchange members here;
 	~Server() = default;
@@ -22,7 +23,7 @@ public:
 
 	// Public Functions
 public:
-	void Init();
+	void Init() override;
 	void Start();
 	void Listen();
 	void Send();

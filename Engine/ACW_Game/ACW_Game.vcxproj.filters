@@ -6,16 +6,23 @@
     <ClCompile Include="PyramidScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="PyramidClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidGame.h" />
     <ClInclude Include="PyramidScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="PyramidClient.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
       <UniqueIdentifier>{4281f7b4-730b-4c44-85b5-b9442e54f926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{ea33f0b8-d52f-47f7-b4e2-7a1d79f16d81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

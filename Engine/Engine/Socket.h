@@ -26,8 +26,12 @@ protected:
 	//Accessors
 public:
 
+	SOCKET GetSocket() const { return mSocket; }
+	
 	//Mutators
 public:
+
+	void SetSocket(SOCKET& pSocket) { mSocket = pSocket; }
 
 	// Public Functions
 public:

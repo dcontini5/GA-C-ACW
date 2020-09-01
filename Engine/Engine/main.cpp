@@ -21,8 +21,9 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	;
 	std::shared_ptr<Game> game = std::make_shared<PyramidGame>();
+
+	//PyramidGame game;
 	
 	std::shared_ptr<Window_DX> window = std::make_shared<Window_DX>(600, 800, game, hInstance, nCmdShow);
 	

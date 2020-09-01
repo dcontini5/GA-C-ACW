@@ -1,6 +1,8 @@
 ﻿#include "Server.h"
 #include "ThreadManager.h"
 
+Server::Server(): NetworkingSystem({}){}
+
 void Server::Init() {
 
 	mListenSocket.Init(2, 2);

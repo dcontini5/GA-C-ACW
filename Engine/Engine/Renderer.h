@@ -28,6 +28,8 @@ public:
 	virtual void Cleanup() = 0;
 	virtual void Run() = 0;
 	virtual void StopRunning() = 0;
+	virtual void ClearScreen() = 0;
+	virtual void Present() = 0;
 	
 	// Private Functions
 private:

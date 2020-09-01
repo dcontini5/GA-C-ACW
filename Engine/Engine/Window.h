@@ -5,7 +5,7 @@
 
 class Game;
 
-class Window {
+class Window : public std::enable_shared_from_this<Window> {
 
 	//Structors
 public:

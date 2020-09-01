@@ -2,6 +2,10 @@
 #include <thread>
 #include <vector>
 #include <map>
+#include <mutex>
+#include <shared_mutex>
+
+
 
 typedef std::map<uint32_t, std::thread> ThreadMap;
 
@@ -22,12 +26,13 @@ public:
 
 		if (!mInstance){ mInstance = new ThreadManager(); }
 
+		
 		return mInstance;
 	}
 
 	//Accessors
 public:
-
+	std::shared_mutex& GetMutex() const { return mMutex; }
 	//Mutators
 public:
 
@@ -65,6 +70,8 @@ private:
 	static ThreadManager* mInstance;
 	static int mID;
 	ThreadMap mThreads;
+
+	mutable std::shared_mutex mMutex;
 	
 };
 

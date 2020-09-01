@@ -15,13 +15,14 @@ public:
 	//Accessors
 public:
 
+	
 	//Mutators
 public:
 
+	
 	// Public Functions
 public:
 		
-	void SetSocket(SOCKET& pSocket) { mSocket = pSocket; }
 	void Connect(const Peer& pPeer) const;
 	void Send();
 	void Receive();

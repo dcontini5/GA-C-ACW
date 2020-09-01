@@ -13,7 +13,7 @@ public:
 	System(SystemType& pType): mType(pType){}
 	System(const System&);
 	System(System&&); //exchange members here;
-	~System() = default;
+	virtual ~System() = default;
 
 	//Accessors
 public:

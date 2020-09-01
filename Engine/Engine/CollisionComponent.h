@@ -18,7 +18,7 @@ public:
 	CollisionComponent(GameObjectPtr& pParent, ColliderType& pCollider): GameObjectComponent(pParent, ComponentTypes::COLLISION), mCollider(pCollider){}
 	CollisionComponent(const CollisionComponent&);
 	CollisionComponent(CollisionComponent&&); //exchange members here;
-	~CollisionComponent();
+	~CollisionComponent() = default;
 
 	//Accessors
 public:

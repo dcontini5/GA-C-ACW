@@ -19,7 +19,7 @@ public:
 
 	// Public Functions
 public:
-	void Initialize();
+	void Initialize(std::shared_ptr<Window>& pWindow) override;
 	// Private Functions
 private:
 

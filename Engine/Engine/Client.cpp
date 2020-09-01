@@ -6,17 +6,18 @@ void Client::Init(){
 
 	mTransferSocket.Init(2, 2);
 	mTransferSocket.Create();
+	
+}
+
+void Client::Connect(){
+
+
 	mTransferSocket.Connect(mPeer);
+
 	
 }
 
 
-void Client::Start() {
-
-	mReceiveThreadID =  ThreadManager::Instance()->AddThread(&TransferSocket::Receive, mTransferSocket);
-	mSendThreadID =  ThreadManager::Instance()->AddThread(&TransferSocket::Send, mTransferSocket);
-
-}
 
 //void Client::Echo(const std::string& pMessage){
 //

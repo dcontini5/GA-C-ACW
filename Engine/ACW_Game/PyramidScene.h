@@ -18,8 +18,8 @@ public:
 
 	// Public Functions
 public:
-	
-	void Start(std::shared_ptr<Renderer>& pRenderer);
+
+	virtual void Start();
 	
 	// Private Functions
 private:

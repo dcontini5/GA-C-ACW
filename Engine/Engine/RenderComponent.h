@@ -20,7 +20,9 @@ public:
 	
 	//Mutators
 public:
-	void SetMesh(std::shared_ptr<Mesh>& pMesh) { mMesh = pMesh; }
+	void SetMesh(std::shared_ptr<Mesh>& pMesh){
+		mMesh = pMesh;
+	}
 	void StartDrawing() { if (mMesh) mDrawable = true; }
 	void StopDrawing() { mDrawable = false; }
 	

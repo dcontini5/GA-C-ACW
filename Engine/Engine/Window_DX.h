@@ -7,7 +7,7 @@
 #include "Window.h"
 #include "Renderer_DX.h"
 
-class Window_DX final : public Window {
+class Window_DX final : /*std::enable_shared_from_this<Window_DX>,*/ public Window  {
 
 	//Structors
 public:

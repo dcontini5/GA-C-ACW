@@ -7,9 +7,9 @@ class Observer {
 	//Structors
 public:
 	Observer() = default;
-	Observer(const Observer&);
+	Observer(const Observer&) = default;
 	Observer(Observer&&); //exchange members here;
-	~Observer() = default;
+	virtual ~Observer() = default;
 
 	//Accessors
 public:

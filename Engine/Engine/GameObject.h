@@ -13,7 +13,7 @@ typedef std::map <int, std::shared_ptr<GameObjectComponent>>::iterator Component
 typedef std::shared_ptr<GameObjectComponent> ComponentPtr;
 
 
-class GameObject :std::enable_shared_from_this<GameObject>, public Subject {
+class GameObject : public std::enable_shared_from_this<GameObject>, public Subject {
 
 	//Structors
 public:
@@ -40,6 +40,7 @@ public:
 public:
 
 	void AddComponent(ComponentPtr& pComponent);
+	void AddComponent(GameObjectComponent* pComponent);
 	void RemoveComponent(ComponentType& pType);
 	void RemoveComponent(ComponentPtr& pComponent);
 	

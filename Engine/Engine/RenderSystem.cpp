@@ -6,6 +6,8 @@
 
 void RenderSystem::Process(){
 
+	mRenderer->ClearScreen();
+	
 	for(const auto& object: mGameObjects){
 		
 		const auto renderComponent = std::reinterpret_pointer_cast<RenderComponent>(object->GetComponent(ComponentTypes::RENDER));
@@ -17,6 +19,9 @@ void RenderSystem::Process(){
 
 		mRenderer->Render(mesh, pos, scale);
 	}
+
+	mRenderer->Present();
+	
 }
 
 void RenderSystem::Start(){

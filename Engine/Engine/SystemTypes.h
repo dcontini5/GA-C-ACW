@@ -7,5 +7,6 @@ struct SystemTypes {
 	static SystemType PHYSICS = 1;
 	static SystemType RENDER = 2;
 	static SystemType COLLISION = 3;
-
+	static SystemType NETWORKING = 4;
+	
 };

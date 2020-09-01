@@ -5,10 +5,10 @@ class SphereCollisionComponent : public CollisionComponent {
 
 	//Structors
 public:
-	SphereCollisionComponent();
+	SphereCollisionComponent(GameObjectPtr& pParent);
 	SphereCollisionComponent(const SphereCollisionComponent&);
 	SphereCollisionComponent(SphereCollisionComponent&&); //exchange members here;
-	~SphereCollisionComponent();
+	~SphereCollisionComponent() = default;
 
 	//Accessors
 public:

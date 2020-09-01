@@ -34,7 +34,7 @@ public:
 	// Public Functions
 public:
 	void OnMessage(std::shared_ptr<Message>& pMessage);
-	void Start();
+	virtual void Start();
 	void AddSystem(std::shared_ptr<System>& pSystem);
 	// Private Functions
 private:

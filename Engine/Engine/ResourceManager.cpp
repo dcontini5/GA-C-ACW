@@ -5,6 +5,8 @@
 #include <string>
 #include "Mesh.h"
 #include "Renderer.h"
+//#include <glm.hpp>
+
 
 ResourceManager* ResourceManager::mInstance = nullptr;
 
@@ -62,44 +64,66 @@ void ResourceManager::ParseMessage(std::string& pMessage){
 
 void ResourceManager::LoadMesh(const PrefabMeshes& pMeshType, std::shared_ptr<Renderer>& pRenderer){
 
-	const auto vertices = GenerateVertices();
-	const auto indices = GenerateIndices();
-	
-	auto newMesh = std::make_shared<Mesh>(vertices, indices);
 
-	newMesh->CreateVBO(pRenderer);
-	
-	if (mMeshes.find("Plane") != mMeshes.end()){
+	if(pMeshType == PLANE){
 
-		mMeshes["Plane"] = newMesh;
+		const auto vertices = GenerateVertices();
+		const auto indices = GenerateIndices();
+
+		
+		auto newMesh = std::make_shared<Mesh>(vertices, indices);
+
+		newMesh->CreateVBO(pRenderer);
+
+		if (mMeshes.find("Plane") == mMeshes.end()) {
+
+			mMeshes["Plane"] = newMesh;
+
+		}
+
+		
+	}else{
+
+		Vertices vertices;
+		Indices indices;
+		
+		CreateSphereGeometry(vertices, indices, 10, 10);
+
+		auto newMesh = std::make_shared<Mesh>(vertices, indices);
+
+		newMesh->CreateVBO(pRenderer);
+
+		if (mMeshes.find("Sphere") == mMeshes.end()) {
+
+			mMeshes["Sphere"] = newMesh;
+
+		}
+
 		
 	}
 
 	
 }
 
+std::shared_ptr<Mesh> ResourceManager::GetMesh(const std::string& pName){
+
+	if(mMeshes.find(pName) != mMeshes.end()){
+
+		return mMeshes[pName];
+		
+	}
+
+	return nullptr;
+	
+}
 
 
 std::vector<WORD> ResourceManager::GenerateIndices(){
 	
 	std::vector<WORD> indices = {
+		
 		0, 1, 2, // -x
 		2, 3, 0,
-
-		//4,5,6, // +x
-		//5,7,6,
-		//
-		//0,1,5, // -y
-		//0,5,4,
-		//
-		//2,6,7, // +y
-		//2,7,3,
-		//
-		//0,4,6, // -z
-		//0,6,2,
-		//
-		//1, 3, 7, // +z
-		//1, 7, 5,
 
 	};
 
@@ -111,38 +135,114 @@ std::vector<WORD> ResourceManager::GenerateIndices(){
 std::vector<SimpleVertex> ResourceManager::GenerateVertices(){
 
 	std::vector<SimpleVertex> vertices;
-	
-	vertices.push_back({DirectX::XMFLOAT3(-1.0f, 1.0f, 0.0f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 0.0f) });
-	vertices.push_back({DirectX::XMFLOAT3(1.0f, 1.0f, 0.0f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 0.0f) });
-	vertices.push_back({DirectX::XMFLOAT3(1.0f, -1.0f, 0.0f), DirectX::XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 1.0f) });
-	vertices.push_back({DirectX::XMFLOAT3(-1.0f, -1.0f, 0.0f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 1.0f) });
 
-	//vertices.push_back({ XMFLOAT3(-1.0f, -1.0f, 0.0f), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f, 0.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f, 0.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(1.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f), XMFLOAT2(0.0f, 1.0f) });
-	//
-	//vertices.push_back({ XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 0.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, 1.0f, -1.0f), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f) });
-	//
-	//vertices.push_back({ XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(1.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(0.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(0.0f, 0.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, 1.0f, 1.0f), XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT2(1.0f, 0.0f) });
-	//
-	//vertices.push_back({ XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(1.0f, 0.0f) });
-	//vertices.push_back({ XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f), XMFLOAT2(0.0f, 0.0f) });
-	//
-	//vertices.push_back({ XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT4(1.0f, 0.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(1.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, -1.0f, -1.0f), XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(0.0f, 1.0f) });
-	//vertices.push_back({ XMFLOAT3(1.0f, -1.0f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(0.0f, 0.0f) });
-	//vertices.push_back({ XMFLOAT3(-1.0f, -1.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f), XMFLOAT2(1.0f, 0.0f) });
+	auto inf = 10000;
+	
+	
+	//vertices.push_back({DirectX::XMFLOAT3(-1.0f,  0.0f, 1.0f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 0.0f) });
+	//vertices.push_back({DirectX::XMFLOAT3(1.0f,  0.0f, 1.0f),  DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 0.0f) });
+	//vertices.push_back({DirectX::XMFLOAT3(1.0f, 0.0f, -1.0f),  DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 0.0f) });
+	//vertices.push_back({DirectX::XMFLOAT3(-1.0f, 0.0f, -1.0f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 0.0f) });
+
+	vertices.push_back({ DirectX::XMFLOAT3(-inf,  0.0f, inf), DirectX::XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 1.0f) });
+	vertices.push_back({ DirectX::XMFLOAT3(inf,  0.0f, inf), DirectX::XMFLOAT4(0.0f, 1.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(0.0f, 1.0f) });
+	vertices.push_back({ DirectX::XMFLOAT3(inf, 0.0f, -inf), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 1.0f) });
+	vertices.push_back({ DirectX::XMFLOAT3(-inf, 0.0f, -inf), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 1.0f) });
 
 	return vertices;
 	
 }
 
+
+// Code taken from http://www.songho.ca/opengl/gl_sphere.html
+void ResourceManager::CreateSphereGeometry(std::vector<SimpleVertex>& vertices, std::vector<WORD>& indices, const  int& pSectorCount = 10, const int& pStackCount = 10 ) {
+
+	auto radius = 1.0f;
+	const auto sectorCount = pSectorCount;
+	const auto stackCount = pStackCount;
+
+	auto const pi = DirectX::XM_PI;
+
+	
+	
+	float x, y, z, xy;                              // vertex position
+	float nx, ny, nz, lengthInv = 1.0f / radius;    // vertex normal
+	float s, t;                                     // vertex texCoord
+
+	float sectorStep = 2 * pi / sectorCount;
+	float stackStep = pi / stackCount;
+	float sectorAngle, stackAngle;
+
+	for (int i = 0; i <= stackCount; ++i)
+	{
+
+	
+		stackAngle = pi / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+		xy = radius * cosf(stackAngle);             // r * cos(u)
+		z = radius * sinf(stackAngle);              // r * sin(u)
+
+		// add (sectorCount+1) vertices per stack
+		// the first and last vertices have same position and normal, but different tex coords
+		for (int j = 0; j <= sectorCount; ++j)
+		{
+
+
+			SimpleVertex vertex{};
+			
+			sectorAngle = j * sectorStep;           // starting from 0 to 2pi
+
+			// vertex position (x, y, z)
+			x = xy * cosf(sectorAngle);             // r * cos(u) * cos(v)
+			y = xy * sinf(sectorAngle);             // r * cos(u) * sin(v)
+			vertex.pos = { x, y ,z };
+
+
+			// normalized vertex normal (nx, ny, nz)
+			nx = x * lengthInv;
+			ny = y * lengthInv;
+			nz = z * lengthInv;
+
+			vertex.normal = { nx, ny, nz };
+			
+
+			// vertex tex coord (s, t) range between [0, 1]
+			s = (float)j / sectorCount;
+			t = (float)i / stackCount;
+
+			vertex.texCoord = { s, t };
+			
+			vertex.color = { 1.0,1.0,1.0,1.0 };
+			
+			vertices.push_back(vertex);
+
+		}
+	}
+
+	int k1, k2;
+	for (int i = 0; i < stackCount; ++i)
+	{
+		k1 = i * (sectorCount + 1);     // beginning of current stack
+		k2 = k1 + sectorCount + 1;      // beginning of next stack
+
+		for (int j = 0; j < sectorCount; ++j, ++k1, ++k2)
+		{
+			// 2 triangles per sector excluding first and last stacks
+			// k1 => k2 => k1+1
+			if (i != 0)
+			{
+				indices.push_back(k1);
+				indices.push_back(k2);
+				indices.push_back(k1 + 1);
+			}
+
+			// k1+1 => k2 => k2+1
+			if (i != (stackCount - 1))
+			{
+				indices.push_back(k1 + 1);
+				indices.push_back(k2);
+				indices.push_back(k2 + 1);
+			}
+		}
+	}
+
+}

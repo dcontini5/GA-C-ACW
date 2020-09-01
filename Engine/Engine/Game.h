@@ -25,7 +25,7 @@ public:
 	//Accessors
 public:
 	bool GetQuitFlag() const { return !mQuitFlag; }
-	
+	std::shared_ptr<Window> GetWindow() const { return mWindow; }
 	//Mutators
 public:
 
@@ -38,7 +38,7 @@ public:
 	// Public Functions
 public:
 
-	void Initialize(std::shared_ptr<Renderer>& pRenderer);
+	virtual void Initialize(std::shared_ptr<Window>& pWindow);
 	
 	// Private Functions
 private:

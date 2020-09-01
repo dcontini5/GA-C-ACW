@@ -130,6 +130,12 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Pattern Classes</Filter>
     </ClCompile>
+    <ClCompile Include="NetworkComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkingSystem.cpp">
+      <Filter>Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -242,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Pattern Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkingSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

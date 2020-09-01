@@ -8,7 +8,7 @@ class PhysicsComponent : public GameObjectComponent {
 public:
 	
 	PhysicsComponent(GameObjectPtr& pParent);
-	~PhysicsComponent();
+	~PhysicsComponent() = default;
 
 private:
 	

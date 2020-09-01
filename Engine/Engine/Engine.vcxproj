@@ -169,6 +169,8 @@
     <ClCompile Include="ListenSocket.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Message.cpp" />
+    <ClCompile Include="NetworkComponent.cpp" />
+    <ClCompile Include="NetworkingSystem.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Peer.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
@@ -206,6 +208,8 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="MessageTypes.h" />
+    <ClInclude Include="NetworkComponent.h" />
+    <ClInclude Include="NetworkingSystem.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Peer.h" />
     <ClInclude Include="PhysicsComponent.h" />

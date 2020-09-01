@@ -10,12 +10,12 @@ typedef std::shared_ptr<GameObject> GameObjectPtr;
 
 
 
-class GameObjectComponent : std::enable_shared_from_this<GameObjectComponent>, public Observer {
+class GameObjectComponent : public std::enable_shared_from_this<GameObjectComponent>, public Observer {
 
 	//Structors
 public:
 	GameObjectComponent(GameObjectPtr& pParent, ComponentType& pType);
-	GameObjectComponent(const GameObjectComponent&);
+	GameObjectComponent(const GameObjectComponent&) = default;
 	GameObjectComponent(GameObjectComponent&&); //exchange members here;
 	~GameObjectComponent() = default;
 
@@ -28,7 +28,8 @@ public:
 
 	// Public Functions
 public:
-	
+
+	void OnMessage(std::shared_ptr<Message>& pMessage) override {};
 	// Private Functions
 private:
 

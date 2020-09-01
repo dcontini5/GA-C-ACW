@@ -29,13 +29,13 @@ private:
 
 	//Operators
 public:
-	Mesh& operator=(const Mesh& pOther){ return *this = Mesh(pOther); }
+	//Mesh& operator=(const Mesh& pOther){ return *this = Mesh(pOther); }
 
-	Mesh& operator=(const Mesh&& pOther){
-
-		/*Swap Members Here*/
-		return *this;
-	}
+	//Mesh& operator=(const Mesh&& pOther){
+	//
+	//	/*Swap Members Here*/
+	//	return *this;
+	//}
 
 	//Data:
 private:

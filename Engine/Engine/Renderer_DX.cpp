@@ -19,6 +19,23 @@ void DX_Renderer::Cleanup(){
 
 }
 
+void DX_Renderer::ClearScreen(){
+
+	//
+	// Clear the back buffer
+	//
+	mD3D11ImmediateContext->ClearRenderTargetView(mD3D11RenderTargetView.Get(), DirectX::Colors::LightBlue);
+	mD3D11ImmediateContext->ClearDepthStencilView(mD3D11DepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+	
+	
+}
+
+void DX_Renderer::Present(){
+
+	mDXGISwapChain->Present(0, 0);
+	
+}
+
 void DX_Renderer::CreateDevice(){
 
 
@@ -306,7 +323,7 @@ void DX_Renderer::CreateMVPM(){
 	// Initialize the view matrix
 	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 0.0f, 3.0f, 0.0f);
 	DirectX::XMVECTOR At = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-	DirectX::XMVECTOR Up = DirectX::XMVectorSet(-1.0f, 0.0f, 0.0f, 0.0f);
+	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	mView = DirectX::XMMatrixLookAtLH(Eye, At, Up);
 
 	// Initialize the projection matrix
@@ -366,27 +383,6 @@ HRESULT DX_Renderer::CompileShaderFromFile(const LPCWSTR& pFileName, const LPCST
 }
 
 void DX_Renderer::Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const glm::vec3 pScale){
-	
-	// Update our time
-	static float t = 0.0f;
-	if (mDriverType == D3D_DRIVER_TYPE_REFERENCE)
-	{
-		t += (float)DirectX::XM_PI * 0.0125f;
-	}
-	else
-	{
-		static ULONGLONG timeStart = 0;
-		ULONGLONG timeCur = GetTickCount64();
-		if (timeStart == 0)
-			timeStart = timeCur;
-		t = (timeCur - timeStart) / 1000.0f;
-	}
-
-	//
-	// Clear the back buffer
-	//
-	mD3D11ImmediateContext->ClearRenderTargetView(mD3D11RenderTargetView.Get(), DirectX::Colors::LightBlue);
-	mD3D11ImmediateContext->ClearDepthStencilView(mD3D11DepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 	//
 	// Update variables
@@ -400,8 +396,8 @@ void DX_Renderer::Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const
 	cb.mWorld = DirectX::XMMatrixTranspose(world);
 	cb.mView = DirectX::XMMatrixTranspose(mView);
 	cb.mProjection = DirectX::XMMatrixTranspose(mProjection);
-	cb.time = t;
-	cb.lightPos = DirectX::XMVectorSet(-2.0f, 2.0f, -2.0f, 0.0f);
+	cb.time = 0;
+	cb.lightPos = DirectX::XMVectorSet(0.0f, 2.0f, 0.0f, 0.0f);
 	cb.Eye = DirectX::XMVectorSet(0.0f, 0.0f, 3.0f, 0.0f);
 	mD3D11ImmediateContext->UpdateSubresource(mD3D11ConstantBuffer.Get(), 0, nullptr, &cb, 0, 0);
 
@@ -419,5 +415,5 @@ void DX_Renderer::Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const
 	mD3D11ImmediateContext->DrawIndexed(vbo->GetNumberOfIndices(), 0, 0);
 
 
-	mDXGISwapChain->Present(0, 0);
+	
 }

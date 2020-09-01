@@ -1,11 +1,14 @@
 ﻿#pragma once
-#include "TransferSocket.h"
+#include <string>
 
-class Client {
+#include "NetworkingSystem.h"
+
+
+class Client : public NetworkingSystem{
 
 	//Structors
 public:
-	Client() : mPeer("127.0.0.1"), mSendThreadID(-1), mReceiveThreadID(-1) {}
+	Client() :NetworkingSystem({"127.0.0.1"}){}
 	Client(const Client&);
 	Client(Client&&); //exchange members here;
 	~Client() = default;
@@ -18,15 +21,19 @@ public:
 
 	// Public Functions
 public:
-	void Init();
+	
+	void Init() override;
+	void Connect();
 	void Start();
 	void Echo(const std::string& pMessage);
+
+	
 	// Private Functions
 private:
 
 	//Operators
 public:
-	Client& operator=(const Client& pOther){ return *this = Client(pOther); }
+	Client& operator=(const Client& pOther) = delete;
 
 	Client& operator=(const Client&& pOther){
 
@@ -34,12 +41,10 @@ public:
 		return *this;
 	}
 
+	
 	//Data:
 private:
 
-	TransferSocket	mTransferSocket;
-	Peer			mPeer;
-	int				mSendThreadID;
-	int				mReceiveThreadID;
+
 	
 };

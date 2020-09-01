@@ -55,6 +55,8 @@ public:
 	void Cleanup() override;
 	void StopRunning() override { mRun = false; }
 	void Run() override {};
+	void ClearScreen() override;
+	void Present() override;
 	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() const { return mD3D11Device; }
 
 
