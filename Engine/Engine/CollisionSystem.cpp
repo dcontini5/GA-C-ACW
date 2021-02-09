@@ -62,7 +62,7 @@ bool CollisionSystem::CheckCollision(ComponentPtr& pCollider, ComponentPtr& pCol
 
 bool CollisionSystem::CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCollisionPtr& pCollidee){
 
-	const auto dist =abs( pCollider->GetParent()->GetPos() - pCollidee->GetParent()->GetPos() );
+	const auto dist = abs( pCollider->GetParent()->GetPos() - pCollidee->GetParent()->GetPos() );
 
 	const auto distLenght = glm::dot(dist, dist);
 
