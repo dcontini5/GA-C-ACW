@@ -45,7 +45,7 @@ void Subject::BroadcastMessage(std::shared_ptr<Message>& pMessage){
 
 	if(it != mListeners.end()){
 
-		for(auto observer : it->second){
+		for(const auto& observer : it->second){
 
 			observer->OnMessage(pMessage);
 			

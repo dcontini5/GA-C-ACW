@@ -2,7 +2,8 @@
 #include "ThreadManager.h"
 ThreadManager* ThreadManager::mInstance = nullptr;
 int ThreadManager::mID = 0;
-
+bool ThreadManager::mPhysicsDone = false;
+//bool ThreadManager::mCollisionDone = true;
 
 ThreadManager::~ThreadManager(){
 

@@ -1,12 +1,29 @@
 ﻿#include "PhysicsSystem.h"
+
+#include "Game.h"
 #include "PhysicsComponent.h"
+#include "ThreadManager.h"
 
 void PhysicsSystem::Process(){
 
-	const auto now = std::chrono::steady_clock::now();
-	const auto dt = std::chrono::duration<float>(now - mLastTime).count();
+	{
+		
+		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+		ThreadManager::Instance()->GetConditionVariable().wait(lk, []{
+			return !ThreadManager::Instance()->IsPhysicsDone();
+		});
+	
+	}
+	
+	
+	const std::chrono::duration<float> lag = std::chrono::high_resolution_clock::now() - mLastTime;
+	
+	if (lag < mTimeStep) std::this_thread::sleep_for(mTimeStep - lag);
+	
+	const auto now = std::chrono::high_resolution_clock::now();
+	const std::chrono::duration<float> dt = now - mLastTime;
 	mLastTime = now;
-
+		
 	for(auto& obj : mGameObjects){
 				
 		
@@ -16,22 +33,30 @@ void PhysicsSystem::Process(){
 		
 		const auto pos = obj->GetPos();
 
-		const auto newVel = physComp->GetVelocity() * physComp->GetDrag();
+		const auto newVel = physComp->GetVelocity() + mGravity * physComp->GetMass() * 0.1f;
 
 		physComp->SetVelocity(newVel);
 		
-		const auto newPos =  pos + (newVel + mGravity) * dt;
+		const auto newPos =  pos + (newVel) * dt.count();
 
 		obj->SetPos(newPos);
 		
 	}
 	
+	ThreadManager::Instance()->SetPhysicsDone(true);
+	ThreadManager::Instance()->GetConditionVariable().notify_one();
 	
 }
 
 void PhysicsSystem::Start(){
 
 	mLastTime = std::chrono::steady_clock::now();
+
+	while (Game::Instance()->GetQuitFlag()){
+
+		Process();
+		
+	}
 
 	
 }

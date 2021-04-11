@@ -1,13 +1,26 @@
 ﻿#include "CollisionSystem.h"
+
+#include "Game.h"
 #include "Message.h"
 #include "SphereCollisionComponent.h"
 #include "InfinitePlaneCollisionComponent.h"
 #include "PhysicsComponent.h"
+#include "ThreadManager.h"
 
 
 void CollisionSystem::Process(){
 
-	for(size_t i = 0; i <= mGameObjects.size(); i++){
+		
+	{
+		//auto mutex = ThreadManager::Instance()->GetMutex();
+		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+		ThreadManager::Instance()->GetConditionVariable().wait(lk, []{
+			return ThreadManager::Instance()->IsPhysicsDone();
+		});
+		
+	}
+	
+	for(auto i = 0; i <= mGameObjects.size() - 1; i++){
 
 		auto collider = mGameObjects[i]->GetComponent(ComponentTypes::COLLISION);
 		
@@ -19,6 +32,7 @@ void CollisionSystem::Process(){
 			if(CheckCollision(collider, collidee)){
 
 				//CollisionResponse()
+				CollisionResponse(collider, collidee);
 				
 				auto msg = std::make_shared<Message>(MessageTypes::COLLISION);
 				collider->GetParent()->BroadcastMessage(msg);
@@ -30,34 +44,55 @@ void CollisionSystem::Process(){
 
 	}
 
+	ThreadManager::Instance()->SetPhysicsDone(false);
+	ThreadManager::Instance()->GetConditionVariable().notify_one();
+	
 }
 
 
-void CollisionSystem::Start(){}
+void CollisionSystem::Start(){
+
+	while(Game::Instance()->GetQuitFlag()){
+
+		Process();
+		
+	}
+	
+}
 
 
 
 bool CollisionSystem::CheckCollision(ComponentPtr& pCollider, ComponentPtr& pCollidee){
 
-	const std::shared_ptr<CollisionComponent> collider = std::dynamic_pointer_cast<CollisionComponent>(pCollider);
-	const std::shared_ptr<CollisionComponent> collidee = std::dynamic_pointer_cast<CollisionComponent>(pCollidee);
+	std::shared_ptr<CollisionComponent> collider = std::dynamic_pointer_cast<CollisionComponent>(pCollider);
+	std::shared_ptr<CollisionComponent> collidee = std::dynamic_pointer_cast<CollisionComponent>(pCollidee);
 
 
 	
 	if (collider->GetColliderType() == collidee->GetColliderType()) {
 		
-		auto sphereCollider = std::dynamic_pointer_cast<SphereCollisionComponent>(collider);
-		auto sphereCollidee = std::dynamic_pointer_cast<SphereCollisionComponent>(collidee);
+		auto sphereCollider = std::static_pointer_cast<SphereCollisionComponent>(collider);
+		auto sphereCollidee = std::static_pointer_cast<SphereCollisionComponent>(collidee);
 		
 		return (CheckSphereSphere(sphereCollider, sphereCollidee));
 		
 	}
 
-	auto planeCollider = std::dynamic_pointer_cast<InfinitePlaneCollisionComponent>(collider);
-	auto sphereCollidee = std::dynamic_pointer_cast<SphereCollisionComponent>(collidee);
+	std::shared_ptr<InfinitePlaneCollisionComponent> planeCollider = nullptr;
+	std::shared_ptr<SphereCollisionComponent> sphereCollidee = nullptr;
 	
+	if(collider->GetColliderType() == ColliderTypes::PLANE){
+		planeCollider = std::static_pointer_cast<InfinitePlaneCollisionComponent>(collider);
+		sphereCollidee = std::static_pointer_cast<SphereCollisionComponent>(collidee);
+		
+	}else{
+
+		planeCollider = std::static_pointer_cast<InfinitePlaneCollisionComponent>(collidee);
+		sphereCollidee = std::static_pointer_cast<SphereCollisionComponent>(collider);
+				
+	}
+		
 	return CheckPlaneSphere(planeCollider, sphereCollidee);
-	
 }
 
 bool CollisionSystem::CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCollisionPtr& pCollidee){
@@ -68,7 +103,7 @@ bool CollisionSystem::CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCol
 
 	const auto radSum = pCollider->GetRadius() + pCollidee->GetRadius();
 	
-	return (distLenght <= radSum) ;
+	return (distLenght < radSum * radSum) ;
 		
 }
 
@@ -91,17 +126,17 @@ bool CollisionSystem::CheckPlaneSphere(PlaneCollisionPtr& pPlaneCollider, Sphere
 
 void CollisionSystem::ResponsePlaneSphere(PlaneCollisionPtr& pPlaneCollider, SphereCollisionPtr& pSphereCollidee){
 
-	const auto sphereSparent = pSphereCollidee->GetParent();
+	const auto sphereParent = pSphereCollidee->GetParent();
 
-	const auto diff = (glm::vec3(pSphereCollidee->GetRadius()) - sphereSparent->GetPos()) * pPlaneCollider->GetNormal();
-	
-	sphereSparent->SetPos( sphereSparent->GetPos() + diff );
+	const auto diff = glm::abs((sphereParent->GetPos() - pSphereCollidee->GetRadius()) * pPlaneCollider->GetNormal() - pPlaneCollider->GetParent()->GetPos());
+		
+	sphereParent->SetPos(sphereParent->GetPos() + diff * 1.1f);
 
 	const auto collideePhysComp = std::dynamic_pointer_cast<PhysicsComponent>(pSphereCollidee->GetParent()->GetComponent(ComponentTypes::PHYSICS));
 
-	const auto reflectedVel = glm::reflect(collideePhysComp->GetVelocity(), pPlaneCollider->GetNormal());
+	const auto reflectedVel = glm::reflect(collideePhysComp->GetVelocity(), pPlaneCollider->GetNormal()) * 0.9f;
 	
-	collideePhysComp->SetVelocity( glm::vec3(reflectedVel.x * 0.9, reflectedVel.y * 0.9, reflectedVel.z * 0.9) );
+	collideePhysComp->SetVelocity(reflectedVel);
 	
 }
 
@@ -139,9 +174,8 @@ void CollisionSystem::ResponseSphereSphere(SphereCollisionPtr& pCollider, Sphere
 
 		colliderPhysComp->SetVelocity(glm::vec3(reflectedVel.x * 0.9, reflectedVel.y * 0.9, reflectedVel.z * 0.9));
 
-	}	else{
-
-
+	}else{
+		
 		const auto colliderNormal = glm::normalize(pCollider->GetParent()->GetPos() - pCollidee->GetParent()->GetPos());
 		
 		const auto diff = (glm::vec3(pCollider->GetRadius()) - pCollider->GetParent()->GetPos()) * colliderNormal;
@@ -173,15 +207,15 @@ void CollisionSystem::CollisionResponse(ComponentPtr& pCollider, ComponentPtr& p
 		auto sphereCollider = std::dynamic_pointer_cast<SphereCollisionComponent>(collider);
 		auto sphereCollidee = std::dynamic_pointer_cast<SphereCollisionComponent>(collidee);
 
-		
-		
+		ResponseSphereSphere(sphereCollider, sphereCollidee);
+		return;
 		//if(!colliderPhysComp->IsStatic()) ResponseSphereSphere(sphereCollider, sphereCollidee);
 		//if(!collideePhysComp->IsStatic()) ResponseSphereSphere(sphereCollidee, sphereCollider);
 
 	}
 
-	auto planeCollider = std::dynamic_pointer_cast<InfinitePlaneCollisionComponent>(collider);
-	auto sphereCollidee = std::dynamic_pointer_cast<SphereCollisionComponent>(collidee);
+	auto planeCollider = std::static_pointer_cast<InfinitePlaneCollisionComponent>(collider);
+	auto sphereCollidee = std::static_pointer_cast<SphereCollisionComponent>(collidee);
 
 	ResponsePlaneSphere(planeCollider, sphereCollidee);
 	

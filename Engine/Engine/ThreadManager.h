@@ -2,6 +2,7 @@
 #include <thread>
 #include <vector>
 #include <map>
+#include <condition_variable>
 #include <mutex>
 #include <shared_mutex>
 
@@ -32,7 +33,10 @@ public:
 
 	//Accessors
 public:
-	std::shared_mutex& GetMutex() const { return mMutex; }
+	std::mutex& GetMutex() const { return mMutex; }
+	std::condition_variable& GetConditionVariable() const { return mConditionVariable; }
+	bool IsPhysicsDone() const { return mPhysicsDone; }
+	void SetPhysicsDone(const bool& pNewValue) { mPhysicsDone = pNewValue; }
 	//Mutators
 public:
 
@@ -57,7 +61,6 @@ public:
 	//	return mID++;
 	//
 	//}
-
 	
 	void TeminateThread(uint32_t pThreadID);
 	void Finish();
@@ -71,7 +74,12 @@ private:
 	static int mID;
 	ThreadMap mThreads;
 
-	mutable std::shared_mutex mMutex;
+
+	mutable std::condition_variable mConditionVariable;
+	mutable std::mutex mMutex;
+
+	static bool mPhysicsDone;
+	bool mCollisionDone;
 	
 };
 

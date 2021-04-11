@@ -27,7 +27,8 @@ private:
 	//Data:
 private:
 
-	const glm::vec3 mGravity = glm::vec3(0.f, 9.8f, 0.f);
-	std::chrono::time_point<std::chrono::steady_clock> mLastTime;
+	const glm::vec3 mGravity = glm::vec3(0.f, -9.8f, 0.f);
+	std::chrono::time_point<std::chrono::high_resolution_clock> mLastTime;
+	const std::chrono::duration<float> mTimeStep{ 1.f / 60.f };
 	
 };
