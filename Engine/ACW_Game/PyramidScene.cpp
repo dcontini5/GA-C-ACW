@@ -72,7 +72,7 @@ void PyramidScene::Start(){
 
 				auto sphereObj = std::make_shared<GameObject>();
 
-				sphereObj->InitPos({ x + k * 2, (noOfLevels - i) * 1.48 + 1, z + j * 2 - 5.f});
+				sphereObj->InitPos({ x + k * 2, (noOfLevels - i) * 1.45 + 1, z + j * 2 - 5.f});
 				sphereObj->setRot({ 0, 0, 0 });
 				sphereObj->setScale({ 1.f, 1.f, 1.f });
 
