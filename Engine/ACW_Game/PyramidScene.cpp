@@ -29,7 +29,7 @@ void PyramidScene::Start(){
 
 
 	
-	planeObj->InitPos({ 0.f, -3.f, 0.f });
+	planeObj->InitPos({ 0.f, 0.f, 0.f });
 	planeObj->setRot({ 0.f, 0.f, 0.f });
 	planeObj->setScale({ 1.f, 1.f, 1.f });
 	
@@ -58,139 +58,65 @@ void PyramidScene::Start(){
 		
 	mGameObjectList.push_back(planeObj);
 
-	int noOfBalls = 1;
-	
-	for (auto i = 0; i < noOfBalls; i++) {
-		
-		auto sphereObj = std::make_shared<GameObject>();
-	
-		sphereObj->InitPos({ -0/* * 0.5f + i * 3*/, 10.f + i * i , -5 });
-		sphereObj->setRot({ 0, 0, 0 });
-		sphereObj->setScale({ 1, 1, 1 });
+	int noOfLevels = 5;
 
-		{
+	for (auto i = noOfLevels; i > 0; i--) {
+
+		auto x = 0;
+		x -= i - 1;
+		const auto z = x;
+
+		for (auto j = i - 1; j >= 0; j--) {
+
+			for (auto k = i - 1; k >= 0; k--) {
+
+				auto sphereObj = std::make_shared<GameObject>();
+
+				sphereObj->InitPos({ x + k * 2, (noOfLevels - i) * 1.48 + 1, z + j * 2 - 5.f});
+				sphereObj->setRot({ 0, 0, 0 });
+				sphereObj->setScale({ 1.f, 1.f, 1.f });
+
+				{
+
+					auto rc = std::make_shared<RenderComponent>(sphereObj);
+					auto mesh = ResourceManager::Instance()->GetMesh("Sphere");
+
+					rc->SetMesh(mesh);
+					rc->StartDrawing();
+
+					auto comp = std::reinterpret_pointer_cast<GameObjectComponent>(rc);
+
+					sphereObj->AddComponent(comp);
+
+					auto pc = std::make_shared<PhysicsComponent>(sphereObj);
+					pc->SetDrag(0.60f);
+					pc->SetStatic(i == noOfLevels);
+
+					comp = std::reinterpret_pointer_cast<GameObjectComponent>(pc);
+
+					sphereObj->AddComponent(comp);
+
+					auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
+
+					cc->SetRadius(1.f);
+
+					comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
+
+					sphereObj->AddComponent(comp);
+				}
+
+
+				mGameObjectList.push_back(sphereObj);
+
+
+			}
+
 			
-			auto rc = std::make_shared<RenderComponent>(sphereObj);
-			auto mesh = ResourceManager::Instance()->GetMesh("Sphere");
-
-			rc->SetMesh(mesh);
-			rc->StartDrawing();
-
-			auto comp = std::reinterpret_pointer_cast<GameObjectComponent>(rc);
-
-			sphereObj->AddComponent(comp);
-
-			auto pc = std::make_shared<PhysicsComponent>(sphereObj);
-			pc->SetDrag(0.60f);
-					
-			comp = std::reinterpret_pointer_cast<GameObjectComponent>(pc);
-
-			sphereObj->AddComponent(comp);
-
-			auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
-
-			cc->SetRadius(1.f);
-
-			comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
-			
-			sphereObj->AddComponent(comp);
 		}
-
-		
-		mGameObjectList.push_back(sphereObj);
-		
-	}
-	
-	
-	{
-
-		auto sphereObj = std::make_shared<GameObject>();
-
-		sphereObj->InitPos({ -0.2, 2.f , -5.1 });
-		sphereObj->setRot({ 0, 0, 0 });
-		sphereObj->setScale({ 1.f, 1.f, 1.f });
-
-		{
-
-			auto rc = std::make_shared<RenderComponent>(sphereObj);
-			auto mesh = ResourceManager::Instance()->GetMesh("Sphere");
-
-			rc->SetMesh(mesh);
-			rc->StartDrawing();
-
-			auto comp = std::reinterpret_pointer_cast<GameObjectComponent>(rc);
-
-			sphereObj->AddComponent(comp);
-
-			auto pc = std::make_shared<PhysicsComponent>(sphereObj);
-			pc->SetDrag(0.60f);
-			//pc->SetStatic(true);
-			
-			comp = std::reinterpret_pointer_cast<GameObjectComponent>(pc);
-
-			sphereObj->AddComponent(comp);
-
-			auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
-
-			cc->SetRadius(1.f);
-
-			comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
-
-			sphereObj->AddComponent(comp);
-		}
-
-
-		mGameObjectList.push_back(sphereObj);
 
 		
 	}
 
-
-	{
-
-		auto sphereObj = std::make_shared<GameObject>();
-
-		sphereObj->InitPos({ 0.2, 5.f , -4.9 });
-		sphereObj->setRot({ 0, 0, 0 });
-		sphereObj->setScale({ 1.f, 1.f, 1.f });
-
-		{
-
-			auto rc = std::make_shared<RenderComponent>(sphereObj);
-			auto mesh = ResourceManager::Instance()->GetMesh("Sphere");
-
-			rc->SetMesh(mesh);
-			rc->StartDrawing();
-
-			auto comp = std::reinterpret_pointer_cast<GameObjectComponent>(rc);
-
-			sphereObj->AddComponent(comp);
-
-			auto pc = std::make_shared<PhysicsComponent>(sphereObj);
-			pc->SetDrag(0.60f);
-			//pc->SetStatic(true);
-
-			comp = std::reinterpret_pointer_cast<GameObjectComponent>(pc);
-
-			sphereObj->AddComponent(comp);
-
-			auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
-
-			cc->SetRadius(1.f);
-
-			comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
-
-			sphereObj->AddComponent(comp);
-		}
-
-
-		mGameObjectList.push_back(sphereObj);
-
-
-	}
-
-
-	
 	
 	Scene::Start();
 	

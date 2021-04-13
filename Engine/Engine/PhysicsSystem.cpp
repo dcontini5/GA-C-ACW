@@ -4,6 +4,9 @@
 #include "PhysicsComponent.h"
 #include "ThreadManager.h"
 
+#define DT_MULT 1.f
+
+
 void PhysicsSystem::Process(){
 	
 	{
@@ -16,12 +19,12 @@ void PhysicsSystem::Process(){
 	}
 
 	{
-
-		
+				
 		for (auto& obj : mGameObjects) {
 			std::unique_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
 			obj->SetOldPos(obj->GetPos());
 		}
+		
 	}
 	
 	const std::chrono::duration<float> lag = std::chrono::high_resolution_clock::now() - mLastTime;
@@ -45,14 +48,17 @@ void PhysicsSystem::Process(){
 
 		physComp->SetVelocity(newVel);
 		
-		const auto newPos =  pos + (newVel) * (dt.count());
+		const auto newPos =  pos + (newVel) * (dt.count() * DT_MULT);
 
 		obj->SetPos(newPos);
 		
 	}
 	
-	ThreadManager::Instance()->SetPhysicsDone(true);
-	ThreadManager::Instance()->GetConditionVariable().notify_one();
+	{
+		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+		ThreadManager::Instance()->SetPhysicsDone(true);
+		ThreadManager::Instance()->GetConditionVariable().notify_one();
+	}
 	
 }
 

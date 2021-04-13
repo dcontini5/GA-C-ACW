@@ -34,10 +34,12 @@ void CollisionSystem::Process(){
 		}
 
 	}
-
-	ThreadManager::Instance()->SetPhysicsDone(false);
-	ThreadManager::Instance()->GetConditionVariable().notify_one();
 	
+	{
+		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+		ThreadManager::Instance()->SetPhysicsDone(false);
+		ThreadManager::Instance()->GetConditionVariable().notify_one();
+	}
 }
 
 
@@ -105,7 +107,7 @@ void CollisionSystem::CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCol
 		const auto distLenghtSquared = radSum - sqrt( distLenght);
 		
 		if (colliderPhysComp->IsStatic()) {
-			CollisionResponseStatic(collideePhysComp, distLenght, glm::normalize(-dist));
+			CollisionResponseStatic(collideePhysComp, distLenghtSquared, glm::normalize(-dist));
 			return;
 		}
 		if (collideePhysComp->IsStatic()) {
@@ -146,7 +148,7 @@ void CollisionSystem::CheckPlaneSphere(PlaneCollisionPtr& pPlaneCollider, Sphere
 
 void CollisionSystem::CollisionResponseStatic(PhysicsComponentPtr& pCollider, const float& pDistance, const glm::vec3& pNormal){
 	
-	const auto diff = (pNormal * pDistance);
+	const auto diff = (pNormal * pDistance) * 1.0001f;
 
 	pCollider->GetParent()->SetPos(pCollider->GetParent()->GetPos() + diff);
 
@@ -160,7 +162,7 @@ void CollisionSystem::CollisionResponseStatic(PhysicsComponentPtr& pCollider, co
 
 void CollisionSystem::CollisionResponseDynamic(PhysicsComponentPtr& pCollider, PhysicsComponentPtr& pCollidee, const float& pDistance, const glm::vec3& pNormal){
 
-	const auto diff = (pNormal * pDistance) * 0.51f;
+	const auto diff = (pNormal * pDistance) * 0.50001f;
 	
 	pCollider->GetParent()->SetPos(pCollider->GetParent()->GetPos() + diff);
 	pCollidee->GetParent()->SetPos(pCollidee->GetParent()->GetPos() - diff);
