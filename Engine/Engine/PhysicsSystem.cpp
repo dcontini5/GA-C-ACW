@@ -5,7 +5,7 @@
 #include "ThreadManager.h"
 
 void PhysicsSystem::Process(){
-
+	
 	{
 		
 		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
@@ -14,7 +14,15 @@ void PhysicsSystem::Process(){
 		});
 	
 	}
-	
+
+	{
+
+		
+		for (auto& obj : mGameObjects) {
+			std::unique_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
+			obj->SetOldPos(obj->GetPos());
+		}
+	}
 	
 	const std::chrono::duration<float> lag = std::chrono::high_resolution_clock::now() - mLastTime;
 	

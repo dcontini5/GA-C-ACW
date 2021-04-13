@@ -35,6 +35,7 @@ public:
 public:
 	std::mutex& GetMutex() const { return mMutex; }
 	std::condition_variable& GetConditionVariable() const { return mConditionVariable; }
+	std::shared_mutex& GetSharedMutex() const { return mSharedMutex; }
 	bool IsPhysicsDone() const { return mPhysicsDone; }
 	void SetPhysicsDone(const bool& pNewValue) { mPhysicsDone = pNewValue; }
 	//Mutators
@@ -77,6 +78,7 @@ private:
 
 	mutable std::condition_variable mConditionVariable;
 	mutable std::mutex mMutex;
+	mutable std::shared_mutex mSharedMutex;
 
 	static bool mPhysicsDone;
 	bool mCollisionDone;

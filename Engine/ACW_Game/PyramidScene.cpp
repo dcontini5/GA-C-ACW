@@ -29,7 +29,7 @@ void PyramidScene::Start(){
 
 
 	
-	planeObj->SetPos({ 0.f, -3.f, 0.f });
+	planeObj->InitPos({ 0.f, -3.f, 0.f });
 	planeObj->setRot({ 0.f, 0.f, 0.f });
 	planeObj->setScale({ 1.f, 1.f, 1.f });
 	
@@ -64,7 +64,7 @@ void PyramidScene::Start(){
 		
 		auto sphereObj = std::make_shared<GameObject>();
 	
-		sphereObj->SetPos({ -0/* * 0.5f + i * 3*/, 10.f + i * i , -5 });
+		sphereObj->InitPos({ -0/* * 0.5f + i * 3*/, 10.f + i * i , -5 });
 		sphereObj->setRot({ 0, 0, 0 });
 		sphereObj->setScale({ 1, 1, 1 });
 
@@ -106,7 +106,7 @@ void PyramidScene::Start(){
 
 		auto sphereObj = std::make_shared<GameObject>();
 
-		sphereObj->SetPos({ -0.2, 2.f , -5.1 });
+		sphereObj->InitPos({ -0.2, 2.f , -5.1 });
 		sphereObj->setRot({ 0, 0, 0 });
 		sphereObj->setScale({ 1.f, 1.f, 1.f });
 
@@ -150,7 +150,7 @@ void PyramidScene::Start(){
 
 		auto sphereObj = std::make_shared<GameObject>();
 
-		sphereObj->SetPos({ 0.2, 5.f , -4.9 });
+		sphereObj->InitPos({ 0.2, 5.f , -4.9 });
 		sphereObj->setRot({ 0, 0, 0 });
 		sphereObj->setScale({ 1.f, 1.f, 1.f });
 

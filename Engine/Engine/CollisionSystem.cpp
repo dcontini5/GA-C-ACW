@@ -11,7 +11,7 @@ void CollisionSystem::Process(){
 
 		
 	{
-		//auto mutex = ThreadManager::Instance()->GetMutex();
+		
 		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
 		ThreadManager::Instance()->GetConditionVariable().wait(lk, []{
 			return ThreadManager::Instance()->IsPhysicsDone();
