@@ -324,7 +324,7 @@ void DX_Renderer::CreateMVPM(){
 	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 0.0f, 3.0f, 0.0f);
 	DirectX::XMVECTOR At = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-	mView = DirectX::XMMatrixLookAtLH(Eye, At, Up);
+	mView = DirectX::XMMatrixLookAtRH(Eye, At, Up);
 
 	// Initialize the projection matrix
 	//
@@ -333,7 +333,7 @@ void DX_Renderer::CreateMVPM(){
 
 	//g_View = setViewMatrix(Eye, At, Up);
 
-	mProjection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV2, mWidth / (FLOAT)mHeight, 0.01f, 100.0f);
+	mProjection = DirectX::XMMatrixPerspectiveFovRH(DirectX::XM_PIDIV2, mWidth / (FLOAT)mHeight, 0.01f, 100.0f);
 
 }
 
@@ -387,17 +387,19 @@ void DX_Renderer::Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const
 	//
 	// Update variables
 	//
-	ConstantBuffer cb;
+	ConstantBuffer cb{};
 
 	auto world = mWorld;
-	world *= DirectX::XMMatrixScaling(pScale.x, pScale.y, pScale.z);
+	
 	world *= DirectX::XMMatrixTranslation(pPos.x, pPos.y, pPos.z);
+	world *= DirectX::XMMatrixScaling(pScale.x, pScale.y, pScale.z);
+	
 	
 	cb.mWorld = DirectX::XMMatrixTranspose(world);
 	cb.mView = DirectX::XMMatrixTranspose(mView);
 	cb.mProjection = DirectX::XMMatrixTranspose(mProjection);
 	cb.time = 0;
-	cb.lightPos = DirectX::XMVectorSet(0.0f, 2.0f, 0.0f, 0.0f);
+	cb.lightPos = DirectX::XMVectorSet(0.0f, 12.0f, 0.0f, 0.0f);
 	cb.Eye = DirectX::XMVectorSet(0.0f, 0.0f, 3.0f, 0.0f);
 	mD3D11ImmediateContext->UpdateSubresource(mD3D11ConstantBuffer.Get(), 0, nullptr, &cb, 0, 0);
 

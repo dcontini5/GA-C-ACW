@@ -32,8 +32,8 @@ class DX_Renderer : public Renderer {
 	//Structors
 public:
 	DX_Renderer(const HWND pHWindow,  const UINT& pHeight, const UINT& pWidth) : Renderer(pHeight, pWidth),
-	                                                                             mHWindow(pHWindow), mWorld(), mView(),
-	                                                                             mProjection(){}
+	                                                                             mHWindow(pHWindow), mWorld(DirectX::XMMatrixIdentity()), mView(DirectX::XMMatrixIdentity()),
+	                                                                             mProjection(DirectX::XMMatrixIdentity()){}
 
 	DX_Renderer(const DX_Renderer&);
 	DX_Renderer(DX_Renderer&&); //exchange members here;

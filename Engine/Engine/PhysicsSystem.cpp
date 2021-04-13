@@ -37,7 +37,7 @@ void PhysicsSystem::Process(){
 
 		physComp->SetVelocity(newVel);
 		
-		const auto newPos =  pos + (newVel) * dt.count();
+		const auto newPos =  pos + (newVel) * (dt.count());
 
 		obj->SetPos(newPos);
 		
