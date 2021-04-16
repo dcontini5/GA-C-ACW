@@ -2,7 +2,6 @@
 //
 
 #include "ServersideGame.h"
-#include "Window.h"
 
 
 int main()
@@ -10,11 +9,15 @@ int main()
 
 	ServersideGame game;
 
-	std::shared_ptr<Window> win = nullptr;
+	//std::shared_ptr<Window> win = nullptr;
 	
-	game.Initialize(win);
+	game.Initialize();
 
-
+	while (game.GetQuitFlag()) {
+			
+	}
+	
+	
 	return 0;
 	
 }

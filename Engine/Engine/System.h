@@ -30,6 +30,7 @@ public:
 	virtual void Start() = 0;
 	void AddObject(GameObjectPtr& pGameObject);
 	void RemoveObject(GameObjectPtr& pGameObject);
+	void RemoveObjectByID(const int& pID);
 	
 	// Private Functions
 private:

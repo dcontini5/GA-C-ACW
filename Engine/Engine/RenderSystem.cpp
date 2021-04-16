@@ -20,7 +20,7 @@ void RenderSystem::Process(){
 		auto mesh = renderComponent->GetMesh();
 		const auto pos = object->GetOldPos();
 		const auto scale = object->GetScale();
-
+	
 		mRenderer->Render(mesh, pos, scale);
 	}
 

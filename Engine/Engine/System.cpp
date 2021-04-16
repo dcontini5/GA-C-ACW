@@ -20,3 +20,18 @@ void System::RemoveObject(GameObjectPtr& pGameObject) {
 	}
 
 }
+
+void System::RemoveObjectByID(const int& pID){
+
+
+	auto it = mGameObjects.begin();
+	for (const auto& object : mGameObjects) {
+
+		++it;
+		if (object->GetId() == pID) {
+			mGameObjects.erase(it);
+			return;
+		}
+	}
+	
+}

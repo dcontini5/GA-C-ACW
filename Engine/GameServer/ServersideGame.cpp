@@ -11,3 +11,13 @@ void ServersideGame::Initialize(std::shared_ptr<Window>& pWindow){
 
 	
 }
+
+void ServersideGame::Initialize(){
+
+	
+	mScene = std::make_shared<ServersideScene>();
+
+	mScene->Start();
+
+	
+}

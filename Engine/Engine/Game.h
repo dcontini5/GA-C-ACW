@@ -39,6 +39,7 @@ public:
 public:
 
 	virtual void Initialize(std::shared_ptr<Window>& pWindow);
+	virtual void Initialize() {};
 	
 	// Private Functions
 private:

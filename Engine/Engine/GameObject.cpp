@@ -3,6 +3,10 @@
 #include "Game.h"
 #include "AddedComponentMessage.h"
 
+static int IDs = 0;
+
+GameObject::GameObject():mID(IDs++){}
+
 ComponentPtr GameObject::GetComponent(const int& pComponentName){
 
 	ComponentMapIterator it = mComponents.find(pComponentName);

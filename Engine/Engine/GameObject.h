@@ -13,11 +13,12 @@ typedef std::map <int, std::shared_ptr<GameObjectComponent>>::iterator Component
 typedef std::shared_ptr<GameObjectComponent> ComponentPtr;
 
 
+
 class GameObject : public std::enable_shared_from_this<GameObject>, public Subject {
 
 	//Structors
 public:
-	GameObject() = default;
+	GameObject();
 	GameObject(const GameObject&);
 	GameObject(GameObject&&); //exchange members here;
 	~GameObject() = default;
@@ -31,6 +32,7 @@ public:
 	glm::vec3 GetOldPos() const { return mOldPosition; };
 	glm::vec3 GetScale() const { return mScale; };
 	glm::vec3 GetRot() const { return mRotation; }
+	int GetId() const { return mID; }
 	
 	//Mutators
 public:
@@ -64,12 +66,13 @@ public:
 	//Data:
 private:
 
-	glm::vec3 mPosition;
-	glm::vec3 mOldPosition;
-	glm::vec3 mScale;
-	glm::vec3 mRotation;
+	glm::vec3 mPosition{0.f};
+	glm::vec3 mOldPosition{0.f};
+	glm::vec3 mScale{1.f};
+	glm::vec3 mRotation{0.f};
 
-	bool mAlive = true;
+	const int mID;
+	bool mAlive{true};
 	ComponentMap mComponents;
 	
 };
