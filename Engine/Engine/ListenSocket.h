@@ -19,7 +19,7 @@ public:
 public:
 	void Bind(const Peer& pPeer);
 	SOCKET Listen();
-	void Listen(SOCKET& pSocket);
+	void Listen(SOCKET& pSocket, sockaddr_in& pAddress, int& pAddressSize);
 	
 	// Private Functions
 private:

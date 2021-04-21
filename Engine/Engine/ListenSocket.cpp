@@ -27,7 +27,7 @@ SOCKET ListenSocket::Listen(){
 	
 }
 
-void ListenSocket::Listen(SOCKET& pSocket){
+void ListenSocket::Listen(SOCKET& pSocket, sockaddr_in& pAddress, int& pAddressSize){
 
 	if(listen(mSocket, 5) == SOCKET_ERROR){
 		
@@ -38,7 +38,7 @@ void ListenSocket::Listen(SOCKET& pSocket){
 
 	std::cout << "Waiting..." << std::endl;
 
-	pSocket = accept(mSocket, nullptr, nullptr);
+	pSocket = accept(mSocket, reinterpret_cast<sockaddr*>(&pAddress), &pAddressSize);
 	
 }
 

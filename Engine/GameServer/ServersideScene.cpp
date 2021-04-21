@@ -1,43 +1,30 @@
 ﻿#include "ServersideScene.h"
 
 
-
+#include "NetworkingSystem.h"
 #include "CollisionSystem.h"
 #include "GameObject.h"
 #include "GameObjectComponent.h"
 #include "InfinitePlaneCollisionComponent.h"
+#include "NewPlayerConnectedMessage.h"
 #include "SphereCollisionComponent.h"
 #include "PhysicsComponent.h"
 #include "PhysicsSystem.h"
+#include "ThreadManager.h"
 
 void ServersideScene::Start(){
 
 
-	std::shared_ptr<System> physicsSystem = std::make_shared<PhysicsSystem>();
-	std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>();
+	//std::shared_ptr<System> physicsSystem = std::make_shared<PhysicsSystem>();
+	//std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>();
+	//
+	//AddSystem(physicsSystem);
+	//AddSystem(collisionSystem);
 
-	AddSystem(physicsSystem);
-	AddSystem(collisionSystem);
 
 
-	auto planeObj = std::make_shared<GameObject>();
 	
-	planeObj->SetPos({ 0, 0, 0 });
-	planeObj->setRot({ 0, 0, 0 });
-	planeObj->setScale({ 1, 1, 1 });
-	
-	{
 
-		auto cc = std::make_shared<InfinitePlaneCollisionComponent>(planeObj);
-		cc->SetNormal({0, 1, 0});
-		
-		auto comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
-		
-		planeObj->AddComponent(comp);
-		
-	}
-
-	mGameObjectList.push_back(planeObj);
 	
 	auto sphereObj = std::make_shared<GameObject>();
 	
@@ -47,18 +34,7 @@ void ServersideScene::Start(){
 
 	{
 
-		auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
-		cc->SetRadius(1.0);
-
-		auto collComp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
-
-		auto pc = std::make_shared<PhysicsComponent>(sphereObj);
-		pc->SetStatic(false);
-		pc->SetDrag(0.9f);
-		pc->SetMass(1.f);
-		pc->SetVelocity({ 0.f, 0.f, 0.f });
-		
-		sphereObj->AddComponent(collComp);
+	
 
 	}
 
@@ -69,3 +45,34 @@ void ServersideScene::Start(){
 
 	
 }
+
+void ServersideScene::OnMessage(std::shared_ptr<Message>& pMessage){
+
+	Scene::OnMessage(pMessage);
+
+	switch (pMessage->GetType()) {
+
+
+		case MessageTypes::PLAYER_CONNECTED:
+		{
+			const auto playerConnectedMessage = std::reinterpret_pointer_cast<NewPlayerConnectedMessage>(pMessage);
+
+			auto player = std::make_shared<GameObject>();
+			player->InitPos({ 0.f, 0.f, 0.f });
+			player->setRot({ 0.f, 0.f, 0.f });
+
+			playerConnectedMessage->GetTransferSocket()->SetPlayerGameObject(player);
+
+			mGameObjectList.push_back(player);
+
+			//ThreadManager::Instance()->AddThreadWithArgs(/*pyramidclient::send(), &server, playerConnectedMessage->GetTransferSocket()*/);
+			break;
+		}
+
+
+
+	}
+
+	
+}
+

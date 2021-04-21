@@ -6,6 +6,7 @@
 #include "PhysicsComponent.h"
 #include "Game.h"
 #include "InfinitePlaneCollisionComponent.h"
+#include "NewPlayerConnectedMessage.h"
 #include "SphereCollisionComponent.h"
 #include "ThreadManager.h"
 
@@ -119,5 +120,12 @@ void PyramidScene::Start(){
 
 	
 	Scene::Start();
+	
+}
+
+void PyramidScene::OnMessage(std::shared_ptr<Message>& pMessage){
+
+	Scene::OnMessage(pMessage);
+
 	
 }

@@ -33,7 +33,7 @@ public:
 
 	// Public Functions
 public:
-	void OnMessage(std::shared_ptr<Message>& pMessage);
+	virtual void OnMessage(std::shared_ptr<Message>& pMessage);
 	virtual void Start();
 	void AddSystem(std::shared_ptr<System>& pSystem);
 	// Private Functions

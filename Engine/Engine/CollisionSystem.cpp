@@ -148,7 +148,7 @@ void CollisionSystem::CheckPlaneSphere(PlaneCollisionPtr& pPlaneCollider, Sphere
 
 void CollisionSystem::CollisionResponseStatic(PhysicsComponentPtr& pCollider, const float& pDistance, const glm::vec3& pNormal){
 	
-	const auto diff = (pNormal * pDistance) * 1.0001f;
+	const auto diff = (pNormal * pDistance) * 1.000001f;
 
 	pCollider->GetParent()->SetPos(pCollider->GetParent()->GetPos() + diff);
 
@@ -156,13 +156,13 @@ void CollisionSystem::CollisionResponseStatic(PhysicsComponentPtr& pCollider, co
 
 	const auto reflectedVel = glm::reflect(colliderPhysComp->GetVelocity(), pNormal);
 
-	colliderPhysComp->SetVelocity(reflectedVel * 0.9f);
+	colliderPhysComp->SetVelocity(reflectedVel * 0.8f);
 	
 }
 
 void CollisionSystem::CollisionResponseDynamic(PhysicsComponentPtr& pCollider, PhysicsComponentPtr& pCollidee, const float& pDistance, const glm::vec3& pNormal){
 
-	const auto diff = (pNormal * pDistance) * 0.50001f;
+	const auto diff = (pNormal * pDistance) * 0.5000001f;
 	
 	pCollider->GetParent()->SetPos(pCollider->GetParent()->GetPos() + diff);
 	pCollidee->GetParent()->SetPos(pCollidee->GetParent()->GetPos() - diff);
@@ -170,7 +170,7 @@ void CollisionSystem::CollisionResponseDynamic(PhysicsComponentPtr& pCollider, P
 	const auto reflectedVelCollider = glm::reflect(pCollider->GetVelocity(), pNormal);
 	const auto reflectedVelCollidee = glm::reflect(pCollidee->GetVelocity(), -pNormal);
 
-	pCollider->SetVelocity(reflectedVelCollider * 0.9f);
-	pCollidee->SetVelocity(reflectedVelCollidee * 0.9f);
+	pCollider->SetVelocity(reflectedVelCollider * 0.8f);
+	pCollidee->SetVelocity(reflectedVelCollidee * 0.8f);
 	
 }

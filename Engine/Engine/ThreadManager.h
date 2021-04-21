@@ -53,6 +53,17 @@ public:
 		return mID++;
 	
 	}
+
+
+	template<class Function, class... Args>
+	int AddThreadWithArgs(Function&& pFunction, Args&&... pArgs) {
+
+		mThreads.insert(std::pair<uint32_t, std::thread>(mID,
+			std::thread(pFunction, pArgs...)));
+		return mID++;
+
+	}
+	
 	
 	//template<class Function, class... Args>
 	//int AddThread(Function&& pFunction, Args&&... pArgs) {

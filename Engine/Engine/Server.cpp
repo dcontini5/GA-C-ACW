@@ -1,6 +1,10 @@
 ﻿#include "Server.h"
-#include "ThreadManager.h"
 
+#include <ws2tcpip.h>
+
+#include "Game.h"
+#include "ThreadManager.h"
+#include "NewPlayerConnectedMessage.h"
 Server::Server(): NetworkingSystem({}){}
 
 void Server::Init() {
@@ -19,21 +23,48 @@ void Server::Start(){
 
 void Server::Listen(){
 
-	while(true){
+	while(Game::Instance()->GetQuitFlag()){
+		
+		SOCKET newSocket;
+		sockaddr_in address;
+		int addlen = sizeof(address);
+					
+		mListenSocket.Listen(newSocket, address, addlen);
+				
+		if (newSocket != SOCKET_ERROR) {
 
-		auto socket = mListenSocket.Listen();
-		
-		
-		if (socket != SOCKET_ERROR) {
-			TransferSocket transferSocket(socket);
-			mClients.push_back(transferSocket);
-			ThreadManager::Instance()->AddThread(&TransferSocket::Receive, transferSocket);
-			ThreadManager::Instance()->AddThread(&TransferSocket::Send, transferSocket);
 			
+			//TransferSocket newClientSocket(newSocket, address, addlen);
+			std::string ipAdd;
+			inet_ntop(AF_INET, &address.sin_addr, &ipAdd[0], sizeof(ipAdd));
+
+			auto client = mClients[ipAdd];
+			
+			if (client.IsConnected()){
+
+				//close socket;
+				continue;
+			}
+				
+			client.SetSocket(newSocket);
+
+			std::shared_ptr<Message> msg = std::make_shared<NewPlayerConnectedMessage>();
+			
+			Game::Instance()->OnMessage(msg);
+			
+			//new connection message
+			//send message to scene
+			
+			//create client
+			//ThreadManager::Instance()->AddThreadWithArgs(&Server::Receive, this, newSocket);
+			//ThreadManager::Instance()->AddThreadWithArgs(&Server::Send, this, newClient);
 		}
 	}
+
 	
 }
+
+
 
 //void Server::Send(){
 //
@@ -72,8 +103,6 @@ void Server::Listen(){
 //
 //	
 //}
-
-
 
 
 void Server::Echo(std::string& pMessage){

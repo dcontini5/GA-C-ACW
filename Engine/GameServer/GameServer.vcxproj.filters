@@ -21,7 +21,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ServersideGame.cpp" />
     <ClCompile Include="ServersideScene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

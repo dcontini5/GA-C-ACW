@@ -19,6 +19,7 @@ public:
 	// Public Functions
 public:
 	void Start() override;
+	void OnMessage(std::shared_ptr<Message>& pMessage) override;
 	// Private Functions
 private:
 

@@ -13,7 +13,7 @@ public:
 	Server();
 	Server(const Server&);
 	Server(Server&&); //exchange members here;
-	~Server() = default;
+	~Server() { WSACleanup(); };
 
 	//Accessors
 public:
@@ -27,8 +27,8 @@ public:
 	void Start();
 	void Listen();
 	void Send();
-	//void Receive();
-	void Receive(TransferSocket& pClient);
+	void Receive();
+	//void Receive(TransferSocket& pClient);
 	
 	
 	void Echo(std::string& pMessage);
@@ -48,7 +48,7 @@ public:
 	//Data:
 private:
 
-	typedef std::vector<TransferSocket> ClientList;
+	typedef std::map<std::string, TransferSocket> ClientList;
 	ClientList                  mClients;
 	ListenSocket				mListenSocket;
 	TransferSocket				mTransferSocket;

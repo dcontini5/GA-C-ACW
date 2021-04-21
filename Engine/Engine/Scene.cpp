@@ -2,10 +2,10 @@
 #include "System.h"
 #include "ThreadManager.h"
 #include "AddedComponentMessage.h"
+#include "NewPlayerConnectedMessage.h"
 #include "CollisionSystem.h"
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
-//#include "NetworkingSystem.h"
 
 Scene::~Scene(){
 
@@ -20,19 +20,44 @@ Scene::~Scene(){
 void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 
 	//if(objRemove) then remove
-	if(pMessage->GetType() == MessageTypes::ADDED_COMPONENT){
+	switch (pMessage->GetType()){
 
-		auto addMsg = std::reinterpret_pointer_cast<AddedComponentMessage>(pMessage);
+	case MessageTypes::ADDED_COMPONENT:
+		{
 
-		if (mSystems.find(addMsg->GetCompType()) != mSystems.end()){
+			auto addMsg = std::reinterpret_pointer_cast<AddedComponentMessage>(pMessage);
+
+			if (mSystems.find(addMsg->GetCompType()) != mSystems.end()) {
+
+				auto go = addMsg->GetSender();
+				mSystems[addMsg->GetCompType()]->AddObject(go);
+
+			}
+			break;
+		}
+
+	case MessageTypes::PLAYER_CONNECTED:
+		{
+
+			auto playerConnectedMessage = std::reinterpret_pointer_cast<NewPlayerConnectedMessage>(pMessage);
+
+			auto player = std::make_shared<GameObject>();
+			player->InitPos({ 0.f, 0.f, 0.f });
+			player->setRot({ 0.f, 0.f, 0.f });
+
+			playerConnectedMessage->GetTransferSocket()->SetPlayerGameObject(player);
+
+			mGameObjectList.push_back(player);
+
 			
-			auto go = addMsg->GetSender();
-			mSystems[addMsg->GetCompType()]->AddObject(go);
 			
 		}
+
+
 		
 	}
-
+	
+		
 	
 }
 

@@ -12,7 +12,7 @@ public:
 	~Socket(){
 
 		closesocket(mSocket);
-		WSACleanup();
+		//WSACleanup();
 
 	}
 
@@ -31,8 +31,8 @@ public:
 	//Mutators
 public:
 
-	void SetSocket(SOCKET& pSocket) { mSocket = pSocket; }
-
+	virtual void SetSocket(SOCKET& pSocket) { mSocket = pSocket; }
+	virtual void Disconnect() { closesocket(mSocket); mSocket = 0; }
 	// Public Functions
 public:
 
