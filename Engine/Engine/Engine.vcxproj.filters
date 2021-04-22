@@ -139,6 +139,9 @@
     <ClCompile Include="NewPlayerConnectedMessage.cpp">
       <Filter>Messages</Filter>
     </ClCompile>
+    <ClCompile Include="ClientPlayerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -260,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="NewPlayerConnectedMessage.h">
       <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientPlayerComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

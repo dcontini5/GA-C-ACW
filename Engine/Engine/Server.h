@@ -11,8 +11,6 @@ class Server :public NetworkingSystem{
 	//Structors
 public:
 	Server();
-	Server(const Server&);
-	Server(Server&&); //exchange members here;
 	~Server() { WSACleanup(); };
 
 	//Accessors
@@ -28,6 +26,7 @@ public:
 	void Listen();
 	void Send();
 	void Receive();
+	//void AddObject(GameObjectPtr& pGameObject) override;
 	//void Receive(TransferSocket& pClient);
 	
 	
@@ -37,18 +36,13 @@ private:
 
 	//Operators
 public:
-	Server& operator=(const Server& pOther){ return *this = Server(pOther); }
-
-	Server& operator=(const Server&& pOther){
-
-		/*Swap Members Here*/
-		return *this;
-	}
-
+	
 	//Data:
 private:
 
-	typedef std::map<std::string, TransferSocket> ClientList;
+	//typedef std::map<std::string, GameObjectPtr> ClientList;
+	typedef std::shared_ptr<TransferSocket> TransferSocketPtr;
+	typedef std::map<std::string, TransferSocketPtr> ClientList;
 	ClientList                  mClients;
 	ListenSocket				mListenSocket;
 	TransferSocket				mTransferSocket;

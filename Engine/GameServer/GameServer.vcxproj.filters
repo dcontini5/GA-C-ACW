@@ -16,6 +16,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{3a8e0c61-eb02-4d43-9672-90c77d6fdee0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Networking">
+      <UniqueIdentifier>{8b16eabc-a373-4370-872e-b9a5d1a0aa74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -23,11 +26,17 @@
     <ClCompile Include="ServersideScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="PyramidServer.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ServersideGame.h" />
     <ClInclude Include="ServersideScene.h">
       <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PyramidServer.h">
+      <Filter>Networking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

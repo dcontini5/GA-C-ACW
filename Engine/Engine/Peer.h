@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <string>
-#include <winsock2.h>
+#include <WinSock2.h>
+#include <WS2tcpip.h>
 
 #pragma comment(lib, "ws2_32.lib") 
 
@@ -10,8 +11,8 @@ class Peer {
 public:
 	Peer();
 	Peer(const std::string& pIP );
-	Peer(const Peer&);
-	Peer(Peer&&); //exchange members here;
+	Peer(const Peer& pOther);
+	Peer(Peer&& pOther) noexcept; //exchange members here;
 	~Peer() = default;
 
 	//Accessors

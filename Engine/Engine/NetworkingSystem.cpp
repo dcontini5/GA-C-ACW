@@ -44,7 +44,5 @@ void NetworkingSystem::Receive() {
 
 void NetworkingSystem::Start() {
 
-	mReceiveThreadID = ThreadManager::Instance()->AddThread(&NetworkingSystem::Receive, *this);
-	mSendThreadID = ThreadManager::Instance()->AddThread(&NetworkingSystem::Send, *this);
-	
+
 }

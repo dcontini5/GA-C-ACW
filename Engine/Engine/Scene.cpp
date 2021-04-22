@@ -1,8 +1,9 @@
 ﻿#include "Scene.h"
+
+#include "Server.h"
 #include "System.h"
 #include "ThreadManager.h"
 #include "AddedComponentMessage.h"
-#include "NewPlayerConnectedMessage.h"
 #include "CollisionSystem.h"
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
@@ -35,27 +36,9 @@ void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 			}
 			break;
 		}
-
-	case MessageTypes::PLAYER_CONNECTED:
-		{
-
-			auto playerConnectedMessage = std::reinterpret_pointer_cast<NewPlayerConnectedMessage>(pMessage);
-
-			auto player = std::make_shared<GameObject>();
-			player->InitPos({ 0.f, 0.f, 0.f });
-			player->setRot({ 0.f, 0.f, 0.f });
-
-			playerConnectedMessage->GetTransferSocket()->SetPlayerGameObject(player);
-
-			mGameObjectList.push_back(player);
-
-			
-			
-		}
-
-
 		
 	}
+
 	
 		
 	
@@ -93,9 +76,14 @@ void Scene::Start(){
 				}
 			
 
-			//case SystemTypes::NETWORKING:
-			//	auto netSys = std::reinterpret_pointer_cast<NetworkingSystem>(system.second);
-			//	mSystemThreadIDs[type] = threadManager->AddThread(&NetworkingSystem::Start, netSys);
+			case SystemTypes::NETWORKING:
+				{
+					auto sys = std::reinterpret_pointer_cast<Server>(system.second);
+					sys->Init();
+					mSystemThreadIDs[type] = threadManager->AddThread(&Server::Listen, sys);
+					break;
+				}
+				
 			
 			default:
 				break;

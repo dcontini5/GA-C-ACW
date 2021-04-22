@@ -3,6 +3,7 @@
 #include "System.h"
 #include "TransferSocket.h"
 #include <queue>
+#include <utility>
 
 typedef std::queue<std::string> MessageQueue;
 
@@ -10,9 +11,7 @@ class NetworkingSystem : public System {
 
 	//Structors
 public:
-	NetworkingSystem(const Peer& pPeer) : System(SystemTypes::NETWORKING), mPeer(pPeer), mSendThreadID(-1), mReceiveThreadID(-1){}
-	NetworkingSystem(const NetworkingSystem&);
-	NetworkingSystem(NetworkingSystem&&); //exchange members here;
+	NetworkingSystem(Peer pPeer) : System(SystemTypes::NETWORKING), mPeer(std::move(pPeer)), mSendThreadID(-1), mReceiveThreadID(-1){}
 	~NetworkingSystem() = default;
 
 	//Accessors
@@ -23,7 +22,7 @@ public:
 
 	// Public Functions
 public:
-	virtual void Init();
+	virtual void Init(){};
 	void Send();
 	void Receive();
 	
@@ -38,13 +37,7 @@ private:
 	
 	//Operators
 public:
-	NetworkingSystem& operator=(const NetworkingSystem& pOther) = delete;
-
-	NetworkingSystem& operator=(const NetworkingSystem&& pOther){
-
-		/*Swap Members Here*/
-		return *this;
-	}
+	
 
 	//Data:
 protected:

@@ -10,7 +10,7 @@ class NewPlayerConnectedMessage :public Message{
 
 	//Structors
 public:
-	NewPlayerConnectedMessage(const TransferSocket& pTransferSocket);
+	NewPlayerConnectedMessage(const TransferSocketPtr& pTransferSocket);
 	NewPlayerConnectedMessage(const NewPlayerConnectedMessage&);
 	NewPlayerConnectedMessage(NewPlayerConnectedMessage&&); //exchange members here;
 	~NewPlayerConnectedMessage() = default;

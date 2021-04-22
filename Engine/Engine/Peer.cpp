@@ -1,6 +1,6 @@
 ﻿#include "Peer.h"
 
-#include <ws2tcpip.h>
+
 
 Peer::Peer() {
 
@@ -17,4 +17,7 @@ Peer::Peer(const std::string& pIP){
 	inet_pton(mPeer.sin_family, pIP.c_str(), &mPeer.sin_addr);
 	
 	
-};
+}
+
+Peer::Peer(const Peer& pOther) : mPeer(pOther.mPeer){}
+Peer::Peer(Peer&& pOther) noexcept : mPeer(std::move(pOther.mPeer)) {}

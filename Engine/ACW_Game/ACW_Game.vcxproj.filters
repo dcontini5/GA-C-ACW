@@ -6,7 +6,9 @@
     <ClCompile Include="PyramidScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="PyramidClient.cpp" />
+    <ClCompile Include="PyramidClient.cpp">
+      <Filter>Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidGame.h" />

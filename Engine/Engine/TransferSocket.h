@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "Socket.h"
-#include "GameObject.h"
 
+
+class GameObject;
 typedef std::shared_ptr<GameObject> GameObjectPtr;
 
 class TransferSocket : public Socket {
@@ -19,18 +20,17 @@ public:
 	//Accessors
 public:
 
-	GameObjectPtr GetPlayerGameObject() const { return mPlayerGameObject; }
+	GameObjectPtr GetPlayer() const { return mPlayer; }
 	std::string GetClientAddress() const { return mClientAddress; }
 	bool IsConnected() const { return mConnected; }
 	int GetSendThreadID() const { return mSendThreadID; }
 	int GetReceiveThreadID() const { return mReceiveThreadID; }
-	
+
 	
 	//Mutators
 public:
 
-
-	void SetPlayerGameObject(const GameObjectPtr& pGameObjectPtr ) {  mPlayerGameObject = pGameObjectPtr; }
+	void SetClient(const GameObjectPtr& pPlayer) { mPlayer = pPlayer; }
 	void SetClientAddress(const std::string& pClientAddress ) {  mClientAddress = pClientAddress; }
 	void SetSocket(SOCKET& pSocket) override { mConnected = true; Socket::SetSocket(pSocket); }
 	void Disconnect() override { mConnected = false; Socket::Disconnect(); }
@@ -61,7 +61,7 @@ public:
 	//Data:
 private:
 
-	GameObjectPtr mPlayerGameObject{nullptr};
+	GameObjectPtr mPlayer;
 	std::string mClientAddress;
 	bool mConnected{ false };
 	int mSendThreadID{-1};

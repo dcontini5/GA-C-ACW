@@ -7,7 +7,8 @@ Game* Game::mInstance = nullptr;
 
 void Game::OnMessage(std::shared_ptr<Message>& pMessage){
 	
-	if (pMessage->GetType() == MessageTypes::ADDED_COMPONENT) mScene->OnMessage(pMessage);
+	//if (pMessage->GetType() == MessageTypes::ADDED_COMPONENT) 
+	mScene->OnMessage(pMessage);
 
 	
 }

@@ -1,4 +1,5 @@
-﻿#include "PyramidScene.h"
+﻿#include "PyramidClient.h"
+#include "PyramidScene.h"
 #include "CollisionSystem.h"
 #include "CollisionComponent.h"
 #include "RenderSystem.h"
@@ -6,7 +7,6 @@
 #include "PhysicsComponent.h"
 #include "Game.h"
 #include "InfinitePlaneCollisionComponent.h"
-#include "NewPlayerConnectedMessage.h"
 #include "SphereCollisionComponent.h"
 #include "ThreadManager.h"
 

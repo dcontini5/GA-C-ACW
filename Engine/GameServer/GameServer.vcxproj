@@ -156,10 +156,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PyramidServer.cpp" />
     <ClCompile Include="ServersideGame.cpp" />
     <ClCompile Include="ServersideScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PyramidServer.h" />
     <ClInclude Include="ServersideGame.h" />
     <ClInclude Include="ServersideScene.h" />
   </ItemGroup>

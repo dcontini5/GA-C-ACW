@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="AddedComponentMessage.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="ClientPlayerComponent.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -199,6 +200,7 @@
   <ItemGroup>
     <ClInclude Include="AddedComponentMessage.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="ClientPlayerComponent.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="ComponentTypes.h" />

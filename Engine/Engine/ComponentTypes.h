@@ -8,5 +8,6 @@ struct ComponentTypes {
 	static ComponentType RENDER = 2;
 	static ComponentType COLLISION = 3;
 	static ComponentType NETWORKING = 4;
+	static ComponentType PLAYER_CLIENT = 5;
 	
 };

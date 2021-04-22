@@ -1,17 +1,12 @@
-#include <windows.h>
-#include <d3d11_1.h>
-#include <d3dcompiler.h>
-#include <directxmath.h>
+#define WIN32_LEAN_AND_MEAN
 
 #include "Window_DX.h"
 #include "ThreadManager.h"
-//#include "Game/PyramidGame.h"
 #include "PyramidGame.h"
-
-
-
-
-
+#include <Windows.h>
+#include <d3d11_1.h>
+#include <d3dcompiler.h>
+#include <directxmath.h>
 //--------------------------------------------------------------------------------------
 // Entry point to the program. Initializes everything and goes into a message processing 
 // loop. Idle time is used to render the scene.
