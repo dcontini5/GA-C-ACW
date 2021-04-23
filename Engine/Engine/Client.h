@@ -45,6 +45,6 @@ public:
 	//Data:
 private:
 
-
+	TransferSocket mTransferSocket;
 	
 };

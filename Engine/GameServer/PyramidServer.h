@@ -8,8 +8,9 @@ public:
 	PyramidServer();
 	~PyramidServer() = default;
 
+	void CreateMessage(std::string& pMessage) override;
+	void ParseMessage(std::string& pMessage) override;
 	//Accessors
-public:
 
 	//Mutators
 public:

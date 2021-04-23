@@ -75,6 +75,7 @@ public:
 	//}
 	
 	void TeminateThread(uint32_t pThreadID);
+	void DetachThread(uint32_t pThreadID);
 	void Finish();
 	
 	// Private Functions

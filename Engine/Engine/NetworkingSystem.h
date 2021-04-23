@@ -6,6 +6,7 @@
 #include <utility>
 
 typedef std::queue<std::string> MessageQueue;
+typedef std::shared_ptr<TransferSocket> TransferSocketPtr;
 
 class NetworkingSystem : public System {
 
@@ -22,14 +23,13 @@ public:
 
 	// Public Functions
 public:
-	virtual void Init(){};
-	void Send();
-	void Receive();
+	virtual void Init() = 0;
+	void Send(const TransferSocketPtr& pTransferSocket);
+	void Receive(const TransferSocketPtr& pTransferSocket);
 	
-	void Start() override;
 
-	virtual void CreateMessage(std::string& pMessage) {};	//implement on game
-	virtual void ParseMessage(std::string& pMessage) {};	//implement on game
+	virtual void CreateMessage(std::string& pMessage) = 0;	//must implement on game
+	virtual void ParseMessage(std::string& pMessage) = 0;	//must implement on game
 	// Private Functions
 private:
 
@@ -41,7 +41,7 @@ public:
 
 	//Data:
 protected:
-	TransferSocket	mTransferSocket;
+	
 	Peer			mPeer;
 	int				mSendThreadID;
 	int				mReceiveThreadID;

@@ -8,7 +8,7 @@ public:
 	NetworkComponent(GameObjectPtr& pParent): GameObjectComponent(pParent, ComponentTypes::NETWORKING) {}
 	NetworkComponent(const NetworkComponent&);
 	NetworkComponent(NetworkComponent&&); //exchange members here;
-	~NetworkComponent();
+	~NetworkComponent() = default;
 
 	//Accessors
 public:
@@ -18,7 +18,7 @@ public:
 
 	// Public Functions
 public:
-	void OnMessage(std::shared_ptr<Message>& pMessage) override;
+	void OnMessage(std::shared_ptr<Message>& pMessage) override {}
 	// Private Functions
 private:
 

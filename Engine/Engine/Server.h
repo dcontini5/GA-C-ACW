@@ -22,10 +22,8 @@ public:
 	// Public Functions
 public:
 	void Init() override;
-	void Start();
+	void Start() override;
 	void Listen();
-	void Send();
-	void Receive();
 	//void AddObject(GameObjectPtr& pGameObject) override;
 	//void Receive(TransferSocket& pClient);
 	

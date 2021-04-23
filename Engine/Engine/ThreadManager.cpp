@@ -24,6 +24,18 @@ void ThreadManager::TeminateThread(uint32_t pThreadID){
 	}
 }
 
+void ThreadManager::DetachThread(uint32_t pThreadID){
+
+	auto thread = mThreads.find(pThreadID);
+
+	if(thread != mThreads.end()){
+
+		thread->second.detach();
+		mThreads.erase(thread);
+		
+	}
+}
+
 void ThreadManager::Finish(){
 
 	for (auto i = mThreads.begin(); i != mThreads.end(); i++) {

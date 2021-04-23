@@ -19,20 +19,22 @@ public:
 	// Public Functions
 public:
 
-	void CreateMessage();
-	void ParseMessage();
+	void CreateMessage(std::string& pMessage) override;
+	void ParseMessage(std::string& pMessage) override;
+	
 	// Private Functions
 private:
 
 	//Operators
 public:
-	PyramidClient& operator=(const PyramidClient& pOther){ return *this = PyramidClient(pOther); }
+	PyramidClient& operator=(const PyramidClient& pOther) = default;
 
 	PyramidClient& operator=(const PyramidClient&& pOther){
 
 		/*Swap Members Here*/
 		return *this;
 	}
+
 
 	//Data:
 private:

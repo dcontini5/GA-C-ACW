@@ -51,8 +51,8 @@ void Server::Listen(){
 
 				// check if socket is closing it should
 				closesocket(newSocket);
-				//client->Disconnect();
-				//terminate threads
+				//terminate threads ?
+			
 				continue;
 			}
 				
@@ -65,7 +65,11 @@ void Server::Listen(){
 			
 			Game::Instance()->OnMessage(msg);
 
-			
+			//const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, client);
+			//client->SetSendThreadID(sendID);
+			const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, client);
+			client->SetReceiveThreadID(receiveID);
+			//ThreadManager::Instance()->TeminateThread(receiveID);
 		}
 		
 	}
@@ -74,56 +78,3 @@ void Server::Listen(){
 }
 
 
-
-//void Server::Send(){
-//
-//	while( mClients.empty() ) std::this_thread::yield();
-//	
-//	while (true){
-//
-//		for(auto& client : mClients){
-//
-//			client.Send("Message");
-//			
-//		}
-//		
-//	}
-//
-//}
-
-//void Server::Receive(TransferSocket& pClient){}
-
-
-//void Server::Receive(){
-//
-//
-//	while (mClients.empty()) std::this_thread::yield();
-//
-//	while(true){
-//
-//		for (auto& client : mClients){
-//
-//			std::string message;
-//			client.Receive(message);
-//			
-//		}
-//		
-//	}
-//
-//	
-//}
-
-	/*
-	 * 
-
-void Server::Echo(std::string& pMessage){
-
-	//std::string message;
-
-	//mTransferSocket.Receive(pMessage);
-	//std::cout << pMessage;
-	//mTransferSocket.Send(pMessage);
-
-	
-}
-	 */

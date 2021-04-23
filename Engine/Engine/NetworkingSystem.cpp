@@ -5,44 +5,53 @@
 
 
 
-void NetworkingSystem::Send() {
+void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 
-	//const auto message = ParseData({ glm::vec3(0.f, 0.f, 0.f) });
-	std::string message;
+	while (pTransferSocket->IsConnected()){
+		std::string message;
 
-	CreateMessage(message);
-	
-	if (send(mTransferSocket.GetSocket(), message.c_str(), message.size(), 0) == SOCKET_ERROR) {
+		CreateMessage(message);
 
-		std::cerr << "Send failed with " << WSAGetLastError() << std::endl;
+		if (send(pTransferSocket->GetSocket(), message.c_str(), message.size(), 0) == SOCKET_ERROR) {
 
+			std::cerr << "Send failed with " << WSAGetLastError() << std::endl;
+
+		}
 	}
+	
 
 }
 
 //void TransferSocket::Receive(std::string& pMessage){}
 
-void NetworkingSystem::Receive() {
-
-	const int maxSize = 4096;
-	std::vector<char> buffer(maxSize);
-
-	
-	if (recv(mTransferSocket.GetSocket(), &buffer[0], maxSize, 0) == SOCKET_ERROR) {
-
-		std::cerr << "Receive failed with " << WSAGetLastError() << std::endl;
-		return;
-
-	}
+void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 
 	std::string message;
-	message.assign(buffer.cbegin(), buffer.cend());
+	
+	while ( message != "DISCONNECT" ){
+		
+		const auto maxSize = 4096;
+		std::vector<char> buffer(maxSize);
 
-	ParseMessage(message);
+
+		if (recv(pTransferSocket->GetSocket(), &buffer[0], maxSize, 0) == SOCKET_ERROR) {
+
+			std::cerr << "Receive failed with " << WSAGetLastError() << std::endl;
+			pTransferSocket->Disconnect();
+			ThreadManager::Instance()->DetachThread(pTransferSocket->GetReceiveThreadID());
+			return;
+
+		}
+
+		std::cout << "Received\n";
+		
+		message.assign(buffer.cbegin(), buffer.cend());
+
+		ParseMessage(message);
+		
+	}
+
 
 }
 
-void NetworkingSystem::Start() {
 
-
-}

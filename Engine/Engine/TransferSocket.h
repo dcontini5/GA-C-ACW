@@ -34,8 +34,8 @@ public:
 	void SetClientAddress(const std::string& pClientAddress ) {  mClientAddress = pClientAddress; }
 	void SetSocket(SOCKET& pSocket) override { mConnected = true; Socket::SetSocket(pSocket); }
 	void Disconnect() override { mConnected = false; Socket::Disconnect(); }
-	void GetSendThreadID(const int& pID) {mSendThreadID = pID; }
-	void GetReceiveThreadID(const int& pID) {mReceiveThreadID = pID; }
+	void SetSendThreadID(const int& pID) {mSendThreadID = pID; }
+	void SetReceiveThreadID(const int& pID) {mReceiveThreadID = pID; }
 	// Public Functions
 public:
 		
