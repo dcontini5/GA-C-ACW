@@ -8,6 +8,7 @@
 void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 
 	while (pTransferSocket->IsConnected()){
+		
 		std::string message;
 
 		CreateMessage(message);
@@ -15,14 +16,15 @@ void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 		if (send(pTransferSocket->GetSocket(), message.c_str(), message.size(), 0) == SOCKET_ERROR) {
 
 			std::cerr << "Send failed with " << WSAGetLastError() << std::endl;
-
+			pTransferSocket->Disconnect();
+			ThreadManager::Instance()->DetachThread(pTransferSocket->GetReceiveThreadID());
+			return;
+			
 		}
 	}
-	
 
 }
 
-//void TransferSocket::Receive(std::string& pMessage){}
 
 void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 
@@ -53,5 +55,7 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 
 
 }
+
+
 
 

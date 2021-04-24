@@ -172,7 +172,7 @@
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="NetworkComponent.cpp" />
     <ClCompile Include="NetworkingSystem.cpp" />
-    <ClCompile Include="NewPlayerConnectedMessage.cpp" />
+    <ClCompile Include="PlayerConnectedMessage.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Peer.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
@@ -213,7 +213,7 @@
     <ClInclude Include="MessageTypes.h" />
     <ClInclude Include="NetworkComponent.h" />
     <ClInclude Include="NetworkingSystem.h" />
-    <ClInclude Include="NewPlayerConnectedMessage.h" />
+    <ClInclude Include="PlayerConnectedMessage.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Peer.h" />
     <ClInclude Include="PhysicsComponent.h" />

@@ -1,31 +1,50 @@
 ﻿#include "Client.h"
 
+
+#include "Game.h"
 #include "ThreadManager.h"
+#include "PlayerConnectedMessage.h"
 
 void Client::Init(){
 
-	mTransferSocket.Init(2, 2);
-	mTransferSocket.Create();
+	mTransferSocket->Init(2, 2);
+	mTransferSocket->Create();
 	
 }
 
-void Client::Connect(){
+void Client::Start(){
 
+	while (Game::Instance()->GetQuitFlag()){
 
-	mTransferSocket.Connect(mPeer);
+		mTransferSocket->Connect(mPeer);
+
+		if (mTransferSocket->IsConnected()) {
+
+			std::shared_ptr<Message> msg = std::make_shared<PlayerConnectedMessage>(mTransferSocket);
+
+			Game::Instance()->BroadcastMessage(msg);
+
+			const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, mTransferSocket);
+			//mTransferSocket->SetSendThreadID(sendID);
+			//const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, mTransferSocket);
+			//mTransferSocket->SetReceiveThreadID(receiveID);
+			ThreadManager::Instance()->TeminateThread(sendID);
+
+		}
+		else {
+							
+			mTransferSocket->Disconnect();
+			mTransferSocket->Create();
+			
+			std::this_thread::sleep_for(std::chrono::duration <double>(10.f));
+			
+		}
+		
+		
+	}
 
 	
 }
 
 
 
-//void Client::Echo(const std::string& pMessage){
-//
-//	mTransferSocket.Send(pMessage);
-//	std::string message;
-//	mTransferSocket.Receive();
-//	//mTransferSocket.Receive(message);
-//
-//	std::cout << message;
-//		
-//}

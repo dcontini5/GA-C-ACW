@@ -5,7 +5,7 @@ class PyramidClient : public Client {
 
 	//Structors
 public:
-	PyramidClient() = default;
+	PyramidClient():Client(){};
 	PyramidClient(const PyramidClient&);
 	PyramidClient(PyramidClient&&); //exchange members here;
 	~PyramidClient() = default;

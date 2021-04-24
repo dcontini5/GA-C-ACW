@@ -28,7 +28,7 @@ void GameObject::AddComponent(ComponentPtr& pComponent){
 	mComponents[pComponent->GetType()] = pComponent;
 	auto imThis = shared_from_this();
 	std::shared_ptr<Message> msg = std::make_shared<AddedComponentMessage>(pComponent->GetType(), imThis);
-	Game::Instance()->OnMessage(msg);
+	Game::Instance()->BroadcastMessage(msg);
 
 	
 }
@@ -43,7 +43,7 @@ void GameObject::AddComponent(GameObjectComponent* pComponent){
 	mComponents[pComponent->GetType()] = std::make_shared<GameObjectComponent>(*pComponent);
 	auto imThis = shared_from_this();
 	std::shared_ptr<Message> msg = std::make_shared<AddedComponentMessage>(pComponent->GetType(), imThis);
-	Game::Instance()->OnMessage(msg);
+	Game::Instance()->BroadcastMessage(msg);
 	
 }
 

@@ -25,8 +25,7 @@ public:
 	void Start() override;
 	void Listen();
 	//void AddObject(GameObjectPtr& pGameObject) override;
-	//void Receive(TransferSocket& pClient);
-	
+	//void Receive(TransferSocket& pClient)
 	
 	void Echo(std::string& pMessage);
 	// Private Functions
@@ -38,9 +37,9 @@ public:
 	//Data:
 private:
 
-	//typedef std::map<std::string, GameObjectPtr> ClientList;
 	typedef std::shared_ptr<TransferSocket> TransferSocketPtr;
 	typedef std::map<std::string, TransferSocketPtr> ClientList;
+	
 	ClientList                  mClients;
 	ListenSocket				mListenSocket;
 	TransferSocket				mTransferSocket;

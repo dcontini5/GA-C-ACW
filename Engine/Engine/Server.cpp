@@ -4,7 +4,7 @@
 
 #include "Game.h"
 #include "ThreadManager.h"
-#include "NewPlayerConnectedMessage.h"
+#include "PlayerConnectedMessage.h"
 #include "ClientPlayerComponent.h"	
 
 Server::Server(): NetworkingSystem({}){}
@@ -18,12 +18,6 @@ void Server::Init() {
 }
 
 void Server::Start(){
-
-	ThreadManager::Instance()->AddThread(&Server::Listen, this);
-
-}
-
-void Server::Listen(){
 
 	while(Game::Instance()->GetQuitFlag()){
 		
@@ -59,17 +53,21 @@ void Server::Listen(){
 			client->SetSocket(newSocket);
 			client->SetClientAddress(ipAdd);
 
-			mClients[ipAdd] = client;
-			
-			std::shared_ptr<Message> msg = std::make_shared<NewPlayerConnectedMessage>(client);
-			
-			Game::Instance()->OnMessage(msg);
+			if (mClients.find(ipAdd) == mClients.end())	{
+				
+				mClients[ipAdd] = client;
+				
+				std::shared_ptr<Message> msg = std::make_shared<PlayerConnectedMessage>(client);
+				
+				Game::Instance()->BroadcastMessage(msg);
+				
+			}
+					
 
 			//const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, client);
 			//client->SetSendThreadID(sendID);
 			const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, client);
 			client->SetReceiveThreadID(receiveID);
-			//ThreadManager::Instance()->TeminateThread(receiveID);
 		}
 		
 	}

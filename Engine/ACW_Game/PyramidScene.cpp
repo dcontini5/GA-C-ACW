@@ -12,6 +12,14 @@
 
 void PyramidScene::Start(){
 
+
+	std::shared_ptr<System> client = std::make_shared<PyramidClient>();
+
+	AddSystem(client);
+
+	Scene::Start();
+	
+	if (1 == 1) return;
 	auto renderer = Game::Instance()->GetWindow()->GetRenderer();
 	
 	std::shared_ptr<System> renderSystem = std::make_shared<RenderSystem>();

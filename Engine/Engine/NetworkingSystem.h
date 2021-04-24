@@ -12,7 +12,7 @@ class NetworkingSystem : public System {
 
 	//Structors
 public:
-	NetworkingSystem(Peer pPeer) : System(SystemTypes::NETWORKING), mPeer(std::move(pPeer)), mSendThreadID(-1), mReceiveThreadID(-1){}
+	NetworkingSystem(Peer pPeer) : System(SystemTypes::NETWORKING), mPeer(std::move(pPeer)){}
 	~NetworkingSystem() = default;
 
 	//Accessors
@@ -26,14 +26,13 @@ public:
 	virtual void Init() = 0;
 	void Send(const TransferSocketPtr& pTransferSocket);
 	void Receive(const TransferSocketPtr& pTransferSocket);
-	
 
 	virtual void CreateMessage(std::string& pMessage) = 0;	//must implement on game
 	virtual void ParseMessage(std::string& pMessage) = 0;	//must implement on game
 	// Private Functions
 private:
 
-	void Process() override { return; }; // not going to be used
+	void Process() override{}; // not going to be used
 	
 	//Operators
 public:
@@ -43,7 +42,7 @@ public:
 protected:
 	
 	Peer			mPeer;
-	int				mSendThreadID;
-	int				mReceiveThreadID;
+	//int				mSendThreadID;
+	//int				mReceiveThreadID;
 	MessageQueue    mSendQueue;
 };

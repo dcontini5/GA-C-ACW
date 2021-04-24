@@ -16,7 +16,8 @@ void Socket::Init(const int& pMinVersion, const int& pMaxVersion) {
 
 void Socket::Create() {
 
-	mSocket = socket(AF_INET, SOCK_STREAM, 6);
+	
+	mSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
 	if (mSocket == INVALID_SOCKET) {
 

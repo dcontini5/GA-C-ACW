@@ -19,7 +19,7 @@ public:
 	}
 
 protected:
-	Socket() : mSocket(INVALID_SOCKET) {}
+	Socket() {}
 	Socket(const SOCKET& pSocket) : mSocket(pSocket) {}
 	Socket(const Socket& pOther) : mSocket(pOther.mSocket) {}
 	Socket(Socket&& pOther) noexcept : mSocket(std::exchange(pOther.mSocket, -1)) {} //exchange members here;
@@ -34,7 +34,7 @@ public:
 public:
 
 	virtual void SetSocket(SOCKET& pSocket) { mSocket = pSocket; }
-	virtual void Disconnect() { closesocket(mSocket); mSocket = 0; }
+	virtual void Disconnect() { closesocket(mSocket); mSocket = INVALID_SOCKET; }
 	// Public Functions
 public:
 
@@ -56,6 +56,6 @@ public:
 	//Data:
 protected:
 
-	SOCKET mSocket;
+	SOCKET mSocket{ INVALID_SOCKET };
 	
 };

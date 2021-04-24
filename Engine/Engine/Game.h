@@ -31,7 +31,7 @@ public:
 
 	void Quit(const bool& pQuitFlag) { mQuitFlag = true; }
 	void SetWindow(std::shared_ptr<Window>& pWindow) { mWindow = pWindow; }
-	void OnMessage(std::shared_ptr<Message>& pMessage);
+	void BroadcastMessage(std::shared_ptr<Message>& pMessage);
 
 	//void StartRenderer();
 	

@@ -1,7 +1,7 @@
 ﻿#include "ServersideScene.h"
 
 #include "PyramidServer.h"
-#include "NewPlayerConnectedMessage.h"
+#include "PlayerConnectedMessage.h"
 #include "NetworkComponent.h"
 
 #include "CollisionSystem.h"
@@ -80,7 +80,7 @@ void ServersideScene::OnMessage(std::shared_ptr<Message>& pMessage){
 
 		case MessageTypes::PLAYER_CONNECTED:
 		{
-			const auto playerConnectedMessage = std::reinterpret_pointer_cast<NewPlayerConnectedMessage>(pMessage);
+			const auto playerConnectedMessage = std::reinterpret_pointer_cast<PlayerConnectedMessage>(pMessage);
 
 			auto player = std::make_shared<GameObject>();
 			player->InitPos({ 0.f, 0.f, 0.f });

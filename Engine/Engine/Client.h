@@ -8,7 +8,7 @@ class Client : public NetworkingSystem{
 
 	//Structors
 public:
-	Client() :NetworkingSystem({"127.0.0.1"}){}
+	Client() :NetworkingSystem({"127.0.0.1"}), mTransferSocket(std::make_shared<TransferSocket>()){}
 	Client(const Client&);
 	Client(Client&&); //exchange members here;
 	~Client() = default;
@@ -24,7 +24,7 @@ public:
 	
 	void Init() override;
 	void Connect();
-	void Start();
+	void Start() override;
 	void Echo(const std::string& pMessage);
 
 	
@@ -45,6 +45,8 @@ public:
 	//Data:
 private:
 
-	TransferSocket mTransferSocket;
+
+	typedef std::shared_ptr<TransferSocket> TransferSocketPtr;
+	TransferSocketPtr mTransferSocket;
 	
 };

@@ -136,11 +136,11 @@
     <ClCompile Include="NetworkingSystem.cpp">
       <Filter>Systems</Filter>
     </ClCompile>
-    <ClCompile Include="NewPlayerConnectedMessage.cpp">
-      <Filter>Messages</Filter>
-    </ClCompile>
     <ClCompile Include="ClientPlayerComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerConnectedMessage.cpp">
+      <Filter>Messages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -261,11 +261,11 @@
     <ClInclude Include="NetworkComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="NewPlayerConnectedMessage.h">
-      <Filter>Messages</Filter>
-    </ClInclude>
     <ClInclude Include="ClientPlayerComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerConnectedMessage.h">
+      <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

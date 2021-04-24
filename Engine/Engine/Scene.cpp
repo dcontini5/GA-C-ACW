@@ -56,21 +56,21 @@ void Scene::Start(){
 
 			case SystemTypes::RENDER:
 				{
-					auto sys = std::reinterpret_pointer_cast<RenderSystem>(system.second);
+					auto sys = std::dynamic_pointer_cast<RenderSystem>(system.second);
 					mSystemThreadIDs[type] = threadManager->AddThread(&RenderSystem::Start, sys);
 					break;
 				}
 			
 			case SystemTypes::COLLISION:
 				{
-					auto sys = std::reinterpret_pointer_cast<CollisionSystem>(system.second);
+					auto sys = std::dynamic_pointer_cast<CollisionSystem>(system.second);
 					mSystemThreadIDs[type] = threadManager->AddThread(&CollisionSystem::Start, sys);
 					break;
 				}
 
 			case SystemTypes::PHYSICS:
 				{
-					auto sys = std::reinterpret_pointer_cast<PhysicsSystem>(system.second);
+					auto sys = std::dynamic_pointer_cast<PhysicsSystem>(system.second);
 					mSystemThreadIDs[type] = threadManager->AddThread(&PhysicsSystem::Start, sys);
 					break;
 				}
@@ -78,9 +78,9 @@ void Scene::Start(){
 
 			case SystemTypes::NETWORKING:
 				{
-					auto sys = std::reinterpret_pointer_cast<Server>(system.second);
+					auto sys = std::dynamic_pointer_cast<NetworkingSystem>(system.second);
 					sys->Init();
-					mSystemThreadIDs[type] = threadManager->AddThread(&Server::Listen, sys);
+					mSystemThreadIDs[type] = threadManager->AddThread(&NetworkingSystem::Start, sys);
 					break;
 				}
 				

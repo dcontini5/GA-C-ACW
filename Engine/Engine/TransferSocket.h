@@ -39,7 +39,7 @@ public:
 	// Public Functions
 public:
 		
-	void Connect(const Peer& pPeer) const;
+	void Connect(const Peer& pPeer);
 	void Send();
 	void Receive();
 	//void Send(const std::string pMessage);
