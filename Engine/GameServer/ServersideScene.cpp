@@ -18,18 +18,53 @@
 void ServersideScene::Start(){
 
 
-	//std::shared_ptr<System> physicsSystem = std::make_shared<PhysicsSystem>();
-	//std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>();
-	//
-	//AddSystem(physicsSystem);
-	//AddSystem(collisionSystem);
+	std::shared_ptr<System> physicsSystem = std::make_shared<PhysicsSystem>();
+	std::shared_ptr<System> collisionSystem = std::make_shared<CollisionSystem>();
 	std::shared_ptr<System> server = std::make_shared<PyramidServer>();
+	
+	AddSystem(physicsSystem);
+	AddSystem(collisionSystem);
 	AddSystem(server);
+	
+	int noOfLevels = 6;
+	/*
+	auto sphereObj = std::make_shared<GameObject>();
 
-	Scene::Start();
+	sphereObj->InitPos({ 0.f, 20,  - 5.f });
+	sphereObj->setRot({ 0, 0, 0 });
+	sphereObj->setScale({ 1.f, 1.f, 1.f });
 
-	int noOfLevels = 1;
+	{
 
+		auto nc = std::make_shared<NetworkComponent>(sphereObj);
+
+		auto comp = std::dynamic_pointer_cast<GameObjectComponent>(nc);
+
+		sphereObj->AddComponent(comp);
+
+		auto pc = std::make_shared<PhysicsComponent>(sphereObj);
+		pc->SetDrag(0.60f);
+		pc->SetStatic(false);
+
+		comp = std::reinterpret_pointer_cast<GameObjectComponent>(pc);
+
+		sphereObj->AddComponent(comp);
+
+		auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
+
+		cc->SetRadius(1.f);
+
+		comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
+
+		sphereObj->AddComponent(comp);
+
+	}
+
+
+	mGameObjectList.push_back(sphereObj);
+
+	*/
+	
 	for (auto i = noOfLevels; i > 0; i--) {
 
 		auto x = 0;
@@ -48,12 +83,28 @@ void ServersideScene::Start(){
 
 				{
 
-					auto rc = std::make_shared<NetworkComponent>(sphereObj);
+					auto nc = std::make_shared<NetworkComponent>(sphereObj);
 
-					auto comp = std::dynamic_pointer_cast<GameObjectComponent>(rc);
+					auto comp = std::dynamic_pointer_cast<GameObjectComponent>(nc);
 
 					sphereObj->AddComponent(comp);
-										
+
+					auto pc = std::make_shared<PhysicsComponent>(sphereObj);
+					pc->SetDrag(0.60f);
+					pc->SetStatic(i == noOfLevels);
+
+					comp = std::reinterpret_pointer_cast<GameObjectComponent>(pc);
+
+					sphereObj->AddComponent(comp);
+
+					auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
+
+					cc->SetRadius(1.f);
+
+					comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
+
+					sphereObj->AddComponent(comp);
+					
 				}
 
 
@@ -67,7 +118,7 @@ void ServersideScene::Start(){
 
 
 	}
-
+	Scene::Start();
 	
 }
 

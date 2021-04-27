@@ -24,12 +24,12 @@ void Client::Start(){
 
 			Game::Instance()->BroadcastMessage(msg);
 
-			const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, mTransferSocket);
+			//const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, mTransferSocket);
 			//mTransferSocket->SetSendThreadID(sendID);
-			//const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, mTransferSocket);
+			const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, mTransferSocket);
 			//mTransferSocket->SetReceiveThreadID(receiveID);
-			ThreadManager::Instance()->TeminateThread(sendID);
-
+			//ThreadManager::Instance()->TeminateThread(receiveID);
+			while (true) { std::this_thread::sleep_for(std::chrono::duration<float>(10)); }
 		}
 		else {
 							

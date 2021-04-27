@@ -2,6 +2,7 @@
 #include "GameObjectComponent.h"
 #include "Game.h"
 #include "AddedComponentMessage.h"
+#include "RemovedComponentMessage.h"
 
 static int IDs = 0;
 
@@ -55,7 +56,10 @@ void GameObject::RemoveComponent(const int& pType){
 
 		mComponents.erase(it);
 
-		it->second; //todo Destroy component
+		auto imThis = shared_from_this();
+		std::shared_ptr<Message> msg = std::make_shared<RemovedComponentMessage>(it->second->GetType(), imThis);
+		Game::Instance()->BroadcastMessage(msg);
+		//todo Destroy component
 		// todo delete it->second;
 		
 	}

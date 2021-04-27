@@ -89,7 +89,7 @@ void CollisionSystem::CheckCollision(ComponentPtr& pCollider, ComponentPtr& pCol
 
 void CollisionSystem::CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCollisionPtr& pCollidee){
 
-	const auto dist = pCollider->GetParent()->GetPos() - pCollidee->GetParent()->GetPos();
+	const auto dist = pCollider->GetParent()->GetNewPos() - pCollidee->GetParent()->GetNewPos();
 
 	const auto distLenght = glm::dot(dist, dist);
 
@@ -125,7 +125,7 @@ void CollisionSystem::CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCol
 
 void CollisionSystem::CheckPlaneSphere(PlaneCollisionPtr& pPlaneCollider, SphereCollisionPtr& pSphereCollidee){
 
-	const auto dist = abs(pPlaneCollider->GetParent()->GetPos() - pSphereCollidee->GetParent()->GetPos());
+	const auto dist = abs(pPlaneCollider->GetParent()->GetNewPos() - pSphereCollidee->GetParent()->GetNewPos());
 
 	const auto distLenght = glm::dot( dist,  pPlaneCollider->GetNormal());
 
@@ -150,7 +150,7 @@ void CollisionSystem::CollisionResponseStatic(PhysicsComponentPtr& pCollider, co
 	
 	const auto diff = (pNormal * pDistance) * 1.000001f;
 
-	pCollider->GetParent()->SetPos(pCollider->GetParent()->GetPos() + diff);
+	pCollider->GetParent()->SetNewPos(pCollider->GetParent()->GetNewPos() + diff);
 
 	const auto colliderPhysComp = std::dynamic_pointer_cast<PhysicsComponent>(pCollider->GetParent()->GetComponent(ComponentTypes::PHYSICS));
 
@@ -164,8 +164,8 @@ void CollisionSystem::CollisionResponseDynamic(PhysicsComponentPtr& pCollider, P
 
 	const auto diff = (pNormal * pDistance) * 0.5000001f;
 	
-	pCollider->GetParent()->SetPos(pCollider->GetParent()->GetPos() + diff);
-	pCollidee->GetParent()->SetPos(pCollidee->GetParent()->GetPos() - diff);
+	pCollider->GetParent()->SetNewPos(pCollider->GetParent()->GetNewPos() + diff);
+	pCollidee->GetParent()->SetNewPos(pCollidee->GetParent()->GetNewPos() - diff);
 	
 	const auto reflectedVelCollider = glm::reflect(pCollider->GetVelocity(), pNormal);
 	const auto reflectedVelCollidee = glm::reflect(pCollidee->GetVelocity(), -pNormal);

@@ -22,7 +22,7 @@ void PhysicsSystem::Process(){
 				
 		for (auto& obj : mGameObjects) {
 			std::unique_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
-			obj->SetOldPos(obj->GetPos());
+			obj->SetPos(obj->GetNewPos());
 		}
 		
 	}
@@ -42,7 +42,7 @@ void PhysicsSystem::Process(){
 
 		if (physComp->IsStatic()) continue;
 		
-		const auto pos = obj->GetPos();
+		const auto pos = obj->GetNewPos();
 
 		const auto newVel = physComp->GetVelocity() + mGravity * physComp->GetMass() * 0.1f;
 
@@ -50,7 +50,7 @@ void PhysicsSystem::Process(){
 		
 		const auto newPos =  pos + (newVel) * (dt.count() * DT_MULT);
 
-		obj->SetPos(newPos);
+		obj->SetNewPos(newPos);
 		
 	}
 	

@@ -25,15 +25,16 @@ public:
 	bool IsConnected() const { return mConnected; }
 	int GetSendThreadID() const { return mSendThreadID; }
 	int GetReceiveThreadID() const { return mReceiveThreadID; }
-
+	bool IsResetted() const { return mResetted; }
 	
 	//Mutators
 public:
 
 	void SetClient(const GameObjectPtr& pPlayer) { mPlayer = pPlayer; }
 	void SetClientAddress(const std::string& pClientAddress ) {  mClientAddress = pClientAddress; }
-	void SetSocket(SOCKET& pSocket) override { mConnected = true; Socket::SetSocket(pSocket); }
+	void SetSocket(SOCKET& pSocket) override { mResetted = mConnected = true; Socket::SetSocket(pSocket); }
 	void Disconnect() override { mConnected = false; Socket::Disconnect(); }
+	void ResetDone() { mResetted = false; }
 	void SetSendThreadID(const int& pID) {mSendThreadID = pID; }
 	void SetReceiveThreadID(const int& pID) {mReceiveThreadID = pID; }
 	// Public Functions
@@ -61,8 +62,10 @@ public:
 	//Data:
 private:
 
+	
 	GameObjectPtr mPlayer;
 	std::string mClientAddress;
+	bool mResetted	{false};
 	bool mConnected{ false };
 	int mSendThreadID{-1};
 	int mReceiveThreadID{-1};

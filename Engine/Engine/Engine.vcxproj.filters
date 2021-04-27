@@ -142,6 +142,12 @@
     <ClCompile Include="PlayerConnectedMessage.cpp">
       <Filter>Messages</Filter>
     </ClCompile>
+    <ClCompile Include="RemovedComponentMessage.cpp">
+      <Filter>Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetSceneMessage.cpp">
+      <Filter>Messages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -265,6 +271,15 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerConnectedMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkMessageTypes.h">
+      <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="RemovedComponentMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetSceneMessage.h">
       <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>

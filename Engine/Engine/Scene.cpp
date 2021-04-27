@@ -37,9 +37,24 @@ void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 			break;
 		}
 		
-	}
-
 	
+	case MessageTypes::REMOVED_COMPONENT:
+		{
+
+			auto remMsg = std::reinterpret_pointer_cast<AddedComponentMessage>(pMessage);
+
+			if (mSystems.find(remMsg->GetCompType()) != mSystems.end()) {
+
+				auto go = remMsg->GetSender();
+				mSystems[remMsg->GetCompType()]->RemoveObject(go);
+
+			}
+			break;
+		}
+		
+		
+
+	}
 		
 	
 }

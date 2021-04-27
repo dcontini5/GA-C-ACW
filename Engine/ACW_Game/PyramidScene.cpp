@@ -1,4 +1,7 @@
 ﻿#include "PyramidClient.h"
+
+#include "NetworkComponent.h"
+
 #include "PyramidScene.h"
 #include "CollisionSystem.h"
 #include "CollisionComponent.h"
@@ -9,17 +12,63 @@
 #include "InfinitePlaneCollisionComponent.h"
 #include "SphereCollisionComponent.h"
 #include "ThreadManager.h"
+#include "ResetSceneMessage.h"
 
 void PyramidScene::Start(){
 
-
-	std::shared_ptr<System> client = std::make_shared<PyramidClient>();
-
-	AddSystem(client);
-
-	Scene::Start();
+	const auto i = 1;
 	
-	if (1 == 1) return;
+	if (1 == i) {
+
+
+		auto renderer = Game::Instance()->GetWindow()->GetRenderer();
+		std::shared_ptr<System> renderSystem = std::make_shared<RenderSystem>();
+		std::dynamic_pointer_cast<RenderSystem>(renderSystem)->SetRenderer(renderer);
+		
+		std::shared_ptr<System> client = std::make_shared<PyramidClient>();
+
+		AddSystem(renderSystem);
+		AddSystem(client);
+
+		
+
+		auto planeObj = std::make_shared<GameObject>();
+
+
+
+		planeObj->InitPos({ 0.f, 0.f, 0.f });
+		planeObj->setRot({ 0.f, 0.f, 0.f });
+		planeObj->setScale({ 1.f, 1.f, 1.f });
+
+		{
+
+			auto rc = std::make_shared<RenderComponent>(planeObj);
+			auto mesh = ResourceManager::Instance()->GetMesh("Plane");
+
+			rc->SetMesh(mesh);
+			rc->StartDrawing();
+
+			auto comp = std::reinterpret_pointer_cast<GameObjectComponent>(rc);
+
+			planeObj->AddComponent(comp);
+
+			auto cc = std::make_shared<InfinitePlaneCollisionComponent>(planeObj);
+
+			cc->SetNormal({ 0.f, 1.f, 0.f });
+
+			comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
+
+			planeObj->AddComponent(comp);
+
+
+		}
+
+		mGameObjectList.push_back(planeObj);
+		
+		Scene::Start();
+	}
+	
+	if (1 == i) return;
 	auto renderer = Game::Instance()->GetWindow()->GetRenderer();
 	
 	std::shared_ptr<System> renderSystem = std::make_shared<RenderSystem>();
@@ -133,7 +182,52 @@ void PyramidScene::Start(){
 
 void PyramidScene::OnMessage(std::shared_ptr<Message>& pMessage){
 
+
+	switch (pMessage->GetType()) {
+
+	case MessageTypes::RESET_SCENE:
+	{
+			auto resetMsg = std::reinterpret_pointer_cast<ResetSceneMessage>(pMessage);
+			std::vector<GameObjectPtr> gameObjects(std::move(resetMsg->GetGameObjects()));
+
+			{
+				std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+				ThreadManager::Instance()->PauseUnpauseRenderer(true);
+
+				
+			for(auto& go : gameObjects){
+
+				auto rc = std::make_shared<RenderComponent>(go);
+				auto mesh = ResourceManager::Instance()->GetMesh("Sphere");
+
+				rc->SetMesh(mesh);
+				rc->StartDrawing();
+
+				auto comp = std::dynamic_pointer_cast<GameObjectComponent>(rc);
+
+				go->AddComponent(comp);
+
+				auto nc = std::make_shared<NetworkComponent>(go);
+
+				comp = std::dynamic_pointer_cast<GameObjectComponent>(nc);
+
+				go->AddComponent(comp);
+
+				
+			}
+			
+			
+				//std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+				ThreadManager::Instance()->PauseUnpauseRenderer(false);
+				ThreadManager::Instance()->GetConditionVariable().notify_one();
+			}
+			
+	}
+
+	}
+	
+	
 	Scene::OnMessage(pMessage);
 
-	
+		
 }

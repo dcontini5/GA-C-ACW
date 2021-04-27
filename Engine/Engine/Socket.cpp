@@ -7,7 +7,7 @@ void Socket::Init(const int& pMinVersion, const int& pMaxVersion) {
 	WSADATA wsaData;
 	if (WSAStartup(wVersionRequested, &wsaData)) {
 
-		std::cerr << "Soket initialization failed" << std::endl;
+		std::cerr << "Socket initialization failed" << std::endl;
 
 
 	}

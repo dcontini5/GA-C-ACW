@@ -14,7 +14,7 @@ void TransferSocket::Connect(const Peer& pPeer){
 	}
 
 	mConnected = true;
-	
+	mResetted = true;
 }
 
 

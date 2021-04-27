@@ -3,16 +3,18 @@
 #include "ThreadManager.h"
 
 
-
-
 void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
-
+		
 	while (pTransferSocket->IsConnected()){
 		
 		std::string message;
 
-		CreateMessage(message);
+		CreateMessage(message, pTransferSocket);
 
+		message += '\0';
+
+		//std::cout << message << "\n";
+		
 		if (send(pTransferSocket->GetSocket(), message.c_str(), message.size(), 0) == SOCKET_ERROR) {
 
 			std::cerr << "Send failed with " << WSAGetLastError() << std::endl;
@@ -21,6 +23,7 @@ void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 			return;
 			
 		}
+		
 	}
 
 }
@@ -31,25 +34,33 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 	std::string message;
 	
 	while ( message != "DISCONNECT" ){
+
 		
-		const auto maxSize = 4096;
-		std::vector<char> buffer(maxSize);
+		do{
+			const auto maxSize = 65535;
+			std::vector<char> buffer(maxSize);
+			std::string recvMessage;
 
+			if (recv(pTransferSocket->GetSocket(), &buffer[0], maxSize, 0) == SOCKET_ERROR) {
 
-		if (recv(pTransferSocket->GetSocket(), &buffer[0], maxSize, 0) == SOCKET_ERROR) {
+				std::cerr << "Receive failed with " << WSAGetLastError() << std::endl;
+				pTransferSocket->Disconnect();
+				ThreadManager::Instance()->DetachThread(pTransferSocket->GetReceiveThreadID());
+				return;
 
-			std::cerr << "Receive failed with " << WSAGetLastError() << std::endl;
-			pTransferSocket->Disconnect();
-			ThreadManager::Instance()->DetachThread(pTransferSocket->GetReceiveThreadID());
-			return;
+			}
+			
+			recvMessage.assign(buffer.cbegin(), buffer.cend());
+			//message.assign(buffer.cbegin(), buffer.cend());
 
-		}
-
-		std::cout << "Received\n";
+			message += recvMessage;
+			
+		} while (message[message.size() - 1] != 0);
 		
-		message.assign(buffer.cbegin(), buffer.cend());
+		
+		ParseMessage(message, pTransferSocket);
 
-		ParseMessage(message);
+		message.clear();
 		
 	}
 

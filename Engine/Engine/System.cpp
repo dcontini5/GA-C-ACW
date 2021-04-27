@@ -1,7 +1,10 @@
 ﻿#include "System.h"
 
+#include "ThreadManager.h"
+
 void System::AddObject(GameObjectPtr& pGameObject) {
 
+	std::unique_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
 	mGameObjects.push_back(pGameObject);
 
 }
@@ -10,7 +13,6 @@ void System::RemoveObject(GameObjectPtr& pGameObject) {
 
 	auto it = mGameObjects.begin();
 	for (const auto& object : mGameObjects) {
-
 
 		++it;
 		if (pGameObject == object) {

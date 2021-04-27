@@ -3,6 +3,7 @@
 ThreadManager* ThreadManager::mInstance = nullptr;
 int ThreadManager::mID = 0;
 bool ThreadManager::mPhysicsDone = false;
+bool ThreadManager::mRenderPause = true;
 //bool ThreadManager::mCollisionDone = true;
 
 ThreadManager::~ThreadManager(){
@@ -38,7 +39,7 @@ void ThreadManager::DetachThread(uint32_t pThreadID){
 
 void ThreadManager::Finish(){
 
-	for (auto i = mThreads.begin(); i != mThreads.end(); i++) {
+	for (auto i = mThreads.begin(); i != mThreads.end(); ++i) {
 
 		i->second.join();
 

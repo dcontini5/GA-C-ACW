@@ -28,17 +28,17 @@ public:
 
 	ComponentMap GetComponents();
 	ComponentPtr GetComponent(ComponentType& pComponentName);
+	glm::vec3 GetNewPos() const { return mNewPosition; };
 	glm::vec3 GetPos() const { return mPosition; };
-	glm::vec3 GetOldPos() const { return mOldPosition; };
 	glm::vec3 GetScale() const { return mScale; };
 	glm::vec3 GetRot() const { return mRotation; }
 	int GetId() const { return mID; }
 	
 	//Mutators
 public:
-	void InitPos(const glm::vec3 pNewPos) { mPosition = pNewPos; mOldPosition = pNewPos; }
-	void SetPos(const glm::vec3& pNewPos) { mPosition = pNewPos; }
-	void SetOldPos(const glm::vec3& pPos) { mOldPosition = pPos; }
+	void InitPos(const glm::vec3 pNewPos) { mNewPosition = pNewPos; mPosition = pNewPos; }
+	void SetNewPos(const glm::vec3& pNewPos) { mNewPosition = pNewPos; }
+	void SetPos(const glm::vec3& pPos) { mPosition = pPos; }
 	void setScale(const glm::vec3& pNewScale) { mScale = pNewScale; }
 	void setRot(const glm::vec3& pNewRot) { mRotation = pNewRot; }
 	// Public Functions
@@ -66,8 +66,8 @@ public:
 	//Data:
 private:
 
+	glm::vec3 mNewPosition{0.f};
 	glm::vec3 mPosition{0.f};
-	glm::vec3 mOldPosition{0.f};
 	glm::vec3 mScale{1.f};
 	glm::vec3 mRotation{0.f};
 

@@ -64,10 +64,10 @@ void Server::Start(){
 			}
 					
 
-			//const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, client);
-			//client->SetSendThreadID(sendID);
-			const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, client);
-			client->SetReceiveThreadID(receiveID);
+			const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, client);
+			client->SetSendThreadID(sendID);
+			//const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, client);
+			//client->SetReceiveThreadID(receiveID);
 		}
 		
 	}
