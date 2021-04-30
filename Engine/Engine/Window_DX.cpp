@@ -9,12 +9,16 @@ Window_DX::Window_DX(const UINT& pHeight, const UINT& pWidth, std::shared_ptr<Ga
 	
 }
 
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	PAINTSTRUCT ps;
 	HDC hdc;
 
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+		return true;
+	
 	switch (message)
 	{
 	case WM_PAINT:

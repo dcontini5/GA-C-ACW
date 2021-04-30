@@ -29,6 +29,12 @@
     <Filter Include="Messages">
       <UniqueIdentifier>{da9cfa1e-93f0-4051-95a1-cd4ebfe4e611}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{45f53ca8-7df4-434b-8ccf-773086cdb73d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectX 11\ImGui_DX">
+      <UniqueIdentifier>{d00d360f-ecd8-493b-9e6d-b47457fec2c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -147,6 +153,27 @@
     </ClCompile>
     <ClCompile Include="ResetSceneMessage.cpp">
       <Filter>Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\backends\imgui_impl_dx11.cpp">
+      <Filter>DirectX 11\ImGui_DX</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\backends\imgui_impl_win32.cpp">
+      <Filter>DirectX 11\ImGui_DX</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Platform Indipendent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +308,24 @@
     </ClInclude>
     <ClInclude Include="ResetSceneMessage.h">
       <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\backends\imgui_impl_dx11.h">
+      <Filter>DirectX 11\ImGui_DX</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\backends\imgui_impl_win32.h">
+      <Filter>DirectX 11\ImGui_DX</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Platform Indipendent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

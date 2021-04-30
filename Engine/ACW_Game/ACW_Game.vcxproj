@@ -81,7 +81,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)glm\glm;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glm\glm;$(SolutionDir)Engine;$(SolutionDir)Engine\ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -132,11 +132,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\main.cpp" />
+    <ClCompile Include="ClientUI.cpp" />
     <ClCompile Include="PyramidClient.cpp" />
     <ClCompile Include="PyramidGame.cpp" />
     <ClCompile Include="PyramidScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientUI.h" />
     <ClInclude Include="PyramidClient.h" />
     <ClInclude Include="PyramidGame.h" />
     <ClInclude Include="PyramidScene.h" />

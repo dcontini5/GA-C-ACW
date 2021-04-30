@@ -9,6 +9,9 @@
     <ClCompile Include="PyramidClient.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
+    <ClCompile Include="ClientUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidGame.h" />
@@ -18,6 +21,9 @@
     <ClInclude Include="PyramidClient.h">
       <Filter>Networking</Filter>
     </ClInclude>
+    <ClInclude Include="ClientUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
@@ -25,6 +31,9 @@
     </Filter>
     <Filter Include="Networking">
       <UniqueIdentifier>{ea33f0b8-d52f-47f7-b4e2-7a1d79f16d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{2e9c24c9-9159-4fbd-9d00-4d50db7b9e15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

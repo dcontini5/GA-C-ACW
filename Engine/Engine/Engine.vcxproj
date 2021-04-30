@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_DISABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)glm\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)glm\glm;$(SolutionDir)Engine\ImGui;$(SolutionDir)Engine\ImGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,6 +167,12 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectComponent.cpp" />
+    <ClCompile Include="ImGui\backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="ImGui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="ImGui\imgui.cpp" />
+    <ClCompile Include="ImGui\imgui_draw.cpp" />
+    <ClCompile Include="ImGui\imgui_tables.cpp" />
+    <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="ListenSocket.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Message.cpp" />
@@ -194,6 +200,7 @@
     <ClCompile Include="System.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
     <ClCompile Include="TransferSocket.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="VBO.cpp" />
     <ClCompile Include="VBO_DX.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -209,6 +216,11 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectComponent.h" />
+    <ClInclude Include="ImGui\backends\imgui_impl_dx11.h" />
+    <ClInclude Include="ImGui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="ImGui\imconfig.h" />
+    <ClInclude Include="ImGui\imgui.h" />
+    <ClInclude Include="ImGui\imgui_internal.h" />
     <ClInclude Include="ListenSocket.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Message.h" />
@@ -240,6 +252,7 @@
     <ClInclude Include="SystemTypes.h" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="TransferSocket.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="VBO.h" />
     <ClInclude Include="VBO_DX.h" />
     <ClInclude Include="Window.h" />

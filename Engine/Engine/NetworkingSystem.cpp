@@ -35,7 +35,8 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 	
 	while ( message != "DISCONNECT" ){
 
-		
+		//todo: send data size with the first packet
+		//https://stackoverflow.com/questions/55178026/reading-more-than-one-message-from-recv
 		do{
 			const auto maxSize = 65535;
 			std::vector<char> buffer(maxSize);

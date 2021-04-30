@@ -193,7 +193,8 @@ void PyramidScene::OnMessage(std::shared_ptr<Message>& pMessage){
 			{
 				std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
 				ThreadManager::Instance()->PauseUnpauseRenderer(true);
-
+				//ThreadManager::Instance()->GetConditionVariable().notify_one();
+			
 				
 			for(auto& go : gameObjects){
 

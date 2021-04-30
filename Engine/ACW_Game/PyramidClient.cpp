@@ -3,6 +3,7 @@
 #include "ResetSceneMessage.h"
 #include "ThreadManager.h"
 
+std::shared_mutex mutex;
 
 void PyramidClient::CreateMessage(std::string& pMessage, const std::shared_ptr<TransferSocket>& pTransferSocket){
 

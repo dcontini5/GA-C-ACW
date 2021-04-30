@@ -44,7 +44,9 @@ public:
 	
 	//Accessors
 public:
-
+	
+	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() const { return mD3D11Device; }
+	
 	//Mutators
 public:
 
@@ -57,19 +59,9 @@ public:
 	void Run() override {};
 	void ClearScreen() override;
 	void Present() override;
-	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() const { return mD3D11Device; }
+	void InitUi() override;
+	void RenderUI() override;
 
-
-	
-	//void Run() {
-	//	
-	//	while(mRun){
-	//
-	//		Render();
-	//	
-	//	}
-	//		   		
-	//}
 
 	
 	

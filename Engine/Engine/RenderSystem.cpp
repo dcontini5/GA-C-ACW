@@ -34,6 +34,8 @@ void RenderSystem::Process(){
 		mRenderer->Render(mesh, pos, scale);
 	}
 
+	mRenderer->RenderUI();
+	
 	mRenderer->Present();
 	
 }

@@ -1,6 +1,8 @@
 ﻿#include "Renderer_DX.h"
 #include "Mesh.h"
 #include <iostream>
+#include "imgui_impl_dx11.h"
+#include "imgui_impl_win32.h"
 
 void DX_Renderer::InitRenderer(){
 
@@ -11,12 +13,16 @@ void DX_Renderer::InitRenderer(){
 	CreateShaders();
 	CreateMVPM();
 	CreateVBO();
+	InitUi();
 
 }
 
 void DX_Renderer::Cleanup(){
 
 
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	mUI->CleanUI();
 }
 
 void DX_Renderer::ClearScreen(){
@@ -24,6 +30,7 @@ void DX_Renderer::ClearScreen(){
 	//
 	// Clear the back buffer
 	//
+	mD3D11ImmediateContext->OMSetRenderTargets(1, mD3D11RenderTargetView.GetAddressOf(), mD3D11DepthStencilView.Get());
 	mD3D11ImmediateContext->ClearRenderTargetView(mD3D11RenderTargetView.Get(), DirectX::Colors::LightBlue);
 	mD3D11ImmediateContext->ClearDepthStencilView(mD3D11DepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 	
@@ -33,6 +40,26 @@ void DX_Renderer::ClearScreen(){
 void DX_Renderer::Present(){
 
 	mDXGISwapChain->Present(0, 0);
+	
+}
+
+void DX_Renderer::InitUi(){
+
+	mUI->Init();
+	ImGui_ImplWin32_Init(mHWindow);
+	ImGui_ImplDX11_Init(mD3D11Device.Get(), mD3D11ImmediateContext.Get());
+
+	
+}
+
+void DX_Renderer::RenderUI(){
+
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+
+	mUI->DrawFrame();
+	
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	
 }
 
@@ -240,7 +267,7 @@ void DX_Renderer::CreateRenderTargetView() {
 
 	
 	
-	mD3D11ImmediateContext->OMSetRenderTargets(1, mD3D11RenderTargetView.GetAddressOf(), mD3D11DepthStencilView.Get());
+	//mD3D11ImmediateContext->OMSetRenderTargets(1, mD3D11RenderTargetView.GetAddressOf(), mD3D11DepthStencilView.Get());
 	
 	//mD3D11ImmediateContext->OMSetRenderTargets(1, &mD3D11RenderTargetView, nullptr);
 	

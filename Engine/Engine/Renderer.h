@@ -3,14 +3,20 @@
 //#include "Mesh.h"
 #include <glm.hpp>
 #include <memory>
+#include <memory>
+#include "UI.h"
+#include "../ACW_Game/ClientUI.h"
+
 
 class Mesh;
+typedef  std::unique_ptr<UI> UIuniquePtr;
 
 class Renderer {
 
 	//Structors
 public:
 	Renderer(const UINT& pHeight, const UINT& pWidth) : mHeight(pHeight), mWidth(pWidth){}
+	Renderer(const UINT& pHeight, const UINT& pWidth, UIuniquePtr& pUI) : mHeight(pHeight), mWidth(pWidth), mUI(std::move(pUI)){}
 	Renderer(const Renderer&);
 	Renderer(Renderer&&); //exchange members here;
 	virtual ~Renderer() = default;
@@ -20,7 +26,8 @@ public:
 
 	//Mutators
 public:
-
+	void SetUI(UIuniquePtr& pUI) { mUI = std::move(pUI); }
+	
 	// Public Functions
 public:
 	virtual void Render(std::shared_ptr<Mesh>& pMesh,const glm::vec3 pPos,const glm::vec3 pScale) = 0;
@@ -30,6 +37,8 @@ public:
 	virtual void StopRunning() = 0;
 	virtual void ClearScreen() = 0;
 	virtual void Present() = 0;
+	virtual void InitUi() = 0;
+	virtual void RenderUI() = 0;
 	
 	// Private Functions
 private:
@@ -44,4 +53,6 @@ public:
 protected:
 	UINT mHeight;
 	UINT mWidth;
+	UIuniquePtr mUI;
+	
 };

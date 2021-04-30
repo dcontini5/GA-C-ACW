@@ -136,7 +136,7 @@ std::vector<SimpleVertex> ResourceManager::GenerateVertices(){
 
 	std::vector<SimpleVertex> vertices;
 
-	auto inf = 10000;
+	auto inf = 10000.f;
 	
 	
 	//vertices.push_back({DirectX::XMFLOAT3(-1.0f,  0.0f, 1.0f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f), DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f), DirectX::XMFLOAT2(1.0f, 0.0f) });
