@@ -40,6 +40,7 @@ public:
 
 	void Init(const int& pMinVersion, const int& pMaxVersion);
 	void Create();
+	void Bind(const Peer& pPeer);
 	// Private Functions
 private:
 

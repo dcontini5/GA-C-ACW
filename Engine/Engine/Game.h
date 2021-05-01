@@ -2,6 +2,8 @@
 #include "AddedComponentMessage.h"
 #include "Window.h"
 
+#include "ResourceManager.h"
+
 class Message;
 class Scene;
 
@@ -9,7 +11,10 @@ class Game {
 
 	//Private Structors
 protected:
-	Game() { mInstance = this; }
+	Game(){
+		mInstance = this;
+		ResourceManager::Instance()->LoadSettings();
+	}
 
 	//Public Structors
 public:
@@ -19,7 +24,6 @@ public:
 	static Game* Instance(){
 
 		return mInstance;
-		
 	}
 
 	//Accessors

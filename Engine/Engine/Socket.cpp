@@ -26,3 +26,13 @@ void Socket::Create() {
 	}
 
 }
+
+void Socket::Bind(const Peer& pPeer) {
+
+	if (bind(mSocket, reinterpret_cast<sockaddr*>(&pPeer.Get()), sizeof(pPeer)) == SOCKET_ERROR) {
+
+		std::cerr << "Bind failed with " << WSAGetLastError() << std::endl;
+
+	}
+
+}

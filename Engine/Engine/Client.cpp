@@ -9,6 +9,8 @@ void Client::Init(){
 
 	mTransferSocket->Init(2, 2);
 	mTransferSocket->Create();
+	const Peer myPeer(ResourceManager::Instance()->GetClientAddress(), ResourceManager::Instance()->GetPort());
+	mTransferSocket->Bind(myPeer);
 	
 }
 

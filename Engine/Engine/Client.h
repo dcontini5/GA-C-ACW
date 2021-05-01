@@ -2,13 +2,13 @@
 #include <string>
 
 #include "NetworkingSystem.h"
-
+#include "ResourceManager.h"
 
 class Client : public NetworkingSystem{
 
 	//Structors
 public:
-	Client() :NetworkingSystem({"127.0.0.1"}), mTransferSocket(std::make_shared<TransferSocket>()){}
+	Client() :NetworkingSystem({ResourceManager::Instance()->GetServerAddress(), ResourceManager::Instance()->GetPort()}), mTransferSocket(std::make_shared<TransferSocket>()){}
 	Client(const Client&);
 	Client(Client&&); //exchange members here;
 	~Client() = default;

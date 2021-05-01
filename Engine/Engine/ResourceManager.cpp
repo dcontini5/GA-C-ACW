@@ -1,34 +1,77 @@
 ﻿#include "ResourceManager.h"
 
 
+
+#include <fstream>
 #include <iostream>
 #include <string>
 #include "Mesh.h"
 #include "Renderer.h"
 //#include <glm.hpp>
 
-
 ResourceManager* ResourceManager::mInstance = nullptr;
 
+void ResourceManager::ParseLine(std::string& line){
 
+	const size_t delim = line.find('=');
+	
+	const std::string settingName = line.substr(0, delim - 1);
+	line.erase(0, delim + 2);
+	const std::string settingValue = line.substr(0, line.size());
 
-std::string ResourceManager::ParseData(const std::vector<glm::vec3>& pPosList){
+	if(settingName == "ServerAddress"){
 
-	std::string data;
-	for(const auto& pos : pPosList){
-
-		data.append(std::to_string(pos.x));
-		data += ",";
-		
-		data.append(std::to_string(pos.y));
-		data += ",";
-		
-		data.append(std::to_string(pos.z));
-		data += ",";
-		
+		mSettings.ServerAddress = settingValue;
+		return;
 	}
 
-	return data;
+	if (settingName == "ClientAddress") {
+
+		mSettings.ClientAddress = settingValue;
+		return;
+	}
+
+	if (settingName == "Port") {
+
+		mSettings.Port = std::stoi(settingValue);
+		return;
+	}
+
+	if (settingName == "Height") {
+
+		mSettings.Height = std::stoi(settingValue);
+		return;
+	}
+
+	if (settingName == "Width") {
+
+		mSettings.Width = std::stoi(settingValue);
+		return;
+	}
+
+}
+
+void ResourceManager::LoadSettings(){
+
+	std::string line;
+	std::ifstream settings("settings.ini");
+
+	if(settings.is_open()){
+		
+		while (settings.good()){
+
+			std::getline(settings, line);
+
+			if (line[0] == '[') continue;
+
+			ParseLine(line);
+			
+			
+			
+		}
+
+		
+	}
 	
 }
 

@@ -10,6 +10,7 @@ class Peer {
 	//Structors
 public:
 	Peer();
+	Peer(const std::string& pIP, const int& pPort);
 	Peer(const std::string& pIP );
 	Peer(const Peer& pOther);
 	Peer(Peer&& pOther) noexcept; //exchange members here;

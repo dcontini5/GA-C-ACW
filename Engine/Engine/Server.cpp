@@ -7,7 +7,7 @@
 #include "PlayerConnectedMessage.h"
 #include "ClientPlayerComponent.h"	
 
-Server::Server(): NetworkingSystem({}){}
+Server::Server(): NetworkingSystem({ ResourceManager::Instance()->GetServerAddress(), ResourceManager::Instance()->GetPort() }){}
 
 void Server::Init() {
 
@@ -35,9 +35,10 @@ void Server::Start(){
 			//auto component =  mClients[ipAdd]->GetComponent(ComponentTypes::PLAYER_CLIENT);
 
 			TransferSocketPtr client;
-
+			
 				//if (component) client = std::dynamic_pointer_cast<ClientPlayerComponent>(component)->GetTransferSocket();
 				//else client = std::make_shared<TransferSocket>();
+			auto x = mClients.find(ipAdd);
 			if(mClients.find(ipAdd) != mClients.end())	client = mClients[ipAdd];
 			else	client = std::make_shared<TransferSocket>();
 			

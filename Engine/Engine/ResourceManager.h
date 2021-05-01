@@ -28,6 +28,16 @@ struct SimpleVertex
 	DirectX::XMFLOAT2 texCoord;
 };
 
+struct SettingList {
+
+	std::string ServerAddress;
+	std::string ClientAddress;
+	int Port;
+	short Height;
+	short Width;
+	
+};
+
 
 class ResourceManager {
 
@@ -41,21 +51,27 @@ public:
 
 	static ResourceManager* Instance(){
 
-		if (!mInstance){ mInstance = new ResourceManager(); }
+		if (!mInstance){
+			mInstance = new ResourceManager();
+		}
 
 		return mInstance;
 	}
 
 	//Accessors
 public:
-
+	std::string GetServerAddress() const { return mSettings.ServerAddress; }
+	std::string GetClientAddress() const { return mSettings.ClientAddress; }
+	int GetPort() const { return mSettings.Port; }
+	short GetWindowHeight() const { return mSettings.Height; }
+	short GetWindowWidth() const { return mSettings.Width; }
 	//Mutators
 public:
 
 	// Public Functions
 public:
 
-	std::string ParseData(const std::vector<glm::vec3>& pPosList);
+	void LoadSettings();
 	void ParseMessage(std::string&);
 
 	void LoadMesh(const PrefabMeshes& pMeshType, std::shared_ptr<Renderer>& pRenderer);
@@ -69,12 +85,15 @@ public:
 	// Private Functions
 private:
 
+	void ParseLine(std::string& line);
+	
+
 	//Data:
 private:
 	static ResourceManager* mInstance;
 	int mIndicesNo = 0;
 	MeshMap mMeshes;
-	
+	SettingList mSettings;
 	//std::string  mParsedData = ""; //todo use it maybe?
 	
 };

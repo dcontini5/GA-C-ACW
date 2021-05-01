@@ -6,8 +6,6 @@
 void PyramidGame::Initialize(std::shared_ptr<Window>& pWindow){
 
 	Game::Initialize(pWindow);
-
-
 	
 	auto renderer = mWindow->GetRenderer();
 
