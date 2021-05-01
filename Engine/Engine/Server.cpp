@@ -29,11 +29,13 @@ void Server::Start(){
 				
 		if (newSocket != SOCKET_ERROR) {
 
-			std::string ipAdd;
+			char buffer[INET_ADDRSTRLEN];
 
-			inet_ntop(AF_INET, &address.sin_addr, &ipAdd[0], sizeof(ipAdd));
+			inet_ntop(AF_INET, &address.sin_addr, buffer, INET_ADDRSTRLEN);
 			//auto component =  mClients[ipAdd]->GetComponent(ComponentTypes::PLAYER_CLIENT);
 
+			const std::string ipAdd(buffer);
+			
 			TransferSocketPtr client;
 			
 				//if (component) client = std::dynamic_pointer_cast<ClientPlayerComponent>(component)->GetTransferSocket();

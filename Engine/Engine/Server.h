@@ -8,6 +8,16 @@
 #include <vector>
 
 
+//struct custcom {
+//
+//	bool operator()(const std::string &s1, const std::string &s2) const{
+//
+//		return s1.back() < s2.back();
+//		
+//	}
+//	
+//};
+
 class Server :public NetworkingSystem{
 
 	//Structors
