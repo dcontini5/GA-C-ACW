@@ -1,7 +1,7 @@
 ﻿#include "Window_DX.h"
 #include "ThreadManager.h"
 #include "Game.h"
-
+#include "windowsx.h"
 
 Window_DX::Window_DX(const UINT& pHeight, const UINT& pWidth, std::shared_ptr<Game>& pGame, HINSTANCE pHInstance, int pNCmdShow)
 : Window(pHeight, pWidth, pGame), mHInstance(pHInstance), mNCmdShow(pNCmdShow){
@@ -18,26 +18,116 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
 		return true;
+
+
+	RECT rcClient;                 // client area rectangle 
+	static POINT ptClientUL;              // client upper left corner 
+	static POINTS ptsBegin;        // beginning point 
+	static POINTS ptsEnd;      // previous endpoint 
 	
 	switch (message)
 	{
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		EndPaint(hWnd, &ps);
-		break;
+		return 0;
 
 	case WM_DESTROY:
 		PostQuitMessage(0);
-		break;
+		return 0;
 
+	case WM_KEYDOWN:
+	{
+		InputState state;
+		state.key = wParam;
+		state.keyState = true;
+		Game::Instance()->OnKeyboard(state);
+		return 0;
+	}
+
+	case WM_KEYUP:
+	{
+		InputState state;
+		state.key = wParam;
+		state.keyState = true;
+		Game::Instance()->OnKeyboard(state);
+		return 0;
+	}
+	
+	case WM_LBUTTONDOWN:
+
+	{
+		SetCapture(hWnd);
+
+		GetClientRect(hWnd, &rcClient);
+		ptClientUL.x = rcClient.left;
+		ptClientUL.y = rcClient.top;
+
+		ClientToScreen(hWnd, &ptClientUL); 
+
+		ptsBegin = MAKEPOINTS(lParam);
+
+		ShowCursor(false);
+		return 0;
+
+	}
+
+		
+
+	case  WM_MOUSEMOVE:
+		{
+
+
+			if (wParam & MK_LBUTTON)
+			{
+				
+				const auto ptsCurr = MAKEPOINTS(lParam);
+				
+				InputState state;
+
+				state.key = WM_MOUSEMOVE;
+				//state.keyState = true;
+				state.mouseMov.x = ptsEnd.x - ptsCurr.x;
+				state.mouseMov.y = ptsEnd.y - ptsCurr.y;
+
+				Game::Instance()->OnKeyboard(state);
+				ptsEnd = ptsCurr;
+				
+			}
+
+	
+			return 0;
+			
+		}
+
+	case WM_LBUTTONUP:
+		{
+
+		//ClipCursor(nullptr);
+		ReleaseCapture();
+		//hdc = GetDC(hWnd);
+		SetCursorPos(ptsBegin.x + ptClientUL.x, ptsBegin.y + ptClientUL.y);
+		ShowCursor(true);
+		return 0;
+		}
 		// Note that this tutorial does not handle resizing (WM_SIZE) requests,
 		// so we created the window without the resize border.
 
+
+	case WM_MOUSEWHEEL:
+		{
+		InputState state;
+		
+			//state.
+			//wParam;
+			auto x = GET_WHEEL_DELTA_WPARAM(wParam);
+			return 0;
+		}
+		
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
-
-	return 0;
+	
 }
 
 void Window_DX::Initialize(){

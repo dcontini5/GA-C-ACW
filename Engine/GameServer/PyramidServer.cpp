@@ -12,10 +12,18 @@ void PyramidServer::CreateMessage(std::string& pMessage, const std::shared_ptr<T
 	
 	for(const auto& obj : mGameObjects){
 
-		std::shared_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
+		glm::vec3 objPos;
+		glm::vec3 objScale;
 
-		const auto pos = std::to_string(obj->GetPos().x) + '>' + std::to_string(obj->GetPos().y) + '>' + std::to_string(obj->GetPos().z) + ')';
-		const auto scale = std::to_string(obj->GetScale().x) + '>' + std::to_string(obj->GetScale().y) + '>' + std::to_string(obj->GetScale().z) + ')';
+		{
+			std::shared_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
+			objPos = obj->GetPos();
+			objScale = obj->GetScale();
+		}
+			
+		const auto pos = std::to_string(objPos.x) + '>' + std::to_string(objPos.y) + '>' + std::to_string(objPos.z) + ')';
+		const auto scale = std::to_string(objScale.x) + '>' + std::to_string(objScale.y) + '>' + std::to_string(objScale.z) + ')';
+
 		
 		pMessage += "P(";
 		pMessage += pos;

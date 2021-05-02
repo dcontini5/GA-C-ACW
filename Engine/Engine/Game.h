@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "AddedComponentMessage.h"
 #include "Window.h"
-
+#include "InputState.h"
 #include "ResourceManager.h"
 
 class Message;
@@ -36,7 +36,7 @@ public:
 	void Quit(const bool& pQuitFlag) { mQuitFlag = true; }
 	void SetWindow(std::shared_ptr<Window>& pWindow) { mWindow = pWindow; }
 	void BroadcastMessage(std::shared_ptr<Message>& pMessage);
-
+	void OnKeyboard(const InputState& pState);
 	//void StartRenderer();
 	
 	// Public Functions

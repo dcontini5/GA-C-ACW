@@ -20,7 +20,6 @@ Scene::~Scene(){
 
 void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 
-	//if(objRemove) then remove
 	switch (pMessage->GetType()){
 
 	case MessageTypes::ADDED_COMPONENT:
@@ -52,8 +51,7 @@ void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 			break;
 		}
 		
-		
-
+	default: break;
 	}
 		
 	

@@ -173,6 +173,7 @@
     <ClCompile Include="ImGui\imgui_draw.cpp" />
     <ClCompile Include="ImGui\imgui_tables.cpp" />
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="InputStateMessage.cpp" />
     <ClCompile Include="ListenSocket.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Message.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="ImGui\imconfig.h" />
     <ClInclude Include="ImGui\imgui.h" />
     <ClInclude Include="ImGui\imgui_internal.h" />
+    <ClInclude Include="InputStateMessage.h" />
     <ClInclude Include="ListenSocket.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Message.h" />
@@ -228,6 +230,7 @@
     <ClInclude Include="NetworkComponent.h" />
     <ClInclude Include="NetworkingSystem.h" />
     <ClInclude Include="NetworkMessageTypes.h" />
+    <ClInclude Include="InputState.h" />
     <ClInclude Include="PlayerConnectedMessage.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Peer.h" />

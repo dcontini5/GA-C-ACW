@@ -7,6 +7,7 @@ struct MessageTypes {
 	static MessageType COLLISION = 1;
 
 	static MessageType PLAYER_CONNECTED = 4;
+	static MessageType INPUT_STATE = 5;
 	
 	static MessageType ADDED_COMPONENT = 8;
 	static MessageType REMOVED_COMPONENT = 9;
