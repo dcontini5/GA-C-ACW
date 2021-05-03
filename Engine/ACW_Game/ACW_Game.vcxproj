@@ -135,12 +135,14 @@
     <ClCompile Include="ClientUI.cpp" />
     <ClCompile Include="PyramidClient.cpp" />
     <ClCompile Include="PyramidGame.cpp" />
+    <ClCompile Include="PyramidPlayer.cpp" />
     <ClCompile Include="PyramidScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientUI.h" />
     <ClInclude Include="PyramidClient.h" />
     <ClInclude Include="PyramidGame.h" />
+    <ClInclude Include="PyramidPlayer.h" />
     <ClInclude Include="PyramidScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

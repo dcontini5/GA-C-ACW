@@ -5,8 +5,7 @@
 #include <memory>
 #include <memory>
 #include "UI.h"
-#include "../ACW_Game/ClientUI.h"
-
+#include "GameObject.h"
 
 class Mesh;
 typedef  std::unique_ptr<UI> UIuniquePtr;
@@ -15,7 +14,9 @@ class Renderer {
 
 	//Structors
 public:
-	Renderer(const UINT& pHeight, const UINT& pWidth) : mHeight(pHeight), mWidth(pWidth){}
+	Renderer(const UINT& pHeight, const UINT& pWidth) : mHeight(pHeight), mWidth(pWidth), mCamera(std::make_shared<GameObject>()){
+		mCamera->SetPos({ 0.f, 8.f, 6.f });
+	}
 	Renderer(const UINT& pHeight, const UINT& pWidth, UIuniquePtr& pUI) : mHeight(pHeight), mWidth(pWidth), mUI(std::move(pUI)){}
 	Renderer(const Renderer&);
 	Renderer(Renderer&&); //exchange members here;
@@ -26,6 +27,7 @@ public:
 
 	//Mutators
 public:
+	void SetCamera(const std::shared_ptr<GameObject>& pCamera) { mCamera = pCamera; UpdateCamera(); }
 	void SetUI(UIuniquePtr& pUI) { mUI = std::move(pUI); }
 	
 	// Public Functions
@@ -43,6 +45,8 @@ public:
 	// Private Functions
 private:
 
+	void UpdateCamera();
+	
 	//Operators
 public:
 	Renderer& operator=(const Renderer& pOther) = delete;
@@ -54,5 +58,6 @@ protected:
 	UINT mHeight;
 	UINT mWidth;
 	UIuniquePtr mUI;
+	std::shared_ptr<GameObject> mCamera;
 	
 };

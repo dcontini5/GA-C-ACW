@@ -16,9 +16,15 @@ void Game::BroadcastMessage(std::shared_ptr<Message>& pMessage){
 
 void Game::OnKeyboard(const InputState& pState){
 
-	std::shared_ptr<Message> msg = std::make_shared<InputStateMessage>(pState);
+	//std::shared_ptr<Message> msg = std::make_shared<InputStateMessage>(pState);
 
-	BroadcastMessage(msg);
+	//BroadcastMessage(msg);
+	
+}
+
+void Game::SetActiveCamera(const std::shared_ptr<GameObject>& pCamera){
+
+	mWindow->GetRenderer()->SetCamera(pCamera);
 	
 }
 

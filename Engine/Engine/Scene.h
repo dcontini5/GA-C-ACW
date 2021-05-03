@@ -55,7 +55,7 @@ protected:
 	GameObjects mGameObjectList;
 	SystemMap   mSystems;
 	ThreadIDMap mSystemThreadIDs;
-
+	GameObjectPtr mPlayer;
 	
 	//std::shared_ptr<CollisionSystem> mCollisionSystem	= nullptr;
 	//std::shared_ptr<PhysicsSystem> mPhysicsSystem		= nullptr;

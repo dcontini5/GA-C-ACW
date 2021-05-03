@@ -4,6 +4,7 @@
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
+
 void DX_Renderer::InitRenderer(){
 
 	CreateDevice();
@@ -348,11 +349,17 @@ void DX_Renderer::CreateMVPM(){
 	mWorld = DirectX::XMMatrixIdentity();
 
 	// Initialize the view matrix
-	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 8.0f, 6.0f, 0.0f);
-	DirectX::XMVECTOR At = DirectX::XMVectorSet(0.0f, 3.0f, 0.0f, 0.0f);
-	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-	mView = DirectX::XMMatrixLookAtRH(Eye, At, Up);
+	const glm::vec3 camPos = mCamera->GetPos();
+	
+	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(camPos.x, camPos.y, camPos.z, 0.0f);
 
+	
+	//DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 8.0f, 6.0f, 0.0f);
+	DirectX::XMVECTOR Forward = DirectX::XMVectorSet(0.0f, 3.0f, 0.0f, 0.0f);
+	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	mView = DirectX::XMMatrixLookAtLH(Eye, Forward, Up);
+
+	
 	// Initialize the projection matrix
 	//
 	// 
@@ -360,7 +367,7 @@ void DX_Renderer::CreateMVPM(){
 
 	//g_View = setViewMatrix(Eye, At, Up);
 
-	mProjection = DirectX::XMMatrixPerspectiveFovRH(DirectX::XM_PIDIV2, mWidth / (FLOAT)mHeight, 0.01f, 100.0f);
+	mProjection = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV2, mWidth / (FLOAT)mHeight, 0.01f, 100.0f);
 
 }
 

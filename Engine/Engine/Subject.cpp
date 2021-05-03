@@ -39,7 +39,7 @@ void Subject::Unregister(MessageType& pType, std::shared_ptr<Observer>& pObserve
 	
 }
 
-void Subject::BroadcastMessage(std::shared_ptr<Message>& pMessage){
+void Subject::OnMessage(std::shared_ptr<Message>& pMessage){
 
 	auto it = mListeners.find(pMessage->GetType());
 

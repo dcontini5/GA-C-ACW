@@ -12,6 +12,7 @@
     <ClCompile Include="ClientUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="PyramidPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidGame.h" />
@@ -24,6 +25,9 @@
     <ClInclude Include="ClientUI.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="PyramidPlayer.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scenes">
@@ -34,6 +38,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{2e9c24c9-9159-4fbd-9d00-4d50db7b9e15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{fd8ecce3-f814-4f21-afd9-621869cc74c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

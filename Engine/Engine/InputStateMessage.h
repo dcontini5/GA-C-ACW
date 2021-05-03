@@ -14,10 +14,11 @@ public:
 
 	//Accessors
 public:
-
+	InputState GetInputState() const { return mState; }
+	
 	//Mutators
 public:
-
+	
 	// Public Functions
 public:
 

@@ -33,10 +33,11 @@ public:
 	//Mutators
 public:
 
-	void Quit(const bool& pQuitFlag) { mQuitFlag = true; }
+	void Quit() { mQuitFlag = true; }
 	void SetWindow(std::shared_ptr<Window>& pWindow) { mWindow = pWindow; }
 	void BroadcastMessage(std::shared_ptr<Message>& pMessage);
 	void OnKeyboard(const InputState& pState);
+	void SetActiveCamera(const std::shared_ptr<GameObject>& pCamera);
 	//void StartRenderer();
 	
 	// Public Functions

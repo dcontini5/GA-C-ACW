@@ -35,6 +35,9 @@
     <Filter Include="DirectX 11\ImGui_DX">
       <UniqueIdentifier>{d00d360f-ecd8-493b-9e6d-b47457fec2c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{47cc49e9-93de-47b9-9b3a-ea9c78ce45fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -178,6 +181,10 @@
     <ClCompile Include="InputStateMessage.cpp">
       <Filter>Messages</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="InputStateComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -335,6 +342,15 @@
     </ClInclude>
     <ClInclude Include="InputStateMessage.h">
       <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="InputKeys.h">
+      <Filter>Pattern Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="InputStateComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

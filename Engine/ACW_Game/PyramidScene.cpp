@@ -10,9 +10,11 @@
 #include "PhysicsComponent.h"
 #include "Game.h"
 #include "InfinitePlaneCollisionComponent.h"
+#include "InputKeys.h"
 #include "SphereCollisionComponent.h"
 #include "ThreadManager.h"
 #include "ResetSceneMessage.h"
+#include "InputStateMessage.h"
 
 void PyramidScene::Start(){
 
@@ -185,46 +187,55 @@ void PyramidScene::OnMessage(std::shared_ptr<Message>& pMessage){
 
 	switch (pMessage->GetType()) {
 
-	case MessageTypes::RESET_SCENE:
-	{
-			auto resetMsg = std::reinterpret_pointer_cast<ResetSceneMessage>(pMessage);
-			std::vector<GameObjectPtr> gameObjects(std::move(resetMsg->GetGameObjects()));
+		case MessageTypes::RESET_SCENE:
+		{
+				auto resetMsg = std::reinterpret_pointer_cast<ResetSceneMessage>(pMessage);
+				std::vector<GameObjectPtr> gameObjects(std::move(resetMsg->GetGameObjects()));
 
-			{
-				std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
-				ThreadManager::Instance()->PauseUnpauseRenderer(true);
-				//ThreadManager::Instance()->GetConditionVariable().notify_one();
-			
+				{
+					std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+					ThreadManager::Instance()->PauseUnpauseRenderer(true);
+					//ThreadManager::Instance()->GetConditionVariable().notify_one();
 				
-			for(auto& go : gameObjects){
+					
+				for(auto& go : gameObjects){
 
-				auto rc = std::make_shared<RenderComponent>(go);
-				auto mesh = ResourceManager::Instance()->GetMesh("Sphere");
+					auto rc = std::make_shared<RenderComponent>(go);
+					auto mesh = ResourceManager::Instance()->GetMesh("Sphere");
 
-				rc->SetMesh(mesh);
-				rc->StartDrawing();
+					rc->SetMesh(mesh);
+					rc->StartDrawing();
 
-				auto comp = std::dynamic_pointer_cast<GameObjectComponent>(rc);
+					auto comp = std::dynamic_pointer_cast<GameObjectComponent>(rc);
 
-				go->AddComponent(comp);
+					go->AddComponent(comp);
 
-				auto nc = std::make_shared<NetworkComponent>(go);
+					auto nc = std::make_shared<NetworkComponent>(go);
 
-				comp = std::dynamic_pointer_cast<GameObjectComponent>(nc);
+					comp = std::dynamic_pointer_cast<GameObjectComponent>(nc);
 
-				go->AddComponent(comp);
+					go->AddComponent(comp);
 
+					
+				}
 				
-			}
-			
-			
-				//std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
-				ThreadManager::Instance()->PauseUnpauseRenderer(false);
-				ThreadManager::Instance()->GetConditionVariable().notify_one();
-			}
-			
-	}
+				
+					//std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
+					ThreadManager::Instance()->PauseUnpauseRenderer(false);
+					ThreadManager::Instance()->GetConditionVariable().notify_one();
+				}
+				
+		}
 
+		case MessageTypes::INPUT_STATE:
+		{
+	
+			mPlayer->OnMessage(pMessage);
+			
+		}
+
+		default: break;
+		
 	}
 	
 	

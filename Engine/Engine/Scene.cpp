@@ -7,6 +7,9 @@
 #include "CollisionSystem.h"
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
+#include "InputStateMessage.h"
+#include "InputKeys.h"
+#include "Game.h"
 
 Scene::~Scene(){
 
@@ -33,7 +36,7 @@ void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 				mSystems[addMsg->GetCompType()]->AddObject(go);
 
 			}
-			break;
+			return;
 		}
 		
 	
@@ -48,10 +51,25 @@ void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 				mSystems[remMsg->GetCompType()]->RemoveObject(go);
 
 			}
-			break;
+			return;
+		}
+
+	case MessageTypes::INPUT_STATE:
+		{
+			
+			auto inpMsg = std::reinterpret_pointer_cast<InputStateMessage>(pMessage);
+
+			if (inpMsg->GetInputState().key == ESCAPE){
+
+				Game::Instance()->Quit();
+				return;
+			}
+			
+			mPlayer->OnMessage(pMessage);
+			return;
 		}
 		
-	default: break;
+	default: return;
 	}
 		
 	

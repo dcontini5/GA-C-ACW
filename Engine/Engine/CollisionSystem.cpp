@@ -98,8 +98,8 @@ void CollisionSystem::CheckSphereSphere(SphereCollisionPtr& pCollider, SphereCol
 	if(distLenght < radSum * radSum){
 
 		auto msg = std::make_shared<Message>(MessageTypes::COLLISION);
-		pCollider->GetParent()->BroadcastMessage(msg);
-		pCollidee->GetParent()->BroadcastMessage(msg);
+		pCollider->GetParent()->OnMessage(msg);
+		pCollidee->GetParent()->OnMessage(msg);
 		
 		PhysicsComponentPtr colliderPhysComp = std::dynamic_pointer_cast<PhysicsComponent>(pCollider->GetParent()->GetComponent(ComponentTypes::PHYSICS));
 		PhysicsComponentPtr collideePhysComp = std::dynamic_pointer_cast<PhysicsComponent>(pCollidee->GetParent()->GetComponent(ComponentTypes::PHYSICS));
@@ -138,8 +138,8 @@ void CollisionSystem::CheckPlaneSphere(PlaneCollisionPtr& pPlaneCollider, Sphere
 		CollisionResponseStatic(colliderPhysComp, radiusMinusDist, pPlaneCollider->GetNormal());
 
 		auto msg = std::make_shared<Message>(MessageTypes::COLLISION);
-		pPlaneCollider->GetParent()->BroadcastMessage(msg);
-		pSphereCollidee->GetParent()->BroadcastMessage(msg);
+		pPlaneCollider->GetParent()->OnMessage(msg);
+		pSphereCollidee->GetParent()->OnMessage(msg);
 		
 	}
 	

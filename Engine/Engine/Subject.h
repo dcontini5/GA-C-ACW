@@ -30,7 +30,7 @@ public:
 public:
 	virtual void Register(MessageType& pType , std::shared_ptr<Observer>& pObserver);
 	virtual void Unregister(MessageType& pType, std::shared_ptr<Observer>& pObserver);
-	virtual void BroadcastMessage(std::shared_ptr<Message>& pMessage);
+	virtual void OnMessage(std::shared_ptr<Message>& pMessage);
 	// Private Functions
 private:
 

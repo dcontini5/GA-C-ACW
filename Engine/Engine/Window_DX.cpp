@@ -63,6 +63,8 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 		ptClientUL.x = rcClient.left;
 		ptClientUL.y = rcClient.top;
 
+		
+			
 		ClientToScreen(hWnd, &ptClientUL); 
 
 		ptsBegin = MAKEPOINTS(lParam);
