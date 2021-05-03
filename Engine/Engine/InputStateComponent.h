@@ -1,5 +1,16 @@
 ﻿#pragma once
 #include "GameObjectComponent.h"
+#include "map"
+#include "InputKeys.h"
+
+struct KeyState {
+
+	bool isActive{ false };
+	short value{ 0 };
+	
+};
+
+typedef std::map<InputKeys, KeyState> KeyStates;
 
 class InputStateComponent : public GameObjectComponent {
 
@@ -15,10 +26,11 @@ public:
 
 	//Mutators
 public:
-
+	void UpdateState(const KeyState& pKeyState);
 	// Public Functions
 public:
 
+	void ResetStates();
 	// Private Functions
 private:
 
@@ -34,5 +46,8 @@ public:
 
 	//Data:
 private:
+
+	KeyStates mKeyStates;
+	
 	
 };

@@ -12,7 +12,9 @@
     <ClCompile Include="ClientUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="PyramidPlayer.cpp" />
+    <ClCompile Include="PyramidPlayer.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidGame.h" />

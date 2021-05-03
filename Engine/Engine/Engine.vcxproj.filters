@@ -184,7 +184,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="InputStateComponent.cpp" />
+    <ClCompile Include="InputStateComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">

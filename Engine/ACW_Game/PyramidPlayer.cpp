@@ -2,19 +2,27 @@
 
 #include "InputKeys.h"
 #include "InputStateMessage.h"
+#include "InputStateComponent.h"
 
 void Player::OnMessage(std::shared_ptr<Message>& pMessage) {
 
 	auto inpMsg = std::reinterpret_pointer_cast<InputStateMessage>(pMessage);
 
 	const InputState inputState = inpMsg->GetInputState();
+	const std::shared_ptr<InputStateComponent> inputStateComponent = std::dynamic_pointer_cast<InputStateComponent>(GetComponent(ComponentTypes::INPUT_STATE));
 
+	//for(auto)
+
+	
+	inputStateComponent->UpdateState({inputState.keyState, inputState.key});
+
+	
 	switch (inputState.key) {
 
 	case R:
 	{
 		//reset scene
-
+		
 
 	}
 	case T:
