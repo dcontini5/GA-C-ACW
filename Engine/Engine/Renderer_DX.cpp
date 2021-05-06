@@ -1,6 +1,8 @@
 ﻿#include "Renderer_DX.h"
 #include "Mesh.h"
 #include <iostream>
+
+#include "CameraComponent.h"
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
@@ -61,6 +63,27 @@ void DX_Renderer::RenderUI(){
 	mUI->DrawFrame();
 	
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	
+}
+
+void DX_Renderer::UpdateViewMatrix(){
+
+
+	const glm::vec3 camPos = mCamera->GetPos();
+	const glm::vec3 camRot = mCamera->GetRot();
+	const std::shared_ptr<CameraComponent> cc = std::dynamic_pointer_cast<CameraComponent>(mCamera->GetComponent(ComponentTypes::CAMERA));
+	const glm::vec3 camForward = cc->GetForward() + camPos + camRot;
+	const glm::vec3 camUp = cc->GetUp();
+
+
+	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(camPos.x, camPos.y, camPos.z, 0.0f);
+	DirectX::XMVECTOR Forward = DirectX::XMVectorSet(camForward.x, camForward.y, camForward.z, 0.0f);
+	DirectX::XMVECTOR Up = DirectX::XMVectorSet(camUp.x, camUp.y, camUp.z, 0.0f);
+	DirectX::XMVECTOR Rot = DirectX::XMVectorSet(camRot.x, camRot.y, camRot.z, 0.f);
+	
+	
+	mView = DirectX::XMMatrixLookAtLH(Eye, Forward, Up)/* * DirectX::XMMatrixRotationRollPitchYawFromVector(Rot)*/;
+
 	
 }
 
@@ -348,17 +371,14 @@ void DX_Renderer::CreateMVPM(){
 	// Initialize the world matrix
 	mWorld = DirectX::XMMatrixIdentity();
 
-	// Initialize the view matrix
-	const glm::vec3 camPos = mCamera->GetPos();
-	
-	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(camPos.x, camPos.y, camPos.z, 0.0f);
 
-	
-	//DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.0f, 8.0f, 6.0f, 0.0f);
-	DirectX::XMVECTOR Forward = DirectX::XMVectorSet(0.0f, 3.0f, 0.0f, 0.0f);
-	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	//UpdateViewMatrix();
+
+	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(0.f, 0.f, 0.f, 0.0f);
+	DirectX::XMVECTOR Forward = DirectX::XMVectorSet(0.f, 0.f, 1.f , 0.0f);
+	DirectX::XMVECTOR Up = DirectX::XMVectorSet(0.f, 1.f, 0.f, 0.0f);
+
 	mView = DirectX::XMMatrixLookAtLH(Eye, Forward, Up);
-
 	
 	// Initialize the projection matrix
 	//

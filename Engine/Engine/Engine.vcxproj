@@ -160,10 +160,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddedComponentMessage.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="CameraUpdateMessage.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientPlayerComponent.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="CurrentSystemFrequencyMessage.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectComponent.cpp" />
@@ -180,7 +183,6 @@
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="NetworkComponent.cpp" />
     <ClCompile Include="NetworkingSystem.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerConnectedMessage.cpp" />
     <ClCompile Include="Observer.cpp" />
     <ClCompile Include="Peer.cpp" />
@@ -211,11 +213,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddedComponentMessage.h" />
+    <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CameraUpdateMessage.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="ClientPlayerComponent.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="ComponentTypes.h" />
+    <ClInclude Include="CurrentSystemFrequencyMessage.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectComponent.h" />
@@ -235,7 +240,6 @@
     <ClInclude Include="NetworkingSystem.h" />
     <ClInclude Include="NetworkMessageTypes.h" />
     <ClInclude Include="InputState.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerConnectedMessage.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Peer.h" />

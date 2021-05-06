@@ -44,9 +44,13 @@ public:
 	}
 
 	//Data:
+protected:
+	
+GameObjectPtr mParent;
+
 private:
 
-	GameObjectPtr mParent;
+	
 	ComponentType mType;
 	
 };

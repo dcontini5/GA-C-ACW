@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <chrono>
 #include <vector>
 #include <memory>
 #include "GameObject.h"
@@ -19,10 +20,11 @@ public:
 public:
 
 	SystemType GetType() const { return mType; }
-	
+	int GetSysFrequency() const { return mSystemFrequency; }
 	//Mutators
 public:
 
+	void SetSysFrequency(const int& pNewFrequency) { mSystemFrequency = pNewFrequency; mTimeStep = std::chrono::duration<double>(1.f / static_cast<float>(mSystemFrequency)); }
 	// Public Functions
 public:
 
@@ -50,4 +52,7 @@ protected:
 
 	GameObjects mGameObjects;
 	SystemType mType;
+	int mSystemFrequency{ 60 };
+	std::chrono::time_point<std::chrono::high_resolution_clock> mLastTime;
+	std::chrono::duration<double> mTimeStep{ 1.f /60.f };
 };

@@ -27,9 +27,12 @@ void PhysicsSystem::Process(){
 		
 	}
 	
-	const std::chrono::duration<float> lag = std::chrono::high_resolution_clock::now() - mLastTime;
+	std::chrono::duration<double> lag = std::chrono::high_resolution_clock::now() - mLastTime;
 	
-	if (lag < mTimeStep) std::this_thread::sleep_for(mTimeStep - lag);
+	while (lag < mTimeStep) {
+		lag = std::chrono::high_resolution_clock::now() - mLastTime;
+	}
+
 	
 	const auto now = std::chrono::high_resolution_clock::now();
 	const std::chrono::duration<float> dt = now - mLastTime;
@@ -59,6 +62,8 @@ void PhysicsSystem::Process(){
 		ThreadManager::Instance()->SetPhysicsDone(true);
 		ThreadManager::Instance()->GetConditionVariable().notify_one();
 	}
+	
+	//mLastTime = std::chrono::high_resolution_clock::now();
 	
 }
 

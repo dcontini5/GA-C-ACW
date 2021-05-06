@@ -61,7 +61,7 @@ public:
 	void Present() override;
 	void InitUi() override;
 	void RenderUI() override;
-
+	void UpdateViewMatrix() override;
 
 	
 	

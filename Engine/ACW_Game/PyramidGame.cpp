@@ -3,6 +3,9 @@
 #include "PyramidScene.h"
 #include "ClientUI.h"
 
+std::shared_ptr<GameState> PyramidGame::mGameState = std::make_shared<GameState>();
+
+
 void PyramidGame::Initialize(std::shared_ptr<Window>& pWindow){
 
 	Game::Initialize(pWindow);

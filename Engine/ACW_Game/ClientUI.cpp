@@ -19,11 +19,11 @@ void ClientUI::PrepareFrame(){
 		//	counter++;
 		//ImGui::SameLine();
 		
-		ImGui::Text("Size of the pyramid = %d", counter);
-		ImGui::Text("Target Graphics Frequency = %d", counter);
-		ImGui::Text("Actual Graphics Frequency = %d", counter);
-		ImGui::Text("Target Network Frequency = %d", counter);
-		ImGui::Text("Actual Network Frequency = %d", counter);
+		ImGui::Text("Size of the pyramid = %d", mGameState->pyramidSize);
+		ImGui::Text("Target Graphics Frequency = %d Hz", mGameState->graphicsTargetFrequency);
+		ImGui::Text("Actual Graphics Frequency = %.2f Hz", mGameState->graphicsActualFrequency);
+		ImGui::Text("Target Network Frequency = %d Hz", counter);
+		ImGui::Text("Actual Network Frequency = %f Hz", counter);
 		ImGui::Text("Time from the start of the simulation = %d s", counter);
 		ImGui::Text("Time from the start of the playback = %d s", counter);
 

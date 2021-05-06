@@ -135,15 +135,18 @@
     <ClCompile Include="ClientUI.cpp" />
     <ClCompile Include="PyramidClient.cpp" />
     <ClCompile Include="PyramidGame.cpp" />
-    <ClCompile Include="PyramidPlayer.cpp" />
+    <ClCompile Include="PyramidPlayerInputComponent.cpp" />
     <ClCompile Include="PyramidScene.cpp" />
+    <ClCompile Include="UpdateFrequencyMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientUI.h" />
     <ClInclude Include="PyramidClient.h" />
+    <ClInclude Include="PyramidClientMessageTypes.h" />
     <ClInclude Include="PyramidGame.h" />
-    <ClInclude Include="PyramidPlayer.h" />
+    <ClInclude Include="PyramidPlayerInputComponent.h" />
     <ClInclude Include="PyramidScene.h" />
+    <ClInclude Include="UpdateFrequencyMessage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

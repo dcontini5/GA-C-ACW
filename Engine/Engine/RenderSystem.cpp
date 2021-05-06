@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "ThreadManager.h"
 #include "Game.h"
+#include "CurrentSystemFrequencyMessage.h"
 
 void RenderSystem::Process(){
 	
@@ -16,8 +17,25 @@ void RenderSystem::Process(){
 	}
 
 	
-	mRenderer->ClearScreen();
+	std::chrono::duration<double> lag = std::chrono::high_resolution_clock::now() - mLastTime;
+
+	while (lag < mTimeStep){
+		lag = std::chrono::high_resolution_clock::now() - mLastTime;
+	}
+
+	//avgFps code taken from https://stackoverflow.com/questions/4687430/c-calculating-moving-fps
+	static auto avgFps = 1.f;
+	const auto alpha = 0.8f;
+	avgFps = alpha * avgFps + (1.f - alpha) * 1 / lag.count();
+	//
 	
+	std::shared_ptr<Message> msg = std::make_shared<CurrentSystemFrequencyMessage>(SystemTypes::RENDER, avgFps);
+	Game::Instance()->BroadcastMessage(msg);
+	
+	mLastTime = std::chrono::high_resolution_clock::now();
+	
+	mRenderer->ClearScreen();
+	mRenderer->UpdateViewMatrix();
 	
 	for(const auto& object: mGameObjects){
 
@@ -37,6 +55,8 @@ void RenderSystem::Process(){
 	mRenderer->RenderUI();
 	
 	mRenderer->Present();
+	
+	//mLastTime = std::chrono::high_resolution_clock::now();
 	
 }
 

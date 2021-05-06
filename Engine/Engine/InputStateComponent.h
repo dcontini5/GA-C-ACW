@@ -2,6 +2,7 @@
 #include "GameObjectComponent.h"
 #include "map"
 #include "InputKeys.h"
+#include "InputState.h"
 
 struct KeyState {
 
@@ -10,7 +11,8 @@ struct KeyState {
 	
 };
 
-typedef std::map<InputKeys, KeyState> KeyStates;
+//typedef std::map<InputKeys, KeyState> KeyStates;
+typedef std::map<short, bool> KeyStates;
 
 class InputStateComponent : public GameObjectComponent {
 
@@ -23,10 +25,11 @@ public:
 
 	//Accessors
 public:
-
+	
 	//Mutators
 public:
-	void UpdateState(const KeyState& pKeyState);
+	virtual void Update(const InputState& pKeyState){};
+	void OnMessage(std::shared_ptr<Message>& pMessage) override;
 	// Public Functions
 public:
 
@@ -45,7 +48,7 @@ public:
 	}
 
 	//Data:
-private:
+protected:
 
 	KeyStates mKeyStates;
 	

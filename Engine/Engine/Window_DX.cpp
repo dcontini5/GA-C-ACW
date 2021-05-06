@@ -16,14 +16,21 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 	PAINTSTRUCT ps;
 	HDC hdc;
 
+	
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
 		return true;
 
 
+
 	RECT rcClient;                 // client area rectangle 
-	static POINT ptClientUL;              // client upper left corner 
+	static POINT ptClientUL;              // client upper left corner
+	// 
 	static POINTS ptsBegin;        // beginning point 
-	static POINTS ptsEnd;      // previous endpoint 
+	static POINTS ptsEnd;
+	////static POINTS ptsBeginLMouse;        // beginning point 
+	//static POINTS ptsEndLMouse;      // previous endpoint 
+	//static POINTS ptsBeginRMouse;
+	//static POINTS ptsEndRMouse;
 	
 	switch (message)
 	{
@@ -49,7 +56,7 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 	{
 		InputState state;
 		state.key = wParam;
-		state.keyState = true;
+		state.keyState = false;
 		Game::Instance()->OnKeyboard(state);
 		return 0;
 	}
@@ -57,25 +64,40 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 	case WM_LBUTTONDOWN:
 
 	{
-		SetCapture(hWnd);
+		//SetCapture(hWnd);
 
 		GetClientRect(hWnd, &rcClient);
 		ptClientUL.x = rcClient.left;
 		ptClientUL.y = rcClient.top;
-
-		
 			
 		ClientToScreen(hWnd, &ptClientUL); 
 
 		ptsBegin = MAKEPOINTS(lParam);
-
+		ptsEnd = ptsBegin;
 		ShowCursor(false);
 		return 0;
 
 	}
 
-		
+	case WM_RBUTTONDOWN:
 
+	{
+		//SetCapture(hWnd);
+
+		GetClientRect(hWnd, &rcClient);
+		ptClientUL.x = rcClient.left;
+		ptClientUL.y = rcClient.top;
+
+
+
+		ClientToScreen(hWnd, &ptClientUL);
+
+		ptsBegin = MAKEPOINTS(lParam);
+		ptsEnd = ptsBegin;
+		ShowCursor(false);
+		return 0;
+
+	}
 	case  WM_MOUSEMOVE:
 		{
 
@@ -84,11 +106,32 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 			{
 				
 				const auto ptsCurr = MAKEPOINTS(lParam);
+
+
 				
 				InputState state;
 
-				state.key = WM_MOUSEMOVE;
-				//state.keyState = true;
+				state.key = WM_LBUTTONDOWN;
+				state.keyState = wParam & MK_LBUTTON && !(wParam & MK_RBUTTON);
+				auto x = wParam & MK_LBUTTON && !(wParam & MK_RBUTTON);
+				state.mouseMov.x = ptsEnd.x - ptsCurr.x;
+				state.mouseMov.y = ptsEnd.y - ptsCurr.y;
+
+				Game::Instance()->OnKeyboard(state);
+				ptsEnd = ptsCurr;
+				
+			}
+			
+			if (wParam & MK_RBUTTON)
+			{
+
+				const auto ptsCurr = MAKEPOINTS(lParam);
+
+				InputState state;
+
+				state.key = WM_RBUTTONDOWN;
+				state.keyState = !(wParam & MK_LBUTTON) && (wParam & MK_RBUTTON);
+				auto x = !(wParam & MK_LBUTTON) && (wParam & MK_RBUTTON);
 				state.mouseMov.x = ptsEnd.x - ptsCurr.x;
 				state.mouseMov.y = ptsEnd.y - ptsCurr.y;
 
@@ -97,8 +140,8 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 				
 			}
 
-	
 			return 0;
+			
 			
 		}
 
@@ -106,23 +149,51 @@ LRESULT CALLBACK Window_DX::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 		{
 
 		//ClipCursor(nullptr);
-		ReleaseCapture();
+		//ReleaseCapture();
 		//hdc = GetDC(hWnd);
+		InputState state;
+			
+		state.key = WM_LBUTTONDOWN;
+		state.keyState = false;
+
+		Game::Instance()->OnKeyboard(state);
+			
 		SetCursorPos(ptsBegin.x + ptClientUL.x, ptsBegin.y + ptClientUL.y);
 		ShowCursor(true);
 		return 0;
 		}
+
+	case WM_RBUTTONUP:
+	{
+
+		//ClipCursor(nullptr);
+		//ReleaseCapture();
+		//hdc = GetDC(hWnd);
+		InputState state;
+
+		state.key = WM_RBUTTONDOWN;
+		state.keyState = false;
+
+		Game::Instance()->OnKeyboard(state);
+
+		SetCursorPos(ptsBegin.x + ptClientUL.x, ptsBegin.y + ptClientUL.y);
+		ShowCursor(true);
+		return 0;
+			
+	}
+		
 		// Note that this tutorial does not handle resizing (WM_SIZE) requests,
 		// so we created the window without the resize border.
 
-
 	case WM_MOUSEWHEEL:
 		{
-		InputState state;
-		
-			//state.
-			//wParam;
-			auto x = GET_WHEEL_DELTA_WPARAM(wParam);
+			InputState state;
+
+			state.key = WM_MOUSEWHEEL;
+			state.keyState = true;
+			state.wheelRot = static_cast<int8_t>(GET_WHEEL_DELTA_WPARAM(wParam) * 0.00833333333333333333333333333333);
+			
+			Game::Instance()->OnKeyboard(state);	
 			return 0;
 		}
 		

@@ -12,8 +12,11 @@
     <ClCompile Include="ClientUI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="PyramidPlayer.cpp">
-      <Filter>GameObjects</Filter>
+    <ClCompile Include="PyramidPlayerInputComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateFrequencyMessage.cpp">
+      <Filter>Messages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -27,8 +30,14 @@
     <ClInclude Include="ClientUI.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="PyramidPlayer.h">
-      <Filter>GameObjects</Filter>
+    <ClInclude Include="PyramidPlayerInputComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateFrequencyMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="PyramidClientMessageTypes.h">
+      <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +52,12 @@
     </Filter>
     <Filter Include="GameObjects">
       <UniqueIdentifier>{fd8ecce3-f814-4f21-afd9-621869cc74c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{f7079115-2744-4f5d-8ba0-53369cb65bc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages">
+      <UniqueIdentifier>{d7f14f84-e56a-4ccb-811f-b64a60fb9035}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

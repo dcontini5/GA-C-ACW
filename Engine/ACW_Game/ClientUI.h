@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "UI.h"
+#include "PyramidGame.h"
 
 class ClientUI :public UI{
 
 	//Structors
 public:
-	ClientUI(){};
+	ClientUI():UI(), mGameState(PyramidGame::GetGameState()){}
 	ClientUI(const ClientUI&);
 	ClientUI(ClientUI&&); //exchange members here;
 	~ClientUI() = default;
@@ -33,5 +34,7 @@ public:
 
 	//Data:
 private:
+
+	std::shared_ptr<GameState> mGameState;
 	
 };

@@ -31,7 +31,10 @@ enum InputKeys {
 	SNAPSHOT       =0x2C,
 	INSERT         =0x2D,
 	DEL			   =0x2E,
-				
+
+	MOUSEL = 0x201,
+	MOUSER = 0x204,
+	MOUSEWHEEL = 0x20A,
 				   		   
 	NUMPAD0     =   0x60,
 	NUMPAD1     =   0x61,

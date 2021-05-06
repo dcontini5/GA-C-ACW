@@ -27,7 +27,7 @@ public:
 
 	//Mutators
 public:
-	void SetCamera(const std::shared_ptr<GameObject>& pCamera) { mCamera = pCamera; UpdateCamera(); }
+	void SetCamera(const std::shared_ptr<GameObject>& pCamera) { mCamera = pCamera; }
 	void SetUI(UIuniquePtr& pUI) { mUI = std::move(pUI); }
 	
 	// Public Functions
@@ -41,11 +41,11 @@ public:
 	virtual void Present() = 0;
 	virtual void InitUi() = 0;
 	virtual void RenderUI() = 0;
-	
+	virtual	void UpdateViewMatrix() = 0;
 	// Private Functions
 private:
 
-	void UpdateCamera();
+
 	
 	//Operators
 public:

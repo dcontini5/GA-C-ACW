@@ -2,6 +2,19 @@
 #include "Game.h"
 
 
+struct GameState {
+
+	bool sceneReset{ false };
+	bool firing{ false };
+	short projectileFired{ 0 };
+	short pyramidSize{ 5 }; //improve
+	short networkTargetFrequency{ 60 };
+	short graphicsTargetFrequency{ 60 };
+	float networkActualFrequency{ 0.f };
+	float graphicsActualFrequency{ 0.f };
+	
+};
+
 class PyramidGame : public Game {
 
 	//Structors
@@ -13,7 +26,7 @@ public:
 
 	//Accessors
 public:
-
+	static std::shared_ptr<GameState>& GetGameState(){ return mGameState; }
 	//Mutators
 public:
 
@@ -37,4 +50,6 @@ public:
 	//Data:
 private:
 
+	static std::shared_ptr<GameState> mGameState;
+	
 };

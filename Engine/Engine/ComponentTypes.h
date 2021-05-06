@@ -10,5 +10,6 @@ struct ComponentTypes {
 	static ComponentType NETWORKING = 4;
 	static ComponentType PLAYER_CLIENT = 5;
 	static ComponentType INPUT_STATE = 6;
+	static ComponentType CAMERA = 7;
 	
 };

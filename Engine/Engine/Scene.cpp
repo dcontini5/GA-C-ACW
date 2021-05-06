@@ -10,6 +10,8 @@
 #include "InputStateMessage.h"
 #include "InputKeys.h"
 #include "Game.h"
+#include "PlayerConnectedMessage.h"
+#include "InputStateComponent.h"
 
 Scene::~Scene(){
 
@@ -56,22 +58,34 @@ void Scene::OnMessage(std::shared_ptr<Message>& pMessage){
 
 	case MessageTypes::INPUT_STATE:
 		{
-			
-			auto inpMsg = std::reinterpret_pointer_cast<InputStateMessage>(pMessage);
-
-			if (inpMsg->GetInputState().key == ESCAPE){
-
-				Game::Instance()->Quit();
-				return;
-			}
-			
+						
 			mPlayer->OnMessage(pMessage);
 			return;
+		}
+	case MessageTypes::CAMERA_UPDATE:
+		{
+
+			mPlayer->OnMessage(pMessage);
+			return;
+			
+		}
+			
+	case MessageTypes::PLAYER_CONNECTED:
+		{
+
+			auto pcMsg = std::reinterpret_pointer_cast<PlayerConnectedMessage>(pMessage);
+
+		
+
+			pcMsg->GetTransferSocket()->SetClient(mPlayer);
+			
+			return;
+			
 		}
 		
 	default: return;
 	}
-		
+	
 	
 }
 
