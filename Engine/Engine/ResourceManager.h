@@ -32,6 +32,7 @@ struct SettingList {
 
 	std::string ServerAddress;
 	std::string ClientAddress;
+	int PyramidHeight;
 	int Port;
 	short Height;
 	short Width;
@@ -63,6 +64,7 @@ public:
 	std::string GetServerAddress() const { return mSettings.ServerAddress; }
 	std::string GetClientAddress() const { return mSettings.ClientAddress; }
 	int GetPort() const { return mSettings.Port; }
+	int GetPyramidHeight() const { return mSettings.PyramidHeight; }
 	short GetWindowHeight() const { return mSettings.Height; }
 	short GetWindowWidth() const { return mSettings.Width; }
 	//Mutators

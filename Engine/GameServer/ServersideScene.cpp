@@ -25,45 +25,9 @@ void ServersideScene::Start(){
 	AddSystem(physicsSystem);
 	AddSystem(collisionSystem);
 	AddSystem(server);
-	
-	int noOfLevels = 6;
-	/*
-	auto sphereObj = std::make_shared<GameObject>();
-
-	sphereObj->InitPos({ 0.f, 20,  - 5.f });
-	sphereObj->setRot({ 0, 0, 0 });
-	sphereObj->setScale({ 1.f, 1.f, 1.f });
-
-	{
-
-		auto nc = std::make_shared<NetworkComponent>(sphereObj);
-
-		auto comp = std::dynamic_pointer_cast<GameObjectComponent>(nc);
-
-		sphereObj->AddComponent(comp);
-
-		auto pc = std::make_shared<PhysicsComponent>(sphereObj);
-		pc->SetDrag(0.60f);
-		pc->SetStatic(false);
-
-		comp = std::reinterpret_pointer_cast<GameObjectComponent>(pc);
-
-		sphereObj->AddComponent(comp);
-
-		auto cc = std::make_shared<SphereCollisionComponent>(sphereObj);
-
-		cc->SetRadius(1.f);
-
-		comp = std::reinterpret_pointer_cast<GameObjectComponent>(cc);
-
-		sphereObj->AddComponent(comp);
-
-	}
 
 
-	mGameObjectList.push_back(sphereObj);
-
-	*/
+	const int noOfLevels = ResourceManager::Instance()->GetPyramidHeight();
 	
 	for (auto i = noOfLevels; i > 0; i--) {
 

@@ -10,7 +10,7 @@ void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 		std::string message;
 
 		CreateMessage(message, pTransferSocket);
-
+		
 		message += '\0';
 
 		//std::cout << message << "\n";
@@ -32,11 +32,11 @@ void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 
 	std::string message;
+	std::string newMessage;
 	
 	while ( message != "DISCONNECT" ){
-
-		//todo: send data size with the first packet
-		//https://stackoverflow.com/questions/55178026/reading-more-than-one-message-from-recv
+		
+		
 		do{
 			const auto maxSize = 65535;
 			std::vector<char> buffer(maxSize);
@@ -52,9 +52,12 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 			}
 			
 			recvMessage.assign(buffer.cbegin(), buffer.cend());
-			//message.assign(buffer.cbegin(), buffer.cend());
-
-			message += recvMessage;
+			recvMessage.shrink_to_fit();
+			size_t msgDelimeter = recvMessage.find('\0');
+			
+			message += (msgDelimeter != std::string::npos) ? recvMessage.substr(0, msgDelimeter + 1) : recvMessage;
+			recvMessage.erase(0, msgDelimeter + 1);
+			newMessage = (recvMessage[0] != '\0')? recvMessage : "";
 			
 		} while (message[message.size() - 1] != 0);
 		
@@ -62,6 +65,8 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 		ParseMessage(message, pTransferSocket);
 
 		message.clear();
+		message = newMessage;
+		newMessage.clear();
 		
 	}
 
@@ -69,5 +74,17 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 }
 
 
+void NetworkingSystem::CreateMessageInfo(std::string& pMessage){
 
+	std::string info;
+	info += "ML: ";
+	//const int digitsInMsgLength = log10(pMessage.size());
+	const int digitsInMsgLength = log10(pMessage.size() + log10(pMessage.size()));
+	info += std::to_string(digitsInMsgLength);
+	//auto size = (digitsInMsgLength < actualSize) ? actualSize + 1 : actualSize;
+	info += '#';
+	
+	pMessage = info + pMessage;
 
+	
+}

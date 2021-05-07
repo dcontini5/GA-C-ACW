@@ -27,6 +27,7 @@ public:
 	void Send(const TransferSocketPtr& pTransferSocket);
 	void Receive(const TransferSocketPtr& pTransferSocket);
 
+	virtual void CreateMessageInfo(std::string& pMessage);
 	virtual void CreateMessage(std::string& pMessage, const TransferSocketPtr& pTransferSocket) = 0;	//must implement on game
 	virtual void ParseMessage(std::string& pMessage, const TransferSocketPtr& pTransferSocket) = 0;	//must implement on game
 	// Private Functions
@@ -46,3 +47,4 @@ protected:
 	//int				mReceiveThreadID;
 	MessageQueue    mSendQueue;
 };
+

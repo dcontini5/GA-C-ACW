@@ -37,6 +37,13 @@ void ResourceManager::ParseLine(std::string& line){
 		return;
 	}
 
+	if (settingName == "PyramidHeight") {
+
+		mSettings.PyramidHeight = std::stoi(settingValue);
+		return;
+	}
+
+
 	if (settingName == "Height") {
 
 		mSettings.Height = std::stoi(settingValue);
