@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Socket.h"
-
+#include "chrono"
 
 class GameObject;
 typedef std::shared_ptr<GameObject> GameObjectPtr;
@@ -26,6 +26,9 @@ public:
 	int GetSendThreadID() const { return mSendThreadID; }
 	int GetReceiveThreadID() const { return mReceiveThreadID; }
 	bool IsResetted() const { return mResetted; }
+	std::chrono::time_point<std::chrono::high_resolution_clock> GetLastSendTime() const { return mLastTimeSend; }
+	std::chrono::time_point<std::chrono::high_resolution_clock> GetLastReceiveTime() const { return mLastTimeReceive; }
+	float GetAverageSend() const { return mAverageSendPerSecond;}
 	
 	//Mutators
 public:
@@ -37,6 +40,9 @@ public:
 	void ResetDone() { mResetted = false; }
 	void SetSendThreadID(const int& pID) {mSendThreadID = pID; }
 	void SetReceiveThreadID(const int& pID) {mReceiveThreadID = pID; }
+	void SetLastSendTime(const std::chrono::time_point<std::chrono::high_resolution_clock>& pNewTime) { mLastTimeSend = pNewTime; }
+	void SetLastReceiveTime(const std::chrono::time_point<std::chrono::high_resolution_clock>& pNewTime) { mLastTimeReceive = pNewTime; }
+	void SetAverageSend(const float& pNewValue) { mAverageSendPerSecond = pNewValue; }
 	// Public Functions
 public:
 		
@@ -69,5 +75,9 @@ private:
 	bool mConnected{ false };
 	int mSendThreadID{-1};
 	int mReceiveThreadID{-1};
+	std::chrono::time_point<std::chrono::high_resolution_clock> mLastTimeSend;
+	std::chrono::time_point<std::chrono::high_resolution_clock> mLastTimeReceive;
+	float mAverageSendPerSecond{0.f};
+	float mAverageReceivePerSecond{0.f};
 	
 };

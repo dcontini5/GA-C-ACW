@@ -9,15 +9,15 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{3a8e0c61-eb02-4d43-9672-90c77d6fdee0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Networking">
       <UniqueIdentifier>{8b16eabc-a373-4370-872e-b9a5d1a0aa74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messages">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -29,6 +29,9 @@
     <ClCompile Include="PyramidServer.cpp">
       <Filter>Networking</Filter>
     </ClCompile>
+    <ClCompile Include="..\ACW_Game\UpdateFrequencyMessage.cpp">
+      <Filter>Messages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ServersideGame.h" />
@@ -37,6 +40,12 @@
     </ClInclude>
     <ClInclude Include="PyramidServer.h">
       <Filter>Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ACW_Game\UpdateFrequencyMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="PyramidMessageTypes.h">
+      <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

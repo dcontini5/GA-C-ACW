@@ -19,7 +19,7 @@
 #include "UpdateFrequencyMessage.h"
 #include "PyramidPlayerInputComponent.h"
 #include "CurrentSystemFrequencyMessage.h"
-#include "CameraComponent.h"
+#include "PyramidCameraComponent.h"
 
 void PyramidScene::Start(){
 
@@ -83,7 +83,7 @@ void PyramidScene::Start(){
 
 			player->Register(MessageTypes::INPUT_STATE, obs);
 
-			std::shared_ptr<CameraComponent> cc = std::make_shared<CameraComponent>(player);
+			std::shared_ptr<CameraComponent> cc = std::make_shared<PyramidCameraComponent>(player);
 
 			cc->SetForward({ 0.0f, 0.0f, 1.0f });
 
@@ -278,8 +278,24 @@ void PyramidScene::OnMessage(std::shared_ptr<Message>& pMessage){
 			auto csfMsg = std::reinterpret_pointer_cast<CurrentSystemFrequencyMessage>(pMessage);
 
 			if (csfMsg->GetSystemType() == SystemTypes::RENDER) PyramidGame::GetGameState()->graphicsActualFrequency = csfMsg->GetFrequency();
-
+			else PyramidGame::GetGameState()->clientActualFrequency = csfMsg->GetFrequency();
+			break;
 		}
+
+		case MessageTypes::RESET_SCENE + 4:
+			{
+				const auto system = mSystems.find(SystemTypes::NETWORKING);
+				
+				if (system != mSystems.end()) {
+
+					auto client = std::dynamic_pointer_cast<PyramidClient>(system->second);
+					//todo: make the client do stuff with keyboard inputs
+					//client.dostuff();
+
+				}
+
+				
+			}
 		 
 		default: break;
 		

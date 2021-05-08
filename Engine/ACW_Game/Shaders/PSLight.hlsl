@@ -24,7 +24,7 @@ float4 PS(VS_OUTPUT input) : SV_Target
 {
 
 	float4 materialAmb = float4 (0.1f, 0.2f, 0.2f, 1.0f);
-	float4 materialDiff = float4 (0.9f, 0.7f, 1.0f, 1.0f);
+	float4 materialDiff = float4 (0.8f, 0.8f, 0.8f, 1.0f);
 	float4 materialSpec = float4 (0.3f, 0.3f, 0.3f, 1.0f);
 	float4 lightCol = float4(0.9f, 0.9f, 0.9f, 1.0f);
 

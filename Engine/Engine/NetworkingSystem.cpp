@@ -1,11 +1,32 @@
 ﻿#include "NetworkingSystem.h"
 
+
+
+#include "CurrentSystemFrequencyMessage.h"
+#include "Game.h"
 #include "ThreadManager.h"
 
 
 void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 		
 	while (pTransferSocket->IsConnected()){
+
+		std::chrono::duration<double> lag = std::chrono::high_resolution_clock::now() - pTransferSocket->GetLastSendTime();
+
+		while (lag < mTimeStep) {
+			lag = std::chrono::high_resolution_clock::now() - pTransferSocket->GetLastSendTime();
+		}
+
+		//avgFps code taken from https://stackoverflow.com/questions/4687430/c-calculating-moving-fps
+		
+		const auto alpha = 0.8f;
+		pTransferSocket->SetAverageSend(alpha * pTransferSocket->GetAverageSend() + (1.f - alpha) * 1 / lag.count());
+
+		//std::shared_ptr<Message> msg = std::make_shared<CurrentSystemFrequencyMessage>(SystemTypes::NETWORKING, avgFps);
+		//Game::Instance()->BroadcastMessage(msg);
+
+		pTransferSocket->SetLastSendTime( std::chrono::high_resolution_clock::now());
+
 		
 		std::string message;
 
@@ -13,7 +34,6 @@ void NetworkingSystem::Send(const TransferSocketPtr& pTransferSocket) {
 		
 		message += '\0';
 
-		//std::cout << message << "\n";
 		
 		if (send(pTransferSocket->GetSocket(), message.c_str(), message.size(), 0) == SOCKET_ERROR) {
 
@@ -35,7 +55,24 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 	std::string newMessage;
 	
 	while ( message != "DISCONNECT" ){
-		
+
+
+		//std::chrono::duration<double> lag = std::chrono::high_resolution_clock::now() - mLastTimeReceive;
+		//
+		//while (lag < mTimeStep) {
+		//	lag = std::chrono::high_resolution_clock::now() - mLastTimeReceive;
+		//}
+		//
+		////avgFps code taken from https://stackoverflow.com/questions/4687430/c-calculating-moving-fps
+		//static auto avgFps = 1.f;
+		//const auto alpha = 0.8f;
+		//avgFps = alpha * avgFps + (1.f - alpha) * 1 / lag.count();
+		////
+		//
+		//std::shared_ptr<Message> msg = std::make_shared<CurrentSystemFrequencyMessage>(SystemTypes::NETWORKING, avgFps);
+		//Game::Instance()->BroadcastMessage(msg);
+		//
+		//mLastTimeReceive = std::chrono::high_resolution_clock::now();
 		
 		do{
 			const auto maxSize = 65535;
@@ -53,10 +90,10 @@ void NetworkingSystem::Receive(const TransferSocketPtr& pTransferSocket) {
 			
 			recvMessage.assign(buffer.cbegin(), buffer.cend());
 			recvMessage.shrink_to_fit();
-			size_t msgDelimeter = recvMessage.find('\0');
+			const size_t msgDelimiter = recvMessage.find('\0');
 			
-			message += (msgDelimeter != std::string::npos) ? recvMessage.substr(0, msgDelimeter + 1) : recvMessage;
-			recvMessage.erase(0, msgDelimeter + 1);
+			message += (msgDelimiter != std::string::npos) ? recvMessage.substr(0, msgDelimiter + 1) : recvMessage;
+			recvMessage.erase(0, msgDelimiter + 1);
 			newMessage = (recvMessage[0] != '\0')? recvMessage : "";
 			
 		} while (message[message.size() - 1] != 0);

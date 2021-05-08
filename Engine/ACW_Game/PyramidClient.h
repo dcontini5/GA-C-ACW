@@ -1,8 +1,11 @@
 ﻿#pragma once
 #include "Client.h"
 #include "Game.h"
+#include "PlayerUpdateInfo.h"
 
 //typedef std::unique_ptr<GameObject> GameObjectUPtr;
+
+
 
 class PyramidClient : public Client {
 
@@ -15,22 +18,24 @@ public:
 
 	//Accessors
 public:
-
+	//PlayerUpdateInfo GetPlayerUpdateInfo()
+	
 	//Mutators
 public:
 
+	void SetPlayerUpdateInfo(const PlayerUpdateInfo& pPlayerUpdate) { mPlayerUpdateInfo = pPlayerUpdate; }
+	
 	// Public Functions
 public:
 
 	void CreateMessage(std::string& pMessage, const std::shared_ptr<TransferSocket>& pTransferSocket) override;
 	void ParseMessage(std::string& pMessage, const std::shared_ptr<TransferSocket>& pTransferSocket) override;
-	void UpdateGameObjects(std::string& pUpdate);
-	
 	
 	// Private Functions
 private:
 	void UpdateScene(const std::shared_ptr<TransferSocket>& pTransferSocket);
-	void UpdateGameObjects(const std::string& pUpdate);
+	void UpdateGameObjects(std::string& pUpdate);
+	void UpdatePlayer( std::string& pUpdate);
 	//Operators
 public:
 	PyramidClient& operator=(const PyramidClient& pOther) = default;
@@ -46,6 +51,7 @@ public:
 private:
 
 	std::vector<GameObjectPtr> mGameObjectsUpdated;
-	
+	PlayerUpdateInfo mPlayerUpdateInfo;
 };
+
 

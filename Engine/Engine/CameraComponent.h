@@ -29,8 +29,8 @@ public:
 	
 	// Public Functions
 public:
-	void OnMessage(std::shared_ptr<Message>& pMessage) override;
-	// Private Functions
+	void OnMessage(std::shared_ptr<Message>& pMessage) override{}
+	// Private Functions 
 private:
 
 	//Operators
@@ -43,7 +43,7 @@ public:
 	}
 
 	//Data:
-private:
+protected:
 
 	glm::vec3 mForward{ 0.f, 0.f, 1.f };
 	glm::vec3 mUp{ 0.f, 1.f, 0.f };

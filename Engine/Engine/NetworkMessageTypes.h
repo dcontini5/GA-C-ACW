@@ -12,5 +12,7 @@ struct NetworkMessageTypes {
 	
 	static NetworkMessageType SCENE_RESET = 3;
 
+	static NetworkMessageType SERVER_FREQUENCY = 4;
+
 	
 };

@@ -156,12 +156,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ACW_Game\UpdateFrequencyMessage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PyramidServer.cpp" />
     <ClCompile Include="ServersideGame.cpp" />
     <ClCompile Include="ServersideScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ACW_Game\UpdateFrequencyMessage.h" />
+    <ClInclude Include="PyramidMessageTypes.h" />
     <ClInclude Include="PyramidServer.h" />
     <ClInclude Include="ServersideGame.h" />
     <ClInclude Include="ServersideScene.h" />

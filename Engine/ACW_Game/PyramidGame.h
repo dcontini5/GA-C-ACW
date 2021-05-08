@@ -10,7 +10,8 @@ struct GameState {
 	short pyramidSize{ 5 }; //improve
 	short networkTargetFrequency{ 60 };
 	short graphicsTargetFrequency{ 60 };
-	float networkActualFrequency{ 0.f };
+	float clientActualFrequency{ 0.f };
+	float serverActualFrequency{ 0.f };
 	float graphicsActualFrequency{ 0.f };
 	
 };

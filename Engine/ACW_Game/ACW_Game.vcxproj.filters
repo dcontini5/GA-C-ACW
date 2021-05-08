@@ -18,6 +18,9 @@
     <ClCompile Include="UpdateFrequencyMessage.cpp">
       <Filter>Messages</Filter>
     </ClCompile>
+    <ClCompile Include="PyramidCameraComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PyramidGame.h" />
@@ -38,6 +41,12 @@
     </ClInclude>
     <ClInclude Include="PyramidClientMessageTypes.h">
       <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="PyramidCameraComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUpdateInfo.h">
+      <Filter>Networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,16 +1,49 @@
 ﻿#include "PyramidClient.h"
+
+#include "CurrentSystemFrequencyMessage.h"
 #include "NetworkMessageTypes.h"
+#include "PyramidGame.h"
 #include "ResetSceneMessage.h"
 #include "ThreadManager.h"
 
-std::shared_mutex mutex;
-
 void PyramidClient::CreateMessage(std::string& pMessage, const std::shared_ptr<TransferSocket>& pTransferSocket){
 
-	pMessage = "culoculo\n";
 
+	const auto timeout = std::chrono::high_resolution_clock::now() + std::chrono::seconds(30);
 	
+	while (!mPlayerUpdateInfo.hasUpdated && timeout >= std::chrono::high_resolution_clock::now()) {
+		//wait
+	}
 	
+	pMessage += std::to_string(NetworkMessageTypes::PLAYER_UPDATE) + ':';
+
+	const auto player = pTransferSocket->GetPlayer();
+
+	const auto pos = std::to_string(player->GetPos().x) + '>' + std::to_string(player->GetPos().y) + '>' + std::to_string(player->GetPos().z) + ')';
+	const auto rotation = std::to_string(player->GetRot().x) + '>' + std::to_string(player->GetRot().y) + '>' + std::to_string(player->GetRot().z) + ')';
+
+
+	pMessage += 'P(';
+	pMessage += pos;
+	pMessage += 'R(';
+	pMessage += rotation;
+	pMessage += '~';
+
+	pMessage += '#';
+
+	pMessage += std::to_string(NetworkMessageTypes::SCENE_RESET) + ':';
+	
+	pMessage += std::to_string(mPlayerUpdateInfo.sceneReset);
+	pMessage += '~';
+
+	pMessage += '#';
+
+	pMessage += std::to_string(NetworkMessageTypes::SERVER_FREQUENCY) + ':';
+
+	pMessage += std::to_string(mSystemFrequency);
+	pMessage += '~';
+
+	pMessage += '#';
 }
 
 void PyramidClient::ParseMessage(std::string& pMessage, const std::shared_ptr<TransferSocket>& pTransferSocket) {
@@ -36,21 +69,41 @@ void PyramidClient::ParseMessage(std::string& pMessage, const std::shared_ptr<Tr
 
 
 				UpdateGameObjects(coords);
-				pMessage.erase(0, messageLenght + 1);
 				break;
 			}
+
+		case NetworkMessageTypes::PLAYER_UPDATE:
+			{
+
+				//UpdatePlayer(coords);
+				break;
+			}
+
+		case NetworkMessageTypes::SERVER_FREQUENCY:
+			{
+
+				coords.erase(0, msgTypeDelimeter + 1);
+
+				const auto freq = std::stof(coords.substr(0, messageLenght));
+
+				
+				
 			
-		
+				std::shared_ptr<Message> msg = std::make_shared<CurrentSystemFrequencyMessage>(SystemTypes::NETWORKING, freq);
+				Game::Instance()->BroadcastMessage(msg);
+			}
+
+			
 		default: ;
 		}
 		
+		pMessage.erase(0, messageLenght + 1);
 	}
 
 
 	UpdateScene(pTransferSocket);
 	//process data
 	mGameObjectsUpdated.clear();
-	//pMessage.erase(0, ++messageLenght);
 
 
 	
@@ -118,4 +171,39 @@ void PyramidClient::UpdateScene(const std::shared_ptr<TransferSocket>& pTransfer
 	}
 	
 	
+}
+
+void PyramidClient::UpdatePlayer(std::string& pUpdate) {
+
+
+	auto player = mTransferSocket->GetPlayer();
+	
+	pUpdate.erase(0, pUpdate.find('(') + 1);
+
+	auto xPos = pUpdate.substr(0, pUpdate.find('>'));
+	pUpdate.erase(0, xPos.length() + 1);
+
+	auto yPos = pUpdate.substr(0, pUpdate.find('>'));
+	pUpdate.erase(0, yPos.length() + 1);
+
+	auto zPos = pUpdate.substr(0, pUpdate.find(')'));
+	
+
+	pUpdate.erase(0, pUpdate.find('(') + 1);
+
+	auto xRot = pUpdate.substr(0, pUpdate.find('>'));
+	pUpdate.erase(0, xRot.length() + 1);
+
+	auto yRot = pUpdate.substr(0, pUpdate.find('>'));
+	pUpdate.erase(0, yRot.length() + 1);
+
+	auto zRot = pUpdate.substr(0, pUpdate.find(')'));
+
+	pUpdate.erase(0, pUpdate.find('~') + 1);
+	
+	{
+		std::unique_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
+		player->SetPos({ std::stof(xPos),std::stof(yPos),std::stof(zPos) });
+		player->setRot({ std::stof(xRot),std::stof(xRot),std::stof(xRot) });
+	}
 }

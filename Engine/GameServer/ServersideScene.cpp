@@ -11,9 +11,11 @@
 #include "SphereCollisionComponent.h"
 #include "PhysicsComponent.h"
 #include "PhysicsSystem.h"
+#include "PyramidMessageTypes.h"
 #include "RenderComponent.h"
 #include "ResourceManager.h"
 #include "ThreadManager.h"
+#include "UpdateFrequencyMessage.h"
 
 void ServersideScene::Start(){
 
@@ -107,7 +109,18 @@ void ServersideScene::OnMessage(std::shared_ptr<Message>& pMessage){
 
 			break;
 		}
+		
+		case PyramidMessageTypes::UPDATE_FREQUENCY:
+		{
+			const auto ufmsg = std::reinterpret_pointer_cast<UpdateFrequencyMessage>(pMessage);
 
+			auto system = mSystems.find(ufmsg->GetSystemType());
+
+			if (system != mSystems.end()) system->second->SetSysFrequency(ufmsg->GetFrequency());
+
+			break;
+
+		}
 
 
 	}

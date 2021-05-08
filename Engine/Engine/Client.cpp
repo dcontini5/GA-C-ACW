@@ -26,7 +26,7 @@ void Client::Start(){
 
 			Game::Instance()->BroadcastMessage(msg);
 
-			//const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, mTransferSocket);
+			const auto sendID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Send, this, mTransferSocket);
 			//mTransferSocket->SetSendThreadID(sendID);
 			const auto receiveID = ThreadManager::Instance()->AddThreadWithArgs(&NetworkingSystem::Receive, this, mTransferSocket);
 			//mTransferSocket->SetReceiveThreadID(receiveID);

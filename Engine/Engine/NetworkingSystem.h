@@ -43,6 +43,7 @@ public:
 protected:
 	
 	Peer			mPeer;
+
 	//int				mSendThreadID;
 	//int				mReceiveThreadID;
 	MessageQueue    mSendQueue;

@@ -43,7 +43,7 @@ public:
 
 	
 	//Data:
-private:
+protected:
 
 
 	typedef std::shared_ptr<TransferSocket> TransferSocketPtr;

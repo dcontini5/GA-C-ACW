@@ -68,22 +68,31 @@ void DX_Renderer::RenderUI(){
 
 void DX_Renderer::UpdateViewMatrix(){
 
-
-	const glm::vec3 camPos = mCamera->GetPos();
-	const glm::vec3 camRot = mCamera->GetRot();
-	const std::shared_ptr<CameraComponent> cc = std::dynamic_pointer_cast<CameraComponent>(mCamera->GetComponent(ComponentTypes::CAMERA));
-	const glm::vec3 camForward = cc->GetForward() + camPos + camRot;
-	const glm::vec3 camUp = cc->GetUp();
+	glm::vec3 camPos;
+	glm::vec3 camRot;
+	std::shared_ptr<CameraComponent> cc;
+	glm::vec3 camForward;
+	glm::vec3 camUp;
+	
+	{
+		std::shared_lock<std::shared_mutex> lk(ThreadManager::Instance()->GetSharedMutex());
+		camPos = mCamera->GetPos();
+		camRot = mCamera->GetRot();
+		cc = std::dynamic_pointer_cast<CameraComponent>(mCamera->GetComponent(ComponentTypes::CAMERA));
+		camForward = cc->GetForward() + camPos + camRot;
+		camUp = cc->GetUp();
+	}
 
 
 	DirectX::XMVECTOR Eye = DirectX::XMVectorSet(camPos.x, camPos.y, camPos.z, 0.0f);
 	DirectX::XMVECTOR Forward = DirectX::XMVectorSet(camForward.x, camForward.y, camForward.z, 0.0f);
 	DirectX::XMVECTOR Up = DirectX::XMVectorSet(camUp.x, camUp.y, camUp.z, 0.0f);
-	DirectX::XMVECTOR Rot = DirectX::XMVectorSet(camRot.x, camRot.y, camRot.z, 0.f);
+	//DirectX::XMVECTOR Rot = DirectX::XMVectorSet(camRot.x, camRot.y, camRot.z, 0.f);
 	
 	
-	mView = DirectX::XMMatrixLookAtLH(Eye, Forward, Up)/* * DirectX::XMMatrixRotationRollPitchYawFromVector(Rot)*/;
-
+	//mView = DirectX::XMMatrixLookAtLH(Eye, Forward, Up) * DirectX::XMMatrixRotationRollPitchYawFromVector(Rot);
+	mView = DirectX::XMMatrixLookAtLH(Eye, Forward, Up);
+	
 	
 }
 

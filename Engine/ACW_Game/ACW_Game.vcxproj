@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="..\Engine\main.cpp" />
     <ClCompile Include="ClientUI.cpp" />
+    <ClCompile Include="PyramidCameraComponent.cpp" />
     <ClCompile Include="PyramidClient.cpp" />
     <ClCompile Include="PyramidGame.cpp" />
     <ClCompile Include="PyramidPlayerInputComponent.cpp" />
@@ -141,6 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientUI.h" />
+    <ClInclude Include="PlayerUpdateInfo.h" />
+    <ClInclude Include="PyramidCameraComponent.h" />
     <ClInclude Include="PyramidClient.h" />
     <ClInclude Include="PyramidClientMessageTypes.h" />
     <ClInclude Include="PyramidGame.h" />
