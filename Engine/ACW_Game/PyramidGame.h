@@ -4,10 +4,10 @@
 
 struct GameState {
 
-	bool sceneReset{ false };
-	bool firing{ false };
-	short projectileFired{ 0 };
-	short pyramidSize{ 5 }; //improve
+	bool sceneReset{ false }; 
+	bool hasUpdated{ false };
+	uint8_t projectileFired{ 0 };
+	uint8_t pyramidSize{ 5 }; //improve 
 	short networkTargetFrequency{ 60 };
 	short graphicsTargetFrequency{ 60 };
 	float clientActualFrequency{ 0.f };

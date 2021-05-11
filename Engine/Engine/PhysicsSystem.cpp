@@ -13,7 +13,7 @@ void PhysicsSystem::Process(){
 		
 		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
 		ThreadManager::Instance()->GetConditionVariable().wait(lk, []{
-			return !ThreadManager::Instance()->IsPhysicsDone();
+			return (!ThreadManager::Instance()->IsPhysicsDone());
 		});
 	
 	}

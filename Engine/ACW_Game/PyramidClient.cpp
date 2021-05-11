@@ -1,19 +1,28 @@
 ﻿#include "PyramidClient.h"
 
 #include "CurrentSystemFrequencyMessage.h"
+#include "UpdateFrequencyMessage.h"
 #include "NetworkMessageTypes.h"
 #include "PyramidGame.h"
 #include "ResetSceneMessage.h"
 #include "ThreadManager.h"
+#include "UpdatePyramidHeightMessage.h"
+#include "SpawnObjectMessage.h"
 
 void PyramidClient::CreateMessage(std::string& pMessage, const std::shared_ptr<TransferSocket>& pTransferSocket){
 
 
-	const auto timeout = std::chrono::high_resolution_clock::now() + std::chrono::seconds(30);
+	//const auto timeout = std::chrono::high_resolution_clock::now() + std::chrono::seconds(30);
 	
-	while (!mPlayerUpdateInfo.hasUpdated && timeout >= std::chrono::high_resolution_clock::now()) {
-		//wait
-	}
+	//while (!mGameState->hasUpdated /*&& timeout >= std::chrono::high_resolution_clock::now()*/) {
+		//std::this_thread::sleep_for(std::chrono::nanoseconds(1));
+	//}
+	if(!mGameState->hasUpdated) return;
+
+
+	
+	mGameState->hasUpdated = false;
+	
 	
 	pMessage += std::to_string(NetworkMessageTypes::PLAYER_UPDATE) + ':';
 
@@ -27,23 +36,26 @@ void PyramidClient::CreateMessage(std::string& pMessage, const std::shared_ptr<T
 	pMessage += pos;
 	pMessage += 'R(';
 	pMessage += rotation;
-	pMessage += '~';
-
 	pMessage += '#';
-
-	pMessage += std::to_string(NetworkMessageTypes::SCENE_RESET) + ':';
 	
-	pMessage += std::to_string(mPlayerUpdateInfo.sceneReset);
-	pMessage += '~';
-
+	pMessage += std::to_string(NetworkMessageTypes::PYRAMID_HEIGHT) + ':';
+	pMessage += std::to_string(mGameState->pyramidSize);
 	pMessage += '#';
-
+	
+	pMessage += std::to_string(NetworkMessageTypes::SCENE_RESET) + ':';
+	pMessage += std::to_string(mGameState->sceneReset);
+	pMessage += '#';
+	
 	pMessage += std::to_string(NetworkMessageTypes::SERVER_FREQUENCY) + ':';
-
-	pMessage += std::to_string(mSystemFrequency);
-	pMessage += '~';
-
+	pMessage += std::to_string(mGameState->networkTargetFrequency);
 	pMessage += '#';
+
+	//pMessage += std::to_string(NetworkMessageTypes::PROJECTILE_FIRED) + ':';
+	//pMessage += std::to_string(mGameState->projectileFired);
+	//pMessage += '#';
+
+	
+	//mGameState->projectileFired = 0;
 }
 
 void PyramidClient::ParseMessage(std::string& pMessage, const std::shared_ptr<TransferSocket>& pTransferSocket) {
@@ -52,7 +64,10 @@ void PyramidClient::ParseMessage(std::string& pMessage, const std::shared_ptr<Tr
 
 	std::string data;
 
+	//if(data.empty()) return;
+	
 	size_t messageLenght = 0;
+
 	
 	while((messageLenght = pMessage.find('#')) != std::string::npos){
 
@@ -60,7 +75,7 @@ void PyramidClient::ParseMessage(std::string& pMessage, const std::shared_ptr<Tr
 
 		const NetworkMessageType msgType = std::stoi(pMessage.substr(0, msgTypeDelimeter));
 
-		auto coords = pMessage.substr(0, messageLenght);
+		auto coords = pMessage.substr(0, messageLenght + 1);
 		
 		switch (msgType){
 
@@ -82,22 +97,71 @@ void PyramidClient::ParseMessage(std::string& pMessage, const std::shared_ptr<Tr
 		case NetworkMessageTypes::SERVER_FREQUENCY:
 			{
 
-				coords.erase(0, msgTypeDelimeter + 1);
+				coords.erase(0, coords.find('(') + 1);
+				const auto targetFreq = std::stoi(coords.substr(0, coords.find(')')));
 
-				const auto freq = std::stof(coords.substr(0, messageLenght));
-
-				
-				
-			
-				std::shared_ptr<Message> msg = std::make_shared<CurrentSystemFrequencyMessage>(SystemTypes::NETWORKING, freq);
+				std::shared_ptr<Message> msg = std::make_shared<UpdateFrequencyMessage>(SystemTypes::NETWORKING, targetFreq);
 				Game::Instance()->BroadcastMessage(msg);
+			
+
+				coords.erase(0, coords.find('(') + 1);
+				const auto averageFreq = std::stof(coords.substr(0, coords.find(')')));
+				
+				msg = std::make_shared<CurrentSystemFrequencyMessage>(SystemTypes::NETWORKING, averageFreq);
+				Game::Instance()->BroadcastMessage(msg);
+				break;
+				
 			}
 
+		case NetworkMessageTypes::PYRAMID_HEIGHT:
+			{
+				coords.erase(0, coords.find(':') + 1);
+				const auto pyramidHeight = std::stoi(coords.substr(0, coords.find('#')));
+
+				std::shared_ptr<Message> msg = std::make_shared<UpdatePyramidHeightMessage>(pyramidHeight);
+				Game::Instance()->BroadcastMessage(msg);
+
+				break;
+			}
+
+		//case NetworkMessageTypes::SPAWN_OBJECT:
+		//	{
+		//		
+		//	coords.erase(0, coords.find('(') + 1);
+		//
+		//	auto xPos = coords.substr(0, coords.find('>'));
+		//	coords.erase(0, xPos.length() + 1);
+		//
+		//	auto yPos = coords.substr(0, coords.find('>'));
+		//	coords.erase(0, yPos.length() + 1);
+		//
+		//	auto zPos = coords.substr(0, coords.find(')'));
+		//
+		//	coords.erase(0, coords.find('(') + 1);
+		//
+		//	auto xScale = coords.substr(0, coords.find('>'));
+		//	coords.erase(0, xScale.length() + 1);
+		//
+		//	auto yScale = coords.substr(0, coords.find('>'));
+		//	coords.erase(0, yScale.length() + 1);
+		//
+		//	auto zScale = coords.substr(0, coords.find(')'));
+		//
+		//	glm::vec3 pos(std::stof(xPos), std::stof(yPos), std::stof(zPos));
+		//	glm::vec3 scale( std::stof(xScale),std::stof(yScale),std::stof(zScale));
+		//
+		//	std::shared_ptr<Message> msg = std::make_shared<SpawnObjectMessage>(pos, scale);
+		//
+		//	Game::Instance()->BroadcastMessage(msg);
+		//		
+		//	break;
+		//	}
 			
-		default: ;
+		default: break;
 		}
 		
 		pMessage.erase(0, messageLenght + 1);
+		pMessage.erase(0, pMessage.find_first_not_of('\0'));
 	}
 
 

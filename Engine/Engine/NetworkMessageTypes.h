@@ -14,5 +14,10 @@ struct NetworkMessageTypes {
 
 	static NetworkMessageType SERVER_FREQUENCY = 4;
 
+	static NetworkMessageType PYRAMID_HEIGHT = 5;
+
+	static NetworkMessageType PROJECTILE_FIRED = 6;
+	
+	static NetworkMessageType SPAWN_OBJECT = 7;
 	
 };

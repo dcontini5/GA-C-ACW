@@ -32,6 +32,12 @@
     <ClCompile Include="..\ACW_Game\UpdateFrequencyMessage.cpp">
       <Filter>Messages</Filter>
     </ClCompile>
+    <ClCompile Include="UpdatePyramidHeightMessage.cpp">
+      <Filter>Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="FireProjectileMessage.cpp">
+      <Filter>Messages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ServersideGame.h" />
@@ -45,6 +51,12 @@
       <Filter>Messages</Filter>
     </ClInclude>
     <ClInclude Include="PyramidMessageTypes.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdatePyramidHeightMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="FireProjectileMessage.h">
       <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>

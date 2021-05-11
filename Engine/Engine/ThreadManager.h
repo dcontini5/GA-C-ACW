@@ -37,12 +37,16 @@ public:
 	std::condition_variable& GetConditionVariable() const { return mConditionVariable; }
 	std::shared_mutex& GetSharedMutex() const { return mSharedMutex; }
 	bool IsPhysicsDone() const { return mPhysicsDone; }
-	bool IsRendererPaused()const { return mRenderPause; }
+	bool IsCollisionsDone() const { return mCollisionsDone; }
+	bool IsRendererPaused()const { return mRenderPaused; }
+	bool IsPhysicsPaused()const { return mPhysicsPaused; }
 	//Mutators
 public:
 
-	void PauseUnpauseRenderer(const bool& pValue) { mRenderPause = pValue; }
+	void PauseUnpauseRenderer(const bool& pValue) { mRenderPaused = pValue; }
+	void PauseUnpausePhysics(const bool& pValue) { mPhysicsPaused = pValue; }
 	void SetPhysicsDone(const bool& pNewValue) { mPhysicsDone = pNewValue; }
+	void SetCollisionsDone(const bool& pNewValue) { mCollisionsDone = pNewValue; }
 	// Public Functions
 public:
 	
@@ -95,7 +99,9 @@ private:
 	mutable std::shared_mutex mSharedMutex;
 
 	static bool mPhysicsDone;
-	static bool mRenderPause;
+	static bool mCollisionsDone;
+	static bool mRenderPaused;
+	static bool mPhysicsPaused;
 	bool mCollisionDone;
 	
 };

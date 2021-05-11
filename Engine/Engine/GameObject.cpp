@@ -36,8 +36,6 @@ void GameObject::AddComponent(ComponentPtr& pComponent){
 
 void GameObject::AddComponent(GameObjectComponent* pComponent){
 
-
-	
 	if(mComponents.find(pComponent->GetType()) != mComponents.end())
 		return;
 
@@ -54,11 +52,12 @@ void GameObject::RemoveComponent(const int& pType){
 
 	if(it != mComponents.end()){
 
-		mComponents.erase(it);
+		
 
 		auto imThis = shared_from_this();
 		std::shared_ptr<Message> msg = std::make_shared<RemovedComponentMessage>(it->second->GetType(), imThis);
 		Game::Instance()->BroadcastMessage(msg);
+		mComponents.erase(it);
 		//todo Destroy component
 		// todo delete it->second;
 		
@@ -71,5 +70,16 @@ void GameObject::RemoveComponent(const int& pType){
 void GameObject::RemoveComponent(ComponentPtr& pComponent){
 
 	RemoveComponent(pComponent->GetType());
+	
+}
+
+void GameObject::ClearComponents(){
+	
+	while (!mComponents.empty()){
+
+		RemoveComponent(mComponents.begin()->second->GetType());
+		
+	}
+
 	
 }

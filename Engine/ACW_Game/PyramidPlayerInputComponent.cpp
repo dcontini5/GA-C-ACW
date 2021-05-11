@@ -20,25 +20,28 @@ void PyramidPlayerInputComponent::Update(const InputState& pKeyState){
 		case ESCAPE:
 		{
 			Game::Instance()->Quit();
-			return;
+			continue;
 		}
 
 		case R:
 		{
 
 			mGameState->sceneReset = true;
+			//mGameState->hasUpdated = true;
 			continue;
 		}
 		case T:
 		{
 
-			mGameState->pyramidSize = glm::clamp(++mGameState->pyramidSize, static_cast<short>(3), static_cast<short>(50));
+			mGameState->pyramidSize = glm::clamp(++mGameState->pyramidSize, static_cast<uint8_t>(3), static_cast<uint8_t>(50));
+			mGameState->hasUpdated = true;
 			continue;
 		}
 		case G:
 		{
 
-			mGameState->pyramidSize = glm::clamp(--mGameState->pyramidSize, static_cast<short>(3), static_cast<short>(50));
+			mGameState->pyramidSize = glm::clamp(--mGameState->pyramidSize, static_cast<uint8_t>(3), static_cast<uint8_t>(50));
+			mGameState->hasUpdated = true;
 			continue;
 		}
 		case U:
@@ -59,20 +62,25 @@ void PyramidPlayerInputComponent::Update(const InputState& pKeyState){
 		{
 
 			mGameState->networkTargetFrequency = glm::clamp(++mGameState->networkTargetFrequency, static_cast<short>(1), static_cast<short>(1000));
-			std::shared_ptr<Message>  msg = std::make_shared<UpdateFrequencyMessage>(SystemTypes::NETWORKING, mGameState->networkTargetFrequency);
-			Game::Instance()->BroadcastMessage(msg);
+			//std::shared_ptr<Message>  msg = std::make_shared<UpdateFrequencyMessage>(SystemTypes::NETWORKING, mGameState->networkTargetFrequency);
+			//Game::Instance()->BroadcastMessage(msg);
+			mGameState->hasUpdated = true;
 			continue;
 		}
 		case H:
 		{
 			mGameState->networkTargetFrequency = glm::clamp(--mGameState->networkTargetFrequency, static_cast<short>(1), static_cast<short>(1000));
-			std::shared_ptr<Message>  msg = std::make_shared<UpdateFrequencyMessage>(SystemTypes::NETWORKING, mGameState->networkTargetFrequency);
-			Game::Instance()->BroadcastMessage(msg);
+			//std::shared_ptr<Message>  msg = std::make_shared<UpdateFrequencyMessage>(SystemTypes::NETWORKING, mGameState->networkTargetFrequency);
+			//Game::Instance()->BroadcastMessage(msg);
+			mGameState->hasUpdated = true;
 			continue;
 		}
 		case NUM1:
 		{
-			//fire small proj
+			
+			//mGameState->projectileFired = 1;
+			//mGameState->hasUpdated = true;
+			//continue;
 		}
 		case NUM2:
 		{
@@ -105,7 +113,8 @@ void PyramidPlayerInputComponent::Update(const InputState& pKeyState){
 			std::shared_ptr<Message> msg = std::make_shared<CameraUpdateMessage>(pKeyState.mouseMov, false, 0);
 
 			Game::Instance()->BroadcastMessage(msg);
-				continue;
+			mGameState->hasUpdated = true;
+			continue;
 				
 		}
 		case MOUSER:
@@ -114,7 +123,8 @@ void PyramidPlayerInputComponent::Update(const InputState& pKeyState){
 			std::shared_ptr<Message> msg = std::make_shared<CameraUpdateMessage>(pKeyState.mouseMov, true, 0);
 
 			Game::Instance()->BroadcastMessage(msg);
-				continue;
+			mGameState->hasUpdated = true;
+			continue;
 
 		}
 		case MOUSEWHEEL:
@@ -123,6 +133,7 @@ void PyramidPlayerInputComponent::Update(const InputState& pKeyState){
 			std::shared_ptr<Message> msg = std::make_shared<CameraUpdateMessage>(pKeyState.mouseMov, true, pKeyState.wheelRot);
 			Game::Instance()->BroadcastMessage(msg);
 			mKeyStates[MOUSEWHEEL] = false;
+			mGameState->hasUpdated = true;
 			continue;	
 		}
 

@@ -37,7 +37,6 @@ void Client::Start(){
 							
 			mTransferSocket->Disconnect();
 			mTransferSocket->Create();
-			
 			std::this_thread::sleep_for(std::chrono::duration <double>(10.f));
 			
 		}

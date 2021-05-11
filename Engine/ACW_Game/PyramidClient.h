@@ -2,6 +2,7 @@
 #include "Client.h"
 #include "Game.h"
 #include "PlayerUpdateInfo.h"
+#include "PyramidGame.h"
 
 //typedef std::unique_ptr<GameObject> GameObjectUPtr;
 
@@ -11,7 +12,7 @@ class PyramidClient : public Client {
 
 	//Structors
 public:
-	PyramidClient():Client(){};
+	PyramidClient():Client(), mGameState(PyramidGame::GetGameState()){}
 	PyramidClient(const PyramidClient&);
 	PyramidClient(PyramidClient&&); //exchange members here;
 	~PyramidClient() = default;
@@ -23,7 +24,6 @@ public:
 	//Mutators
 public:
 
-	void SetPlayerUpdateInfo(const PlayerUpdateInfo& pPlayerUpdate) { mPlayerUpdateInfo = pPlayerUpdate; }
 	
 	// Public Functions
 public:
@@ -51,7 +51,7 @@ public:
 private:
 
 	std::vector<GameObjectPtr> mGameObjectsUpdated;
-	PlayerUpdateInfo mPlayerUpdateInfo;
+	std::shared_ptr<GameState> mGameState;
 };
 
 

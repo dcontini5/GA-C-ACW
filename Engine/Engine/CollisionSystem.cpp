@@ -9,7 +9,7 @@
 
 void CollisionSystem::Process(){
 
-		
+	
 	{
 		
 		std::unique_lock<std::mutex> lk(ThreadManager::Instance()->GetMutex());
@@ -18,7 +18,7 @@ void CollisionSystem::Process(){
 		});
 		
 	}
-	
+		
 	for(auto i = 0; i <= mGameObjects.size() - 1; i++){
 
 		auto collider = mGameObjects[i]->GetComponent(ComponentTypes::COLLISION);

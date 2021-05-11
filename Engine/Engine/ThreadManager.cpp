@@ -3,7 +3,9 @@
 ThreadManager* ThreadManager::mInstance = nullptr;
 int ThreadManager::mID = 0;
 bool ThreadManager::mPhysicsDone = false;
-bool ThreadManager::mRenderPause = true;
+bool ThreadManager::mCollisionsDone = false;
+bool ThreadManager::mRenderPaused = true;
+bool ThreadManager::mPhysicsPaused = false;
 //bool ThreadManager::mCollisionDone = true;
 
 ThreadManager::~ThreadManager(){

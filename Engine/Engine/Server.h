@@ -23,7 +23,7 @@ class Server :public NetworkingSystem{
 	//Structors
 public:
 	Server();
-	~Server() { WSACleanup(); };
+	~Server() { WSACleanup(); }
 
 	//Accessors
 public:
@@ -55,6 +55,5 @@ private:
 	ClientList                  mClients;
 	ListenSocket				mListenSocket;
 	TransferSocket				mTransferSocket;
-	Peer						mPeer;
 	
 };

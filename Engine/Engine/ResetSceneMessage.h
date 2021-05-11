@@ -10,6 +10,7 @@ class ResetSceneMessage : public Message {
 	//Structors
 public:
 	ResetSceneMessage(std::vector<GameObjectPtr>& pGameObjects): Message(MessageTypes::RESET_SCENE), mGameObjects(std::move(pGameObjects)){}
+	ResetSceneMessage(): Message(MessageTypes::RESET_SCENE){}
 	ResetSceneMessage(const ResetSceneMessage&);
 	ResetSceneMessage(ResetSceneMessage&&); //exchange members here;
 	~ResetSceneMessage() = default;

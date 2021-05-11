@@ -33,7 +33,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -80,6 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(CSLib)\inc;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -129,8 +130,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_DISABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)glm\glm;$(SolutionDir)Engine\ImGui;$(SolutionDir)Engine\ImGui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,7 +165,6 @@
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CameraUpdateMessage.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="ClientPlayerComponent.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
     <ClCompile Include="CurrentSystemFrequencyMessage.cpp" />
@@ -200,6 +201,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="SpawnObjectMessage.cpp" />
     <ClCompile Include="SphereCollisionComponent.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="System.cpp" />
@@ -216,7 +218,6 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraUpdateMessage.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="ClientPlayerComponent.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="CollisionSystem.h" />
     <ClInclude Include="ComponentTypes.h" />
@@ -258,6 +259,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Socket.h" />
+    <ClInclude Include="SpawnObjectMessage.h" />
     <ClInclude Include="SphereCollisionComponent.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="System.h" />

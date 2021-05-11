@@ -20,6 +20,8 @@ public:
 public:
 	void Start() override;
 	void OnMessage(std::shared_ptr<Message>& pMessage) override;
+	void ResetScene();
+	void CreatePyramid();
 	// Private Functions
 private:
 
@@ -35,5 +37,7 @@ public:
 
 	//Data:
 private:
+
+	uint8_t mHeight{ 5 };
 	
 };

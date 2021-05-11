@@ -48,6 +48,7 @@ public:
 	void AddComponent(GameObjectComponent* pComponent);
 	void RemoveComponent(ComponentType& pType);
 	void RemoveComponent(ComponentPtr& pComponent);
+	void ClearComponents();
 	
 
 	// Private Functions

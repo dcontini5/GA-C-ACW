@@ -69,7 +69,7 @@ public:
 	short GetWindowWidth() const { return mSettings.Width; }
 	//Mutators
 public:
-
+	void SetPyramidHeight(const int& pNewHeight) { mSettings.PyramidHeight = pNewHeight; }
 	// Public Functions
 public:
 
